@@ -162,7 +162,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    //Podcast video
    Route::get('video/podcast/{id}', [CoursController::class, 'getPodcastVideo'])->name('podacast.video');
    Route::post('podcast/video/store', [CoursController::class, 'store_videoPodacast'])->name('store.video.podcast');
-
+   
    //update Podcast
    Route::patch('update/podcast/{id}', [CoursController::class, 'update_podcast'])->name('update.podcast');
    //update podcast video
