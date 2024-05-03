@@ -16,6 +16,7 @@ class CoursPadcastVideo extends Model
         'title',
         'tags',
         'image',
+        'iscoming',
         'video',
         'description',
         'duration',  

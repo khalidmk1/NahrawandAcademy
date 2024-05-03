@@ -131,7 +131,7 @@
                                             <div class="col-sm-12 d-flex justify-content-center align-items-center">
                                                 <img class="img-fluid"
                                                     src="{{ asset('storage/upload/cour/image/' . $coursFormation->image) }}"
-                                                    alt="Photo">
+                                                    alt="Photo" style="height: 300px">
                                             </div>
                                             <!-- /.col -->
                                             @if ($coursFormation->documents)

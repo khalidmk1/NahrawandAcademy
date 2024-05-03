@@ -21,6 +21,7 @@ use App\Models\QuizQuestion;
 use App\Models\UserObjectif;
 use Illuminate\Http\Request;
 use App\Models\RolePermission;
+use App\Models\VideoProgressPodcast;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -136,12 +137,10 @@ class ApiServicesRepository  implements apiRepositoryInterface
         $domain = Domain::all();
     
         foreach ($domain as $d) {
-            // Load categories with souscategories and goals only if they are not empty
             $d->category->load(['souscategories' => function ($query) {
                 $query->has('goals');
             }]);
             
-            // Load goals for each souscategory
             $d->category->souscategories->each(function ($souscategory) {
                 $souscategory->load('goals');
             });
@@ -195,8 +194,8 @@ class ApiServicesRepository  implements apiRepositoryInterface
        
     }
 
-    //get personel cours 
-    public function getpersonelCours(String $user)
+//get personel cours 
+public function getpersonelCours(String $user)
 {
     $users = User::findOrFail($user);
 
@@ -215,27 +214,67 @@ class ApiServicesRepository  implements apiRepositoryInterface
     return response()->json(['contentFormation' => $courFormation]);
 }
 
-    public function Cour_Conference(){
-        $courConference = Cour::where('cours_type' , 'conference')->get();
+//personel video podcast
 
-         //cour conference
-        $courConference->load('category');
-        $courConference->load([
+public function personelvideoPodcast(String $user , String $video)
+{
+    $users =  User::findOrFail($user);
+    $video =  CoursPadcastVideo::findOrFail($video);
+
+    $ExistPersonelvideo = VideoProgressPodcast::where(['user_id' => $users->id , 'video_id' => $video->id])->exists();
+    if(!$ExistPersonelvideo){
+        $viewVideo = VideoProgressPodcast::create([
+            'user_id' => $users->id,
+            'video_id' => $video->id
+        ]);
+        return response()->json($viewVideo);
+    }else{
+        return response()->json('already exists');
+    }
+
+
+}
+
+// personel video formation
+public function personelvideoFormation(String $user , String $video)
+{
+    $users =  User::findOrFail($user);
+    $video =  CoursFormationVideo::findOrFail($video);
+
+    $ExistPersonelvideo = VideoProgressFormation::where(['user_id' => $users->id , 'video_id' => $video->id])->exists();
+    if(!$ExistPersonelvideo){
+        $viewVideo = VideoProgressFormation::create([
+            'user_id' => $users->id,
+            'video_id' => $video->id
+        ]);
+        return response()->json($viewVideo);
+    }else{
+        return response()->json('already exists');
+    }
+}
+
+public function Cour_Conference(){
+    $courConference = Cour::where('cours_type' , 'conference')->get();
+
+    //cour conference
+    $courConference->load('category');
+    $courConference->load([
         'CoursConference', 
         'CoursConference.user', 
         'CoursConference.user.userspeaker', 
         'CoursConference.ConferenceVideo', 
         'CoursConference.ConferenceVideo.guestvideo.user.conferenceGuests']);
 
-        return response()->json(['contentConference' => $courConference]);
+    return response()->json(['contentConference' => $courConference]);
 
-    }
+}
 
 
     //all short cours
     public function CourShort()
     {
         $Cours = ShortCours::all();
+        $Cours->load(['user' , 'user.userspeaker']);
         return response()->json($Cours);
     }
 
@@ -249,7 +288,8 @@ class ApiServicesRepository  implements apiRepositoryInterface
         'CoursPodcast.user' , 
         'CoursPodcast.user.userspeaker',
         'CoursPodcast.videopodcast',
-        'CoursPodcast.videopodcast.guestvideo.user'
+        'CoursPodcast.videopodcast.guestvideo.user' , 
+        'CoursPodcast.videopodcast.guestvideo.user.userspeaker'
     ]);
 
         return response()->json(['contentPodcast' => $courPodcast]);

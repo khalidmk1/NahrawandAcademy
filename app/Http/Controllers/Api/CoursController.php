@@ -35,6 +35,16 @@ class CoursController extends Controller
         return $this->apiRepository->getpersonelCours($user);
     }
 
+    //create personel video podcast
+    public function personelvideoPodcast(String $user , String $video){
+        return $this->apiRepository->personelvideoPodcast($user , $video);
+    }
+
+    // personel video formation
+    public function personelvideoFormation(String $user , String $video){
+        return $this->apiRepository->personelvideoFormation($user , $video);
+    }
+
     public function coming_cours(){
         return  $this->apiRepository->coming_cours();
     }

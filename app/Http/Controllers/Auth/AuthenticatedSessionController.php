@@ -84,7 +84,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-       return response()->json();
+       return view('Component.Auth.login');
     }
 
 

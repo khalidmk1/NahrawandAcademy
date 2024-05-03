@@ -3,7 +3,7 @@
     <div class=" mb-2 p-3 col-4">
         <div class="card bg-light p-4">
             <div class=" image d-flex flex-column justify-content-center align-items-center">
-                <img class="rounded mx-auto d-block" src="../../dist/img/user1-128x128.jpg" alt="user-avatar" height="100"
+                <img class="rounded mx-auto d-block" src="{{ asset('storage/avatars/' . $roleuser->user->avatar) }}" alt="user-avatar" height="100"
                     width="100" />
                 <div class="text mt-3">
                     <strong></strong>

@@ -62,6 +62,16 @@
                                     id="titleVideo" placeholder="Entrez Titre ...">
                             </div>
 
+                            <div class="form-group clearfix text-center col-4">
+                                <div class="icheck-primary d-inline">
+                                    <input type="checkbox" name="iscoming" id="iscoming">
+                                    <label for="iscoming">
+                                        Coming Soon
+                                    </label>
+                                </div>
+
+                            </div>
+
                             <!-- textarea -->
                             <div class="form-group">
                                 <label>Description de video</label>
@@ -191,7 +201,9 @@
                             // Append the error message to the form
                             $('.erreurs').html(errorMessage);
                         });
-                        $('html, body').animate({ scrollTop: 0 }, 800);
+                        $('html, body').animate({
+                            scrollTop: 0
+                        }, 800);
                     },
                 })
 

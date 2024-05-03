@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cours_formation_videos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('CourFormation_id');
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->longText('tags')->nullable();
             $table->boolean('iscoming')->nullable()->default(false);

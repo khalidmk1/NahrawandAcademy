@@ -58,6 +58,11 @@ Route::prefix('mobile')->group(function () {
     Route::post('create/personel/cours/{user}/{cour}', [CoursController::class, 'personelCours'])->name('create.personel.cours');
     Route::get('personel/cours/{id}', [CoursController::class, 'getpersonelCours'])->name('personel.cours');
 
+    //personel video podcast formation
+    Route::post('personel/video/podcast/{user}/{video}', [CoursController::class, 'personelvideoPodcast'])->name('creat.personel.video.podcast');
+    Route::post('personel/video/formation/{user}/{video}', [CoursController::class, 'personelvideoFormation'])->name('creat.personel.video.formation');
+
+
     Route::get('/short', [CoursController::class, 'CourShort'])->name('cours.short');
 
 

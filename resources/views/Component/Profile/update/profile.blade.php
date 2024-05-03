@@ -18,7 +18,7 @@
     </section>
 
 
-    @include('Component.Profile.update.password')
+    @include('Component.Profile.update.changepassword')
 
     <!-- Main content -->
     <section class="content">

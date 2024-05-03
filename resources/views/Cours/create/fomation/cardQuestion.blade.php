@@ -1,32 +1,4 @@
-{{-- @foreach ($questions as $Question)
-    <div class="col-sm-6 col-md-4 Question_formation ">
 
-        <ol type="A">
-            <li style="font-family: 'Poppins'; font-size: larger;">
-                <div class="card Qusetion_Quiz ml-2">
-
-                    <div class="card-body">
-
-                        <form action="{{ Route('dashboard.delete.Question', Crypt::encrypt($Question->id)) }}"
-                            method="post" class="delete_Question">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-danger position-absolute" style="right: 6px">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </form>
-
-                        <span>{{ $Question->Question }}</span>
-
-                    </div>
-
-
-
-                </div>
-            </li>
-        </ol>
-
-    </div>
-@endforeach --}}
 
 
 @foreach ($questions as $Question)

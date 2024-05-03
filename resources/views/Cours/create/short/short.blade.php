@@ -44,28 +44,72 @@
                                     id="title" placeholder="Entrez Titre ...">
                             </div>
 
-        
+                            <div class="form-group">
+                                <label>Formateur</label>
+                                <select class="form-control select2 " name="hostFormateur" style="width: 100%;">
+                                    @foreach ($HostFromateur as $HostFromateur)
+                                        <option value="{{ $HostFromateur->user->id }}">
+                                            {{ $HostFromateur->user->email }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            <!-- /.form-group -->
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>SousCategorie</label>
+                                        <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
+                                            style="width: 100%;">
+                                            <option value="">Choisissez Votre Sous-Catégorie</option>
+                                            @foreach ($souscategory as $souscategory)
+                                                <option value="{{ $souscategory->category->id }}"
+                                                    {{ old('cotegoryId') == $souscategory->category->id ? 'selected' : '' }}>
+                                                    {{ $souscategory->category->category_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <div class="col-6">
+
+                                    <div class="form-group">
+                                        <label for="goals_option">Objectifs</label>
+                                        <select class="select3" name="gaols_id[]" multiple="multiple" id="goals_option"
+                                            data-placeholder="Select a State" style="width: 100%;">
+
+                                        </select>
+                                    </div>
+                                    <!-- /.form-group -->
+
+                                </div>
+
+
+                            </div>
 
                             <div class="form-group">
                                 <label for="tags">Mots Clé</label>
                                 <input type="text" class="form-control" name="tags[]" id="tags-input" />
                             </div>
 
-                          
+
                             <div class="form-group">
                                 <label for="image">Image</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="image" id="image">
-                                    <label class="custom-file-label"  for="image">Choisez image</label>
+                                    <label class="custom-file-label" for="image">Choisez image</label>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="video">Video</label>
                                 <input type="url" value="{{ old('video') }}" class="form-control" name="video"
-                                id="video" placeholder="Entrez url video ...">
+                                    id="video" placeholder="Entrez url video ...">
                             </div>
-                           
+
 
 
 
@@ -87,15 +131,59 @@
         </div>
         </div>
     </section>
- <!-- jQuery -->
- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 
- <script>
-     $(document).ready(function() {
-          //tags
-          var tagInputEle = $('#tags-input');
+    <script>
+        $(document).ready(function() {
+            //tags
+            var tagInputEle = $('#tags-input');
             tagInputEle.tagsinput();
-     })
- </script>
 
+                //Initialize Select2 Elements
+                $('.select2').select2();
+            $('.select3').select2();
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+
+
+            //search live for goals
+
+            $('#souscategory_goals').on('change', function() {
+                var sousCategorieId = $(this).val();
+
+                $.ajax({
+                    url: '/backoffice/goals-bySouscategory/' +
+                        sousCategorieId,
+                    method: 'GET',
+                    success: function(response) {
+                        var goalsSelect = $('#goals_option');
+                        goalsSelect.empty();
+
+                        /* window.navigate("page.html"); */
+
+                        console.log(response);
+
+                        $.each(response.goals, function(index, goal) {
+                            goalsSelect.append($('<option>', {
+                                value: goal.id,
+                                text: goal.goals
+                            }));
+
+                            console.log(goal.id);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching goals:', error);
+                    }
+                });
+            });
+
+        })
+    </script>
 @endsection

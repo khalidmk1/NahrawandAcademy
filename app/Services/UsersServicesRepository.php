@@ -17,6 +17,7 @@ use App\Models\Program;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserRole;
+use App\Models\ShortGoal;
 use App\Mail\SendInfoUser;
 use App\Models\CoursGoals;
 use App\Models\Permission;
@@ -671,9 +672,21 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         
         return redirect()->back()->with('status', 'Un utilisateur administratif a été créé avec succès.'); 
     }
-    
 
 
+
+    //crud client
+
+    public function view_client()
+    {
+
+    }
+
+
+    public function detail_client(String $id)
+    {
+        
+    }
     
 
 
@@ -994,9 +1007,12 @@ public function index_cours()
     // create short
     public function create_short()
     {
-        
+        $HostFromateur = UserSpeakers::where('type_speaker' , 'Formateur')->get();
 
-        return view('Cours.create.short.short');
+        $souscategory = SousCategory::distinct()->get(['category_id']);
+
+        return view('Cours.create.short.short')->with(['HostFromateur' => $HostFromateur ,
+        'souscategory' => $souscategory]);
     }
 
     public function getGoalsBySousCategorie(String $id)
@@ -1189,6 +1205,8 @@ public function index_cours()
 //store short
 public function store_short(Request $request)
 {
+
+    /* dd($request); */
     $request->validate([
         'title' => ['required' , 'string' , 'max:100'],
         'tags' => ['required' , 'array'],
@@ -1214,10 +1232,24 @@ public function store_short(Request $request)
 
     $short = ShortCours::create([
         'title' => $request->title,
+        'goal_id' => 1,
+        'host_id' => $request->hostFormateur,
         'video' => 'https://www.youtube.com/embed/'.$videoId,
         'tags' => $tags,
         'image' => $fileNameImage
     ]);
+
+    $goals = $request->gaols_id;
+
+    foreach ($goals as $key => $goal) {
+
+        $shortGoal = ShortGoal::create([
+            'cour_id' => $short->id,
+            'goal_id' => $goal
+        ]);
+    };
+
+   
 
     return redirect()->back()->with('status' , 'Vous avez Crée short');
 }
@@ -1687,12 +1719,13 @@ public function getCoursVideo(String $id){
             $file->storeAs($directory, $fileNameImage, 'public'); 
         }
 
+        $iscoming = $request->iscoming == 'on';
+
         $url = $request->videoPodcast;
         $queryString = parse_url($url, PHP_URL_QUERY);
         parse_str($queryString, $params);
         $videoId = $params['v'];
     
-        
 
         foreach ($request->videoTags as $key => $videoTag) {
             $videoTags[] = $videoTag;
@@ -1704,6 +1737,7 @@ public function getCoursVideo(String $id){
             'title' => $request->titleVideo,
             'image' => $fileNameImage,
             'description' => $request->descriptionVideo,
+            'iscoming' => $iscoming,
             'tags' => $videoTags,
             'video' => 'https://www.youtube.com/embed/'.$videoId ,
             'duration' => $request->videoduration
@@ -1744,7 +1778,7 @@ public function getCoursVideo(String $id){
             'videoduration' => ['required'],
             'video' => ['required' , 'url']
         ]);
-
+        $iscoming = $request->iscoming == 'on';
         $url = $request->video;
 
         if ($request->hasFile('image')) {
@@ -1778,6 +1812,7 @@ public function getCoursVideo(String $id){
         $videoPodcast->description = $request->descriptionVideo;
         $videoPodcast->tags = $tags;
         $videoPodcast->duration = $request->videoduration;
+        $videoPodcast->iscoming = $iscoming;
 
         
         
@@ -2010,7 +2045,7 @@ public function getCoursVideo(String $id){
             'imagevideo' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
             'video' => ['required' , 'url']
         ]);
-
+        $iscoming = $request->iscoming == 'on';
         $url = $request->video;
 
         if ($request->hasFile('image')) {
@@ -2022,7 +2057,7 @@ public function getCoursVideo(String $id){
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
             
-            $coursFormation->image = $fileNameImage;
+            $videoforamtion->image = $fileNameImage;
         }
 
         if (strpos($url, 'watch?v=') !== false) {
@@ -2043,6 +2078,7 @@ public function getCoursVideo(String $id){
         $videoforamtion->title = $request->titleVideo;
         $videoforamtion->description = $request->descriptionVideo;
         $videoforamtion->tags = $tags;
+        $videoforamtion->iscoming = $iscoming;
 
         $videoforamtion->save();
 
@@ -2060,7 +2096,7 @@ public function getCoursVideo(String $id){
         $request->validate([
             'titleVideo' => ['required' , 'string' , 'max:100'],
             'descriptionVideo' => ['required' , 'string' , 'max:100'],
-            'image' => ['required' , 'file' , 'mimes:png,jpg'],
+            'image' => ['required' , 'file' , 'mimes:jpeg,png,jpg,gif'],
             'videoFormation' => ['sometimes' , 'url'],
             'videoTags' => ['required' , 'array'],
         ]);
@@ -2094,6 +2130,7 @@ public function getCoursVideo(String $id){
         $queryString = parse_url($url, PHP_URL_QUERY);
         parse_str($queryString, $params);
         $videoId = $params['v'] ?? null;
+        $iscoming = $request->iscoming == 'on';
 
         if ($videoId === null) {
             return redirect()->back()->with(['faild' => 'The YouTube URL should be like this https://www.youtube.com/watch?v= contain the video ID parameter.'], 400);
@@ -2105,6 +2142,7 @@ public function getCoursVideo(String $id){
         'description' =>$request->descriptionVideo ,
         'image' => $fileNameImage,
         'tags'=> $tags,
+        'iscoming' => $iscoming,
         'video' => 'https://www.youtube.com/embed/'.$videoId,
         ]);
 
@@ -2166,14 +2204,6 @@ public function getCoursVideo(String $id){
                     'Answercount' => $request->count
                 ]);
             }
-
-           /*  $QuizSeccess = QuizSeccesseVideo::create([
-                'video_id' => $courvideoId,
-                'question_id' => $Question->id,
-                'answer_id' => $RightAnswer->id,
-                'rateSeccess' => $request->Rate,
-                'Answercount' => $request->count
-            ]); */
             
             return redirect()->back()->with('QuizSeccess' , $QuizSeccess);
 
@@ -2297,6 +2327,10 @@ public function getCoursVideo(String $id){
             'RightAwnser' => ['required' , 'string' , 'max:200'],
         ]);
 
+        CoursFormation::create([
+            'quiz_type' => 0
+        ]);
+
 
         if( $request->Rate < $request->count ){
 
@@ -2338,6 +2372,8 @@ public function getCoursVideo(String $id){
                     'Answercount' => $request->count
                 ]);
             }
+
+           
             
 
             return redirect()->back(); 
@@ -2346,6 +2382,7 @@ public function getCoursVideo(String $id){
             return redirect()->back()->with('faild' , 'Votre Rate bigger than count'); 
         }
 
+      
         
     }
 
@@ -2370,6 +2407,10 @@ public function getCoursVideo(String $id){
             ]);
     
         }
+
+        CoursFormation::create([
+            'quiz_type' => 1
+        ]);
 
         $getCreatedQuestion = QuizQuestion::where('cours_id' , $request->courId)->get();
         $output = '';

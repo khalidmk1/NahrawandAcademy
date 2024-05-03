@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,5 +31,12 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //
+
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new MailMessage)
+                ->subject('Verify Email Address')
+                ->line('S\'il vous plaît, cliquez sur le bouton ci-dessous pour vérifier votre adresse e-mail.')
+                ->action('Vérifier l\'adresse e-mail', $url);
+        });
     }
 }

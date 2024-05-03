@@ -14,14 +14,12 @@ return new class extends Migration
         Schema::create('short_cours', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('host_id');
-            $table->unsignedBigInteger('goal_id');
             $table->string('title')->nullable();
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->string('video')->nullable();
             $table->text('tags')->nullable();
             $table->softDeletes();
-            $table->foreign('goal_id')->references('id')->on('goals')->onDelete('cascade');
             $table->foreign('host_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

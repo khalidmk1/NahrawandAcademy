@@ -58,4 +58,14 @@ class Goal extends Model
         return $this->hasMany(CoursGoals::class, 'goal_id');
     }
 
+    /**
+     * Get all of the shortGoal for the Goal
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shortGoal(): HasMany
+    {
+        return $this->hasMany(ShortGoal::class, 'goal_id');
+    }
+
 }

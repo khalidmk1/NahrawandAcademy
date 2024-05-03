@@ -1,8 +1,38 @@
-<style>
-    /* .main-sidebar {
-        background: linear-gradient(279deg, rgba(218, 165, 32, 1) 22%, rgba(63, 63, 62, 1) 70%);
-    } */
-</style>
+@php
+    use App\Models\RolePermission;
+
+    $user_role = auth()->user()->userRole->role_id;
+    $rolePermissionSpeaker = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 6,
+        'confirmed' => '1',
+    ])->exists();
+
+    $rolePermissionRole = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 7,
+        'confirmed' => '1',
+    ])->exists();
+
+    $rolePermissionTicket = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 4,
+        'confirmed' => '1',
+    ])->exists();
+
+    $rolePermissionEmail = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 5,
+        'confirmed' => '1',
+    ])->exists();
+
+    $rolePermissionContent = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 1,
+        'confirmed' => '1',
+    ])->exists();
+
+@endphp
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -38,7 +68,7 @@
 
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{Route('dashboard.index')}}" class="nav-link active">
+                            <a href="{{ Route('dashboard.index') }}" class="nav-link active">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Reporting</p>
                             </a>
@@ -49,6 +79,7 @@
                 </li>
                 <li class="nav-header">Gestion Acteur</li>
 
+                @if ($rolePermissionRole || auth()->user()->userRole->role_id == 1)
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.roles.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -58,8 +89,11 @@
                         </p>
                     </a>
                 </li>
+                @endif
 
-                @if (auth()->user()->userRole->role_id === 1)
+                
+
+                @if (auth()->user()->userRole->role_id === 1 || auth()->user()->userRole->role_id == 2)
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.admin.create') }}" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -69,12 +103,7 @@
                             </p>
                         </a>
                     </li>
-                @endif
 
-
-
-
-                @if (auth()->user()->userRole->role_id == 1 || auth()->user()->userRole->role_id == 2)
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.manager.create') }}" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -87,16 +116,22 @@
                 @endif
 
 
+                @php
 
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.speaker.create') }}" class="nav-link">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>
-                            Speakers
+                @endphp
 
-                        </p>
-                    </a>
-                </li>
+                @if ($rolePermissionSpeaker)
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.speaker.create') }}" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                Speakers
+
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
 
                 <li class="nav-item">
                     <a href="pages/widgets.html" class="nav-link">
@@ -108,7 +143,7 @@
                     </a>
                 </li>
 
-                <li class="nav-header">Gestion Achats</li>
+                {{-- <li class="nav-header">Gestion Achats</li>
 
                 <li class="nav-item">
                     <a href="pages/widgets.html" class="nav-link">
@@ -128,7 +163,7 @@
 
                         </p>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-header">Gestion filtre</li>
 
@@ -171,26 +206,31 @@
 
                 <li class="nav-header">Gestion Contenu</li>
 
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.cours.create') }}" class="nav-link">
-                        {{-- <i class="nav-icon fa fa-bullseye" aria-hidden="true"></i> --}}
-                        <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}" alt="">
-                        <p>
-                            Contenu
-                        </p>
-                    </a>
-                </li>
+                @if ($rolePermissionContent)
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.cours.create') }}" class="nav-link">
+
+                            <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}"
+                                alt="">
+                            <p>
+                                Contenu
+                            </p>
+                        </a>
+                    </li>
 
 
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
-                        {{-- <i class="nav-icon fa fa-bullseye" aria-hidden="true"></i> --}}
-                        <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
-                        <p>
-                            Quiqly
-                        </p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
+
+                            <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
+                            <p>
+                                Quiqly
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
+
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.cours.index') }}" class="nav-link">
@@ -201,18 +241,21 @@
                     </a>
                 </li>
 
+                @if ($rolePermissionTicket)
+                    <li class="nav-header">Gestion Tickets</li>
 
-                <li class="nav-header">Gestion Tickets</li>
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.tickets.create') }}" class="nav-link">
+                            <i class="nav-icon fas fa-ticket-alt" aria-hidden="true"></i>
 
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.tickets.create') }}" class="nav-link">
-                        <i class="nav-icon fas fa-ticket-alt" aria-hidden="true"></i>
+                            <p>
+                                Tickets
+                            </p>
+                        </a>
+                    </li>
+                @endif
 
-                        <p>
-                            Tickets
-                        </p>
-                    </a>
-                </li>
+
 
 
                 <li class="nav-header">Paramétres</li>
@@ -226,21 +269,23 @@
                         </p>
                     </a>
                 </li>
+                @if ($rolePermissionEmail)
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.create.email') }}" class="nav-link">
+                            <i class="nav-icon fa fa-envelope" aria-hidden="true"></i>
 
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.create.email') }}" class="nav-link">
-                        <i class="nav-icon fa fa-envelope" aria-hidden="true"></i>
-                       
-                        <p>
-                            Emails
-                        </p>
-                    </a>
-                </li>
+                            <p>
+                                Emails
+                            </p>
+                        </a>
+                    </li>
+                @endif
+
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.cours.history') }}" class="nav-link">
                         <i class="nav-icon fa fa-history" aria-hidden="true"></i>
-        
+
                         <p>
                             Historique
                         </p>

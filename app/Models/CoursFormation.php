@@ -15,8 +15,8 @@ class CoursFormation extends Model
     protected $fillable = [
         'cours_id',
         'host_id',
+        'quiz_type',
         'program_id',
-        'title',
         'isCertify',
         'documents',
         'image',

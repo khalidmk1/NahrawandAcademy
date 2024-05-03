@@ -27,11 +27,7 @@
                         <div class="col-6">
                             <h3 class="card-title">Crée Cotenu</h3>
                         </div>
-                        <div class="col-6 d-flex justify-content-end">
-                            <a href="{{ Route('dashboard.view.admin') }}" class="btn btn-block btn-primary w-25">
-                                List Contenu
-                            </a>
-                        </div>
+                        
                     </div>
                     <!-- /.card-header -->
                     <form action="{{ Route('dashboard.cours.store') }}" method="post" enctype="multipart/form-data">
@@ -468,6 +464,7 @@
                     }
                 });
             });
+            
 
 
             //tags

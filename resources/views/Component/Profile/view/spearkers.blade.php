@@ -155,7 +155,7 @@
 
                 var speaker = $(this).val()
 
-                var url = 'http://192.168.137.187:8000/backoffice/search/pofile'
+                var url = '/backoffice/search/pofile'
 
 
                 $.ajax({

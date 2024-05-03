@@ -15,6 +15,7 @@ class CoursFormationVideo extends Model
         'CourFormation_id',
         'title',
         'description',
+        'iscoming',
         'tags',
         'image',
         'video'

@@ -3,8 +3,8 @@
     <div class="col-lg-4">
         <div class="text-center card-box bg-light">
             <div class="member-card pt-2 pb-2">
-                <div class="thumb-lg member-thumb mx-auto"><img src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                        class="rounded-circle img-thumbnail" alt="profile-image"></div>
+                <div class="thumb-lg member-thumb mx-auto"><img src="{{ asset('storage/avatars/' . $roleuser->user->avatar) }}"
+                    style="height: 89px;width: 89px;" class="rounded-circle img-thumbnail" alt="profile-image"></div>
                 <div class="">
                     <h4>{{ $roleuser->user->firstName . ' ' . $roleuser->user->lastName }}</h4>
                     <p class="text-muted">@Admin <span>| </span><span><a href="#"

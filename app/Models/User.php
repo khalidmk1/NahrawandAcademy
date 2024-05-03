@@ -248,4 +248,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(VideoProgressPodcast::class, 'user_id');
     }
+
+    /**
+     * Get all of the shortCours for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shortCours(): HasMany
+    {
+        return $this->hasMany(ShortCours::class, 'host_id');
+    }
 }

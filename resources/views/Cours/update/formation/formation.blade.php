@@ -77,9 +77,10 @@
 
                 <div class="form-group">
                     <label for="goals_option">Objectifs</label>
-                    <select class="select3" name="goal[]" multiple="multiple" id="goals_option" data-placeholder="Select a State" style="width: 100%;">
+                    <select class="select3" name="goal[]" multiple="multiple" id="goals_option"
+                        data-placeholder="Select a State" style="width: 100%;">
                         @php
-                            $uniqueGoals = $goals->unique('goals'); 
+                            $uniqueGoals = $goals->unique('goals');
                         @endphp
                         @foreach ($uniqueGoals as $goal)
                             @php
@@ -89,8 +90,8 @@
                         @endforeach
                     </select>
                 </div>
-                
-                
+
+
 
                 <!-- /.form-group -->
 
@@ -112,12 +113,15 @@
                 </div>
             </div>
 
+            @if ($coursFormation->condition == 'text')
+            @else
+                <!-- textarea -->
+                <div class="form-group">
+                    <label>Conditions d’éligibilité</label>
+                    <textarea class="form-control" name="conditionformation" rows="3" placeholder="Enter ...">{{ $coursFormation->condition }}</textarea>
+                </div>
+            @endif
 
-            <!-- textarea -->
-            <div class="form-group">
-                <label>Conditions d’éligibilité</label>
-                <textarea class="form-control" name="conditionformation" rows="3" placeholder="Enter ...">{{ $coursFormation->condition }}</textarea>
-            </div>
 
 
             <div class="form-group">
@@ -127,26 +131,28 @@
                         @if (isset($coursFormation->user->email) && $Host->user->email == $coursFormation->user->email)
                             <option selected value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
                         @else
-                            <option  value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
+                            <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
                         @endif
                     @endforeach
                 </select>
             </div>
-            
 
 
-            <div class="form-group">
-                <label>Programme</label>
-                <select class="form-control select2" name="programId" style="width: 100%;">
-                    @foreach ($programs as $program)
-                        <option value="{{ $program->id }}"
-                            {{ $coursFormation->program_id == $program->id ? 'selected' : '' }}>
-                            {{ $program->title }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <!-- /.form-group -->
+            @if (!$programs)
+                <div class="form-group">
+                    <label>Programme</label>
+                    <select class="form-control select2" name="programId" style="width: 100%;">
+                        @foreach ($programs as $program)
+                            <option value="{{ $program->id }}"
+                                {{ $coursFormation->program_id == $program->id ? 'selected' : '' }}>
+                                {{ $program->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- /.form-group -->
+            @endif
+
 
 
 

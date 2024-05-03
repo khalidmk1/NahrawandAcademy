@@ -33,6 +33,10 @@ interface apiRepositoryInterface {
     //get personel cours 
     public function getpersonelCours(String $user);
 
+    //personel video podcast
+    public function personelvideoPodcast(String $user , String $video);
+    // personel video formation
+    public function personelvideoFormation(String $user , String $video);
     
     //all short cours
     public function CourShort();
@@ -40,8 +44,9 @@ interface apiRepositoryInterface {
     //cours
     public function Cour_Conference();
     public function Cour_Podcast();
-
     public function Cour_Formation();
+
+    
     //Qsm formation
     public function Cour_Fourmation_Qsm(String $id); 
 

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('cours_id');
             $table->unsignedBigInteger('host_id');
             $table->unsignedBigInteger('program_id')->nullable();
-            $table->string('title')->nullable();
             $table->boolean('isCertify')->nullable()->default(false);
+            $table->boolean('quiz_type')->nullable();
             $table->text('documents')->nullable();
             $table->string('image')->nullable();
             $table->text('condition')->nullable();

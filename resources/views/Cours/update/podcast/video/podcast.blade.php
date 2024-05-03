@@ -62,6 +62,17 @@
                                name="titleVideo" id="titleVideo" placeholder="Entrez Titre ...">
                        </div>
 
+                       <div class="form-group clearfix text-center col-4">
+                        <div class="icheck-primary d-inline">
+                            <input type="checkbox" name="iscoming" id="iscoming_{{ $video->id }}"
+                                {{ $video->iscoming == 1 ? 'checked' : '' }}>
+                            <label for="iscoming_{{ $video->id }}">
+                                Coming Soon
+                            </label>
+                        </div>
+
+                    </div>
+
                        <!-- textarea -->
                        <div class="form-group">
                            <label>Description de video</label>
