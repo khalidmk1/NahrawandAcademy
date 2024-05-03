@@ -199,7 +199,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursPodcast->id)) }}"
+                                                <a href="{{ Route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id)) }}"
                                                     class="btn btn-block btn-info w-50" style="float: right;">Ajouter video</a>
                                             </div>
                                         </div>

@@ -679,13 +679,17 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
     public function view_client()
     {
+        $role = Role::where('role_name' , 'Client')->first();
 
+        $Client = UserRole::where('role_id' , $role->id)->get();
+
+        return view('Component.Profile.view.client');
     }
 
 
     public function detail_client(String $id)
     {
-        
+
     }
     
 
