@@ -134,7 +134,7 @@
 
 
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <a href="{{Route('dashboard.client.show')}}" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             Utitlisateurs

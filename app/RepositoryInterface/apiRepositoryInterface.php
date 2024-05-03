@@ -49,6 +49,8 @@ interface apiRepositoryInterface {
     
     //Qsm formation
     public function Cour_Fourmation_Qsm(String $id); 
+    //create question answer for user
+    public function user_answer(Request $request ,String $user , String $cour , String $questionId);
 
     
     //tree Cours first

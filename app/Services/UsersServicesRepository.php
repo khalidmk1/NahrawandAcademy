@@ -681,15 +681,17 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     {
         $role = Role::where('role_name' , 'Client')->first();
 
-        $Client = UserRole::where('role_id' , $role->id)->get();
+        $Clients = UserRole::where('role_id' , $role->id)->get();
 
-        return view('Component.Profile.view.client');
+        return view('Component.Profile.view.client')->with('Clients' , $Clients);
     }
 
 
     public function detail_client(String $id)
     {
+        $client = User::findOrFail(Crypt::decrypt($id));
 
+        return view('Component.Profile.detail.client')->with('client' , $client);
     }
     
 

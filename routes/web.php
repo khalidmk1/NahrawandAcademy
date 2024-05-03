@@ -15,15 +15,16 @@ use App\Http\Controllers\Cours\CoursController;
 use App\Http\Controllers\Users\AdminController;
 
 use App\Http\Controllers\PorfileEditeController;
+use App\Http\Controllers\Users\ClientController;
 use App\Http\Controllers\Fileter\GoalsController;
-use App\Http\Controllers\Users\ManagerController;
 
+use App\Http\Controllers\Users\ManagerController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\Users\SpeakersController;
 use App\Http\Controllers\Fileter\ProgramController;
 use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Fileter\CategoriesController;
 
+use App\Http\Controllers\Fileter\CategoriesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Fileter\SousCategoryController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -104,6 +105,10 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::post('admin/store', [AdminController::class, 'store_admin'])->name('admin.store');
    Route::get('admin/view', [AdminController::class, 'view_admin'])->name('view.admin');
    Route::delete('delete/admin/{id}', [AdminController::class, 'delete_admin'])->name('delete.admin');
+
+   //crud client
+   Route::get('client', [ClientController::class, 'view_client'])->name('client.show');
+   Route::get('client/{id}', [ClientController::class, 'detail_client'])->name('client.detail');
 
    // store and update role permission
    Route::post('role-permission/{role}/{permission}', [RolePermissionController::class, 'store_role_permission'])->name('manage.role_permission');

@@ -69,6 +69,11 @@ class CoursController extends Controller
         return  $this->apiRepository->Cour_Fourmation_Qsm($id);
     }
 
+    //create question answer for user
+    public function user_answer(Request $request ,String $user , String $cour , String $questionId){
+        return  $this->apiRepository->user_answer($request ,$user , $cour , $questionId);
+    }
+
     //tree cours get
 
     public function treeCoursFormation(){

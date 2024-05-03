@@ -51,6 +51,10 @@ interface UsersRepositoryInterface{
     //crud admin
     public function view_admin();
     public function store_admin(Request $request);
+
+    //crud client
+    public function view_client();
+    public function detail_client(String $id);
    
 
     //crud categorie

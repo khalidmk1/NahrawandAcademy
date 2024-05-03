@@ -74,6 +74,8 @@ Route::prefix('mobile')->group(function () {
     Route::get('/Cour/Formation', [CoursController::class, 'Cour_Formation'])->name('cours.formation');
     //get Cour Qsm
     Route::get('/Cour/Formation/Qsm/{id}', [CoursController::class, 'Cour_Fourmation_Qsm'])->name('cours.formation.Qsm');
+    //create question answer for user
+    Route::post('user/answer/{user}/{cour}/{Question}', [CoursController::class, 'user_answer'])->name('user.question.answer');
 
     //cours tree 
     Route::get('/Cour/tree/Formation', [CoursController::class, 'treeCoursFormation'])->name('cours.tree.formation');

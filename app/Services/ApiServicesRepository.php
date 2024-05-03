@@ -9,6 +9,7 @@ use App\Models\Domain;
 use App\Models\Ticket;
 use App\Models\Program;
 use App\Models\Category;
+use App\Models\Question;
 use App\Models\UserRole;
 use App\Models\ViewCour;
 use App\Models\ShortCours;
@@ -21,9 +22,13 @@ use App\Models\QuizQuestion;
 use App\Models\UserObjectif;
 use Illuminate\Http\Request;
 use App\Models\RolePermission;
+use App\Models\QuestionAnswers;
+use App\Models\CoursPadcastVideo;
+use App\Models\CoursFormationVideo;
 use App\Models\VideoProgressPodcast;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\VideoProgressFormation;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use App\RepositoryInterface\apiRepositoryInterface;
@@ -325,6 +330,43 @@ public function Cour_Conference(){
         return response()->json(['Cour_Qsm' => $Cour_Qsm , 'Cour_Question' => $Cour_Question]);
 
     }
+
+    //create question answer for user
+    public function user_answer(Request $request, String $user, String $cour, String $questionId)
+    {
+        try {
+            $cour = Cour::findOrFail($cour);
+            $user = User::findOrFail($user);
+            $question = Question::findOrFail($questionId);
+    
+            // Check if the question belongs to the specified course
+            if ($question->cours_id != $cour->id) {
+                return response()->json('The specified question does not belong to the course.', 400);
+            }
+    
+            $questionAnswerExists = QuestionAnswers::where([
+                'cours_id' => $cour->id,
+                'user_id' => $user->id,
+                'question_id' => $question->id
+            ])->exists();
+    
+            if ($questionAnswerExists) {
+                return response()->json('You have already answered this question.', 400);
+            }
+    
+            $answerQuestion = QuestionAnswers::create([
+                'cours_id' => $cour->id,
+                'user_id' => $user->id,
+                'question_id' => $question->id,
+                'answer' => $request->answer
+            ]);
+    
+            return response()->json($answerQuestion);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+    
 
     // get tree Cours 
 
