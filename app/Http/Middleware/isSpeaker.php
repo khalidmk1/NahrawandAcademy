@@ -16,13 +16,14 @@ class isSpeaker
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role_id !== 'Speaker' ){
-            return $next($request);
+        if(Auth::user()->userRole->role_id == 4 ||  Auth::user()->userRole->role_id == 3){
+            Auth::logout();
+            return redirect()->back()->with('faild' , 'Désolé vous n\'avez la permission pour entre a le backofice');
 
         }else
         {
-            Auth::logout();
-            return redirect()->back()->with('faild' , 'u dont have the permission ');
+            return $next($request);
+          
         }
         
        

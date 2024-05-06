@@ -47,7 +47,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::post('roles/create', [RolesController::class, 'store'])->name('roles.store');
 
-Route::middleware(['auth' ])->group(function () {
+Route::middleware(['auth'])->group(function () {
     //change password
     Route::get('/password-change', [PorfileEditeController::class, 'edit_password'])->name('password.change');
     Route::patch('password/change', [PorfileEditeController::class, 'password_change'])->name('password-change.update');
@@ -69,7 +69,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('search/role', [RolesController::class, 'search_role'])->name('search.role');
    Route::get('search/category', [CategoriesController::class, 'search_categorie'])->name('search.categorie');
    Route::get('search/goals', [GoalsController::class, 'search_goals'])->name('search.goals');
-   Route::get('search/soucategory', [SousCategoryController::class, 'search_souscategory'])->name('search.goals');
+   Route::get('search/soucategory', [SousCategoryController::class, 'search_souscategory'])->name('search.souscategory');
    
 
    //crud of profile of admin
@@ -174,7 +174,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::patch('podcast/video/update/{id}', [CoursController::class, 'update_video_podcast'])->name('update.podcast.video');
 
    //delete video podcast
-   Route::post('delete/podcast/{id}', [CoursController::class, 'delete_video_podcast'])->name('delete.podcast');
+   Route::post('delete/video/podcast/{id}', [CoursController::class, 'delete_video_podcast'])->name('delete.podcast.video');
    //delete updated podcast
    Route::delete('delete/update/podcast/{id}', [CoursController::class, 'deleteVidoe_podcast_update'])->name('delete.updated.podcast');
    //delete cours podcast

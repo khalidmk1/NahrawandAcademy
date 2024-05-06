@@ -37,7 +37,7 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+                <a href="../../index2.html" class="h1"><b>N</b>AHRAWAND</a>
             </div>
             <p class="login-box-msg">Merci pour l'enregistrement! Avant de commencer, pourriez-vous vérifier votre adresse
                 e-mail en cliquant sur le lien que nous venons de vous envoyer par e-mail ?</p>
@@ -52,7 +52,7 @@
                 </form>
 
                 <div class="col-4">
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout.auth') }}">
                         @csrf
 
                         <button type="submit" class="btn btn-outline-danger">

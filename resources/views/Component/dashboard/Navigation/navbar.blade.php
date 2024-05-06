@@ -41,7 +41,7 @@
                       Paramètre
                   </a>
 
-                  <form action="{{ route('logout') }}" method="POST">
+                  <form action="{{ route('logout.auth') }}" method="POST">
                       @csrf
                       <button type="submit" class="dropdown-item">
                           <img src="{{ asset('asset/9070510.png') }}" class="mr-2" alt="logout"

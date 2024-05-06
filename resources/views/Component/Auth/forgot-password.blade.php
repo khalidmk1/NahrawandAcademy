@@ -1,17 +1,11 @@
 @extends('Layouts.master_empty')
 
 @section('content')
-    <div id="ajax-errors-container"></div>
 
-    <div id="success">
+   @include('Layouts.errorshandler')
 
-    </div>
-
-    {{-- @if (session('status'))
-        <p class="text-success">{{ session('status') }}</p>
-    @endif --}}
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="/"><b>N</b>AHRAWAND</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -46,64 +40,5 @@
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#forget_password').submit(function(e) {
-                    e.preventDefault()
-                    var formData = new FormData(this);
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: $(this).attr('method'),
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: {
-                            'X-CSRF-TOKEN': CSRF_TOKEN
-                        },
-                        success: function(response) {
-                            var success = `
-    <div class="alert  alert-success alert-dismissible fade show ml-1 w-100" role="alert">
-        <i class="icon fas fa-exclamation-triangle"></i> ${response.status}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-`;
-
-                            $('#success').html(success)
-
-                            console.log(response);
-
-                        },
-                        error: function(error) {
-
-                            console.log(error);
-
-                            // Clear previous errors
-                            $('#ajax-errors-container').empty();
-
-                            // Append new errors to the container
-                            if (error.responseJSON || error.responseJSON.errors) {
-                                var errors = error.responseJSON.errors;
-                                $.each(errors, function(key, value) {
-                                    $('#ajax-errors-container').append(
-                                        '<div class="alert  alert-warning alert-dismissible fade show ml-1" role="alert"><i class="icon fas fa-exclamation-triangle"></i>  ' +
-                                        value +
-                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-                                    );
-                                });
-                            }
-
-
-                        }
-
-                    })
-                }
-
-            )
-        })
-    </script>
+   
 @endsection
