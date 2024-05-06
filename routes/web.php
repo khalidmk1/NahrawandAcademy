@@ -257,7 +257,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
 Route::middleware('guest')->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login.create');
     Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    /* Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request'); */
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('user.create');
 });
 
