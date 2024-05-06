@@ -138,17 +138,23 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     }
 
+
     public function domain(){
         $domain = Domain::all();
     
-        foreach ($domain as $d) {
+     foreach ($domain as $d) {
+        if ($d->category) {
             $d->category->load(['souscategories' => function ($query) {
                 $query->has('goals');
             }]);
             
-            $d->category->souscategories->each(function ($souscategory) {
-                $souscategory->load('goals');
-            });
+            if ($d->category->souscategories) {
+                $d->category->souscategories->each(function ($souscategory) {
+                    $souscategory->load('goals');
+                });
+            }
+        }
+
         }
     
         return response()->json($domain);
@@ -337,7 +343,7 @@ public function Cour_Conference(){
         try {
             $cour = Cour::findOrFail($cour);
             $user = User::findOrFail($user);
-            $question = Question::findOrFail($questionId);
+            $question = QuizQuestion::findOrFail($questionId);
     
             // Check if the question belongs to the specified course
             if ($question->cours_id != $cour->id) {
@@ -352,14 +358,16 @@ public function Cour_Conference(){
     
             if ($questionAnswerExists) {
                 return response()->json('You have already answered this question.', 400);
+            }else{
+
+                $answerQuestion = QuestionAnswers::create([
+                    'cours_id' => $cour->id,
+                    'user_id' => $user->id,
+                    'question_id' => $question->id,
+                    'answer' => $request->answer
+                ]);
             }
     
-            $answerQuestion = QuestionAnswers::create([
-                'cours_id' => $cour->id,
-                'user_id' => $user->id,
-                'question_id' => $question->id,
-                'answer' => $request->answer
-            ]);
     
             return response()->json($answerQuestion);
         } catch (\Exception $e) {
@@ -510,12 +518,21 @@ public function Cour_Conference(){
         $user = User::findOrFail($id);
         $goal = Goal::findOrFail($goal);
 
-        $usergoal = UserObjectif::create([
-            'user_id' => $user->id,
-            'objetif_id' => $goal->id
-        ]);
+        $userObjectif = UserObjectif::where(['user_id' => $user->id , 'objetif_id' => $goal->id])->exists();
 
-        return response()->json($usergoal);
+        if(!$userObjectif)
+        {
+            $usergoal = UserObjectif::create([
+                'user_id' => $user->id,
+                'objetif_id' => $goal->id
+            ]);
+    
+            return response()->json($usergoal);
+        }else{
+            return response()->json('already exist');
+        }
+
+      
 
     }
 

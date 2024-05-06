@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserObjectif extends Model
 {
@@ -31,6 +32,6 @@ class UserObjectif extends Model
      */
     public function goals(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'objetif_id');
+        return $this->belongsTo(Goal::class, 'objetif_id');
     }
 }
