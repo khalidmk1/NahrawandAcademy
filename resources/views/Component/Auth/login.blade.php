@@ -50,12 +50,12 @@
 
 
 
-            <p class="mb-1">
+            {{-- <p class="mb-1">
                 @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}">j'ai oublié mon mot de passe</a>
                 @endif
 
-            </p>
+            </p> --}}
         </div>
         <!-- /.card-body -->
     </div>
