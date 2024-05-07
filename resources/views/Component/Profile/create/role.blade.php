@@ -111,7 +111,7 @@
                                                         <div class="icheck-primary d-inline">
 
                                                             <input type="checkbox" class="checkbox make_permission"
-                                                                data-role = "{{ $role->id }}" {!! $role->id == 1 || $role->role_name == 'Admin' ?  : '' !!}
+                                                                data-role = "{{ $role->id }}" {!! $role->id == 1  ? 'disabled' : '' !!}
                                                                 {{ isset($role_permissions['RolePermissioncheck'][$role->id]) &&
                                                                 $role_permissions['RolePermissioncheck'][$role->id]->contains('permission_id', $permission->id) &&
                                                                 $role_permissions['RolePermissioncheck'][$role->id]->contains('confirmed', 1)

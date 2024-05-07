@@ -87,10 +87,19 @@ interface UsersRepositoryInterface{
     public function create_cours();
     public function getGoalsBySousCategorie(String $id);
     public function store_cours(Request $request);
+
+    //show short
+    public function show_short();
+    //show detail short cours
+    public function detail_short(String $id);
     // create short
     public function create_short();
     //store short
     public function store_short(Request $request);
+    //update short cours
+    public function update_short(Request $request ,String $id);
+
+
     //upload video cours
     public function upload_video_cours(Request $request);
     public function cours_history();

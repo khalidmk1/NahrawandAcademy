@@ -54,22 +54,22 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="{{ asset('storage/avatars/' . $coursPodcast->user->avatar) }}"
+                                    src="{{ asset('storage/avatars/' . $short->user->avatar) }}"
                                     style="height: 100px; width: 100px" alt="User profile picture">
                             </div>
 
                             <h3 class="profile-username text-center">
-                                {{ $coursPodcast->user->firstName . ' ' . $coursPodcast->user->lastName }}</h3>
+                                {{ $short->user->firstName . ' ' . $short->user->lastName }}</h3>
 
-                            <p class="text-muted text-center">{{ $coursPodcast->user->userspeaker->type_speaker }}</p>
+                            <p class="text-muted text-center">{{ $short->user->userspeaker->type_speaker }}</p>
 
-                            <ul class="list-group list-group-unbordered mb-3">
+                        {{--     <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Nomber des invite</b> <a class="float-right">{{ $PodcastGuest->count() }}</a>
+                                    <b>Nomber des invite</b> <a class="float-right">{{ $short->count() }}</a>
                                 </li>
 
 
-                            </ul>
+                            </ul> --}}
 
 
                         </div>
@@ -98,18 +98,16 @@
                                     <div class="post">
                                         <div class="d-flex align-items-center">
                                             <h1 class="username">
-                                                <div>{{ $Cour->title }}</div>
-
+                                                <div>{{ $short->title }}</div>
                                             </h1>
-                                            <h5 class="ml-4 badge badge-success">{{ $Cour->isActive ? 'Active' : '' }}</h5>
-                                            <h5 class="ml-4 badge badge-warning">{{ $Cour->isComing ? 'A Venir' : '' }}</h5>
+                                           
                                         </div>
                                         <!-- /.user-block -->
 
                                         <div class="row mb-3">
                                             <div class="col-sm-6">
                                                 <iframe class="embed-responsive-item w-100 h-100 rounded border-dark"
-                                                    src="{{ $coursPodcast->video }}" allowfullscreen></iframe>
+                                                    src="{{ $short->video }}" allowfullscreen></iframe>
 
                                             </div>
                                             <!-- /.col -->
@@ -117,7 +115,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <img class="img-fluid"
-                                                            src="{{ asset('storage/upload/cour/image/' . $coursPodcast->image) }}"
+                                                            src="{{ asset('storage/upload/cour/image/' . $short->image) }}"
                                                             alt="Photo">
 
                                                     </div>
@@ -125,7 +123,7 @@
                                                     <div class="col-sm-6">
 
                                                         <img class="img-fluid"
-                                                            src="{{ asset('storage/upload/cour/image/flex/' . $coursPodcast->image_flex) }}"
+                                                            src="{{ asset('storage/upload/cour/image/flex/' . $short->image_flex) }}"
                                                             alt="Photo">
                                                     </div>
                                                     <!-- /.col -->
@@ -151,7 +149,7 @@
                                         </div>
                                         <!-- /.user-block -->
                                         <p>
-                                            {{ $Cour->description }}
+                                            {{ $short->description }}
                                         </p>
                                     </div>
                                     <!-- /.post -->
@@ -166,132 +164,24 @@
 
                                         </div>
                                         <!-- /.user-block -->
-                                        @foreach ($Cour->tags as $tag)
+                                        @foreach ($short->tags as $tag)
                                             <h2 class="badge badge-info">
                                                 {{ $tag }}
                                             </h2>
                                         @endforeach
                                     </div>
                                     <!-- /.post -->
-
-                                    <!-- Post -->
-                                    <div class="post clearfix">
-                                        <div class="row mb-2 justify-content-between align-items-center">
-                                            <div class="col-6">
-                                                <div class="d-flex">
-                                                    <i class="fa fa-exclamation-circle" style="font-size: x-large"
-                                                        aria-hidden="true"></i>
-                                                    <div class="ml-2 mb-2"><strong>Video.</strong></div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <a href="{{ Route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id)) }}"
-                                                    class="btn btn-block btn-info w-50" style="float: right;">Ajouter
-                                                    video</a>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            @foreach ($coursPodcast->videopodcast as $video)
-                                                @include('Cours.update.podcast.video.podcast')
-
-                                                <div class="col-12">
-                                                    <!-- Card -->
-
-                                                    <div class="card">
-
-
-
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <iframe
-                                                                    class="embed-responsive-item w-100 h-100 rounded border-dark"
-                                                                    src="{{ $video->video }}" allowfullscreen></iframe>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div class="text-white  m-2 "
-                                                                    style="border-radius: 20px ; background: #343a4070 ">
-                                                                    <div class="position-relative ">
-                                                                        <!-- Button trigger modal -->
-                                                                        <button style="right: 0;"
-                                                                            class="btn btn-sm bg-warning position-absolute update_video_podcast"
-                                                                            data-toggle="modal"
-                                                                            data-id="{{ $video->id }}"
-                                                                            data-target="#update_video_{{ $video->id }}">
-                                                                            <img src="{{ asset('asset/update_icon.png') }}"
-                                                                                style="height: 18px;" alt="update_icon">
-                                                                        </button>
-
-
-
-                                                                        <button type="button" data-toggle="modal"
-                                                                            data-target="#delete_video_{{ $video->id }}"
-                                                                            class="btn btn-sm btn-danger position-absolute"
-                                                                            style="float: right">
-                                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                                        </button>
-                                                                    </div>
-
-                                                                    <div class="card-body">
-
-
-                                                                        <h3 class="pt-2">
-                                                                            {{ $video->title }}
-                                                                        </h3>
-
-                                                                        <ul class="list-inline projects">
-                                                                            @foreach ($video->guestvideo as $guest)
-                                                                                <li class="list-inline-item">
-                                                                                    <img alt="Avatar"
-                                                                                        class="table-avatar"
-                                                                                        style="height: 33px; width: 33px;"
-                                                                                        src="{{ asset('storage/avatars/' . $guest->user->avatar) }}">
-                                                                                </li>
-                                                                            @endforeach
-
-
-                                                                        </ul>
-
-                                                                        <p class="text">{{ $video->description }}.</p>
-
-
-
-                                                                        <h5 class="pink-text text-right">
-                                                                            {{ $video->duration }}</h5>
-
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Content -->
-
-
-                                                    </div>
-                                                    <!-- Card -->
-                                                </div>
-                                            @endforeach
-
-                                        </div>
-                                    </div>
-                                    <!-- /.post -->
-
-
                                 </div>
 
+                              {{--   @include('Cours.update.podcast.podcast') --}}
 
-                                @include('Cours.update.podcast.podcast')
-
-                                <div class="tab-pane" id="settings">
+                            {{--     <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_podcast"
                                             class="btn btn-danger w-50">suprimer</button>
                                     </div>
                                     @include('Cours.delete.podcast')
-                                </div>
+                                </div> --}}
                                 <!-- /.tab-pane -->
                             </div>
                             <!-- /.tab-content -->

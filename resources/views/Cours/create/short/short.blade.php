@@ -27,11 +27,7 @@
                         <div class="col-6">
                             <h3 class="card-title">Crée Cotenu</h3>
                         </div>
-                        <div class="col-6 d-flex justify-content-end">
-                            <a href="{{ Route('dashboard.view.admin') }}" class="btn btn-block btn-primary w-25">
-                                List Contenu
-                            </a>
-                        </div>
+                       
                     </div>
                     <!-- /.card-header -->
                     <form action="{{ Route('dashboard.short.store') }}" method="post" enctype="multipart/form-data">
@@ -101,6 +97,13 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="image" id="image">
                                     <label class="custom-file-label" for="image">Choisez image</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="imageFlex">Image Flex</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="imageFlex" id="image">
+                                    <label class="custom-file-label" for="imageFlex">Choisez image</label>
                                 </div>
                             </div>
 

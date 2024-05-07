@@ -20,9 +20,9 @@ class CoursController extends Controller
     }
 
  
-    //all short cours
-    public function CourShort(){
-        return $this->apiRepository->CourShort();
+     //all short cours by goals
+     public function CourShort(String $user){
+        return $this->apiRepository->CourShort($user);
     }
 
     //create personel cours
@@ -76,8 +76,13 @@ class CoursController extends Controller
 
     //tree cours get
 
-    public function treeCoursFormation(){
-        return  $this->apiRepository->treeCoursFormation();
+    public function treeCoursFormation(String $user){
+        return  $this->apiRepository->treeCoursFormation($user);
+    }
+
+    public function podcastgoals(String $user)
+    {
+        return  $this->apiRepository->podcastgoals($user);
     }
     
    

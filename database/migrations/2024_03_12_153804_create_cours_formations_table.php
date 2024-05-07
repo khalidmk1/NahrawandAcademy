@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('quiz_type')->nullable();
             $table->text('documents')->nullable();
             $table->string('image')->nullable();
+            $table->text('image_flex')->nullable();
             $table->text('condition')->nullable();
             $table->softDeletes();
             $table->foreign('cours_id')->references('id')->on('cours');

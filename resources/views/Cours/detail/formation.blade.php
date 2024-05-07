@@ -74,10 +74,6 @@
                 </div>
 
 
-
-
-
-
                 <!-- /.col -->
                 <div class="col-md-9">
                     <div class="card">
@@ -128,12 +124,25 @@
                                         <!-- /.user-block -->
 
                                         <div class="row mb-3 justify-content-center align-items-center">
-                                            <div class="col-sm-12 d-flex justify-content-center align-items-center">
-                                                <img class="img-fluid"
-                                                    src="{{ asset('storage/upload/cour/image/' . $coursFormation->image) }}"
-                                                    alt="Photo" style="height: 300px">
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-6">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('storage/upload/cour/image/' . $coursFormation->image) }}"
+                                                        alt="Photo" >
+
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-sm-6">
+                                                    <img class="img-fluid"
+                                                        src="{{ asset('storage/upload/cour/image/flex/' . $coursFormation->image_flex) }}"
+                                                        alt="Photo">
+                                                </div>
+                                                <!-- /.col -->
                                             </div>
-                                            <!-- /.col -->
+                                            <!-- /.row -->
+
+
                                             @if ($coursFormation->documents)
                                                 <div class="col-sm-12 pt-1">
                                                     <div class="card">

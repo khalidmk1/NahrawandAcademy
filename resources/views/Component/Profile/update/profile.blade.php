@@ -46,6 +46,19 @@
                                     </div>
                                 </div>
 
+                                @if ($user->userRole->role_id == 3)
+                                    <div class="form-group clearfix text-center col-4">
+                                        <div class="icheck-primary d-inline">
+                                            <input type="checkbox" name="isPopulaire" id="isPopulaire"
+                                                {{ $user->is_popular == 1 ? 'checked' : '' }}>
+                                            <label for="isPopulaire">
+                                                Populaire
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
                                     <label for="firstName"> Nom</label>
                                     <input type="text" class="form-control" id="firstName" name="firstName"
@@ -64,29 +77,33 @@
                                 </div>
 
                                 @if ($user->userRole->role_id == 3)
+                                 
                                     <!-- textarea -->
                                     <div class="form-group">
                                         <label for="biographie">Biographie</label>
                                         <textarea class="form-control" id="biographie" rows="3" name="biographie" placeholder="Enter ...">{{ $user->userspeaker->biographie }}</textarea>
                                     </div>
 
-        
+
+
                                     <div class="form-group">
                                         <label for="facebook">facebook</label>
-                                        <input type="url" value="{{ old('facebook' , $user->userspeaker->faceboock) }}" class="form-control" name="facebook"
-                                        id="facebook" placeholder="Entrez url reseau social ...">
+                                        <input type="url" value="{{ old('facebook', $user->userspeaker->faceboock) }}"
+                                            class="form-control" name="facebook" id="facebook"
+                                            placeholder="Entrez url reseau social ...">
                                     </div>
                                     <div class="form-group">
                                         <label for="linkedin">linkedin</label>
-                                        <input type="url" value="{{ old('linkedin' , $user->userspeaker->linkdin) }}" class="form-control" name="linkedin"
-                                        id="linkedin" placeholder="Entrez url reseau social ...">
+                                        <input type="url" value="{{ old('linkedin', $user->userspeaker->linkdin) }}"
+                                            class="form-control" name="linkedin" id="linkedin"
+                                            placeholder="Entrez url reseau social ...">
                                     </div>
                                     <div class="form-group">
                                         <label for="instagram">instagram</label>
-                                        <input type="url" value="{{ old('instagram' , $user->userspeaker->instagram) }}" class="form-control" name="instagram"
-                                        id="instagram" placeholder="Entrez url reseau social ...">
+                                        <input type="url" value="{{ old('instagram', $user->userspeaker->instagram) }}"
+                                            class="form-control" name="instagram" id="instagram"
+                                            placeholder="Entrez url reseau social ...">
                                     </div>
-        
                                 @endif
 
                             </div>

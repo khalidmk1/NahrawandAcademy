@@ -12,6 +12,8 @@ use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserRole;
 use App\Models\ViewCour;
+use App\Models\ShortGoal;
+use App\Models\CoursGoals;
 use App\Models\ShortCours;
 use App\Models\UserClient;
 use App\Models\QuizSeccess;
@@ -184,6 +186,17 @@ class ApiServicesRepository  implements apiRepositoryInterface
     return response()->json($cours);
     }
 
+    public function CoursByGoals(String $user)
+    {
+        $user =  User::findOrFail($user);
+
+        $userObjectif = UserObjectif::where('user_id' , $user->id)->get();
+
+        $goalsCours = CoursGoals::where('goal_id' , $userObjectif->goal_id)->get();
+
+        return response()->json($data, 200, $headers);
+    }
+
     //create personel cours
     public function personelCours(String $user , String $cour)
     {
@@ -281,15 +294,26 @@ public function Cour_Conference(){
 }
 
 
-    //all short cours
-    public function CourShort()
+    //all short cours by goals
+    public function CourShort(String $user)
     {
-        $Cours = ShortCours::all();
-        $Cours->load(['user' , 'user.userspeaker']);
-        return response()->json($Cours);
+        $user =  User::findOrFail($user);
+    
+        $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+    
+        $goalIds = $userObjectif->pluck('objetif_id');
+            
+        $goalsCours = ShortGoal::whereIn('goal_id', $goalIds)->get();
+    
+    
+        $goalsCours->load('shortCours.user.userspeaker');
+            
+        return response()->json($goalsCours);
     }
 
     public function Cour_Podcast(){
+
+
         $courPodcast = Cour::where(['cours_type' => 'podcast' , 'isComing' => 0])->get();
 
         //cour Podcast
@@ -379,18 +403,46 @@ public function Cour_Conference(){
     // get tree Cours 
 
 
-    public function treeCoursFormation()
+    public function treeCoursFormation(String $user)
     {
-        $TreecourFormation = Cour::where(['cours_type' => 'formation' , 'isComing' => 0])->get()->take(20);
-         // cour formation tree
-         $TreecourFormation->load('category');
+       $user =  User::findOrFail($user);
+    
+       $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+   
+       $goalIds = $userObjectif->pluck('objetif_id');
+           
+       $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
+       ->whereHas('cours', function ($query) {
+       $query->where(['cours_type'=> 'formation' , 'isComing' => 0] );
+       })
+       ->get();
+   
+   
+       $goalsCours->load(['cours.CoursFormation.user.userspeaker' , 'cours.category']);
+           
+       return response()->json($goalsCours);
+    }
 
-       
-        $TreecourFormation->load(['CoursFormation' , 
-        'CoursFormation.user' , 'CoursFormation.user.userspeaker',
-        'CoursFormation.CoursFormationVideo']);
 
-        return response()->json(['TreecourFormation' => $TreecourFormation]);
+
+    // podcast by goals
+    public function podcastgoals(String $user){
+        $user =  User::findOrFail($user);
+    
+       $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+   
+       $goalIds = $userObjectif->pluck('objetif_id');
+           
+       $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
+       ->whereHas('cours', function ($query) {
+       $query->where(['cours_type'=> 'podcast' , 'isComing' => 0] );
+       })
+       ->get();
+   
+   
+       $goalsCours->load('cours.CoursPodcast');
+           
+       return response()->json($goalsCours);
     }
 
 
@@ -400,7 +452,7 @@ public function Cour_Conference(){
 
          //cour conference
         $cours->load('category');
-        $cours->load(['CoursFormation' , 'CoursFormation.user' ,
+        $cours->load(['CoursFormation' , 'CoursFormation.user.userspeaker' ,
         'CoursFormation.CoursFormationVideo' , 
 
     ]);

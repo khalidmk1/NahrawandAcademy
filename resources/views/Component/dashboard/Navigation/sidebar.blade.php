@@ -120,7 +120,7 @@
 
                 @endphp
 
-                @if ($rolePermissionSpeaker)
+                @if ($rolePermissionSpeaker || auth()->user()->userRole->role_id === 1)
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.speaker.create') }}" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -206,7 +206,7 @@
 
                 <li class="nav-header">Gestion Contenu</li>
 
-                @if ($rolePermissionContent)
+                @if ($rolePermissionContent || auth()->user()->userRole->role_id === 1)
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.cours.create') }}" class="nav-link">
 
@@ -218,30 +218,45 @@
                         </a>
                     </li>
 
+                   
 
-                    <li class="nav-item">
-                        <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
-
-                            <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
-                            <p>
-                                Quiqly
-                            </p>
-                        </a>
-                    </li>
+                    
                 @endif
-
-
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.cours.index') }}" class="nav-link">
                         <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}" alt="">
                         <p>
-                            Voir
+                            Voir Contenu
+                        </p> 
+                    </a>
+                </li>
+
+                @if ($rolePermissionContent || auth()->user()->userRole->role_id === 1)
+                <li class="nav-item">
+                    <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
+
+                        <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
+                        <p>
+                            Quiqly
+                        </p>
+                    </a>
+                </li>
+                @endif
+
+                <li class="nav-item">
+                    <a href="{{ Route('dashboard.show.short') }}" class="nav-link">
+
+                        <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
+                        <p>
+                            Voir Quiqly
                         </p>
                     </a>
                 </li>
 
-                @if ($rolePermissionTicket)
+              
+
+                @if ($rolePermissionTicket || auth()->user()->userRole->role_id === 1)
                     <li class="nav-header">Gestion Tickets</li>
 
                     <li class="nav-item">
@@ -269,7 +284,7 @@
                         </p>
                     </a>
                 </li>
-                @if ($rolePermissionEmail)
+                @if ($rolePermissionEmail || auth()->user()->userRole->role_id === 1)
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.create.email') }}" class="nav-link">
                             <i class="nav-icon fa fa-envelope" aria-hidden="true"></i>

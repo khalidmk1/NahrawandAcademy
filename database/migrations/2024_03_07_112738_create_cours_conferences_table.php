@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('cours_id');
             $table->unsignedBigInteger('host_id');
             $table->text('image')->nullable();
+            $table->text('image_flex')->nullable();
             $table->text('description')->nullable();
             $table->time('duration')->nullable();
             $table->text('video')->nullable();

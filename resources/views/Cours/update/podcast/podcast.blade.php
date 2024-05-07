@@ -160,6 +160,13 @@
                           <label class="custom-file-label" for="customFile">Choisez image</label>
                       </div>
                   </div>
+                  <div class="form-group">
+                      <label for="coursImageflex">Image flex</label>
+                      <div class="custom-file">
+                          <input type="file" class="custom-file-input" name="coursImageflex" id="coursImageflex">
+                          <label class="custom-file-label" for="coursImageflex">Choisez image</label>
+                      </div>
+                  </div>
 
 
                   <div class="row">

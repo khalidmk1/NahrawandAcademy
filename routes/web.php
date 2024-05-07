@@ -142,11 +142,16 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('cours/create', [CoursController::class, 'create_cours'])->name('cours.create');
    Route::get('goals-bySouscategory/{id}', [CoursController::class, 'getGoalsBySousCategorie'])->name('goals.Souscategory');
    Route::post('cours/store', [CoursController::class, 'store_cours'])->name('cours.store');
-
+   //show short
+   Route::get('short', [CoursController::class, 'show_short'])->name('show.short');
+   //show detail short
+   Route::get('short/detail/{id}', [CoursController::class, 'detail_short'])->name('short.detail');
    //create short
    Route::get('cours/short', [CoursController::class, 'create_short'])->name('create.short');
    //store short
    Route::post('short/store', [CoursController::class, 'store_short'])->name('short.store');
+   //update short cours
+   Route::put('short/update/{id}', [CoursController::class, 'update_short'])->name('short.update');
 
    //upload cours video 
    Route::post('upload/video', [CoursController::class, 'upload_video_cours'])->name('upload.video');

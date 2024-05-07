@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('host_id');
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
+            $table->text('image_flex')->nullable();
             $table->string('video')->nullable();
             $table->string('title')->nullable();
             $table->time('duration')->nullable();

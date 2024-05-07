@@ -239,6 +239,8 @@ class UsersServicesRepository  implements UsersRepositoryInterface
                 'email' => 'required|email|unique:users,email,' . $profile->id,
             ]);
 
+            $isPopulaire = $request->isPopulaire == 'on';
+
             if ($request->hasFile('avatar')) {
             
                 $imagePath = 'avatars/'.$profile->avatar;
@@ -255,6 +257,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             
             $profile->firstName = $request->firstName;
             $profile->lastName = $request->lastName;
+            $profile->is_popular = $isPopulaire;
             $profile->email = $request->email;
             if($profile->userRole->role_id == 3)
             {
@@ -264,6 +267,8 @@ class UsersServicesRepository  implements UsersRepositoryInterface
                     'linkedin' => ['nullable', 'url'],
                     'instagram' => ['nullable', 'url'],
                 ]);
+
+                
 
                 if ($request->has('facebook') && !str_contains($request->facebook, 'facebook.com')) {
                     $invalidUrls[] = 'Facebook';
@@ -519,8 +524,8 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
         
         $role_admin = Role::where('role_name' , 'Speaker')->first();
-       
 
+        
         $request->validate([
             'avatar' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
             'firstName' => ['required', 'string', 'max:255'],
@@ -528,11 +533,13 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             'type_speaker' => ['required' , 'string' , 'max:255'],
             'biographie' => ['required' , 'string' , 'max:300'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'facebook' => ['nullable', 'url'],
+            'facebook' => ['nullable','url'],
             'linkedin' => ['nullable', 'url'],
             'instagram' => ['nullable', 'url'],
         ]);
-
+        
+        
+        $isPopulaire = $request->isPopulaire == 'on';
         $password  = Str::random(10);
 
         $request->password_confirmation = $password;
@@ -549,49 +556,51 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             $invalidUrls[] = 'Instagram';
         }
         
-        if (!empty($invalidUrls)) {
+        /* if (!empty($invalidUrls) && count(array_filter($invalidUrls)) > 0) {
             return redirect()->back()->with(['faild' => 'Invalid URLs for: ' . implode(', ', $invalidUrls)]);
+        } */
+        
 
-        }else{
-            if ($request->hasFile('avatar')) {
-                $file = $request->file('avatar');
-                $directory = 'avatars/';
-                $fileName = uniqid() . '_' . $file->getClientOriginalName();
-               
-                $file->storeAs($directory, $fileName, 'public');
-                
-            }
-    
-            $user = User::create([
-                'avatar' => $fileName,
-                'firstName' => $request->firstName,
-                'lastName' => $request->lastName,
-                'password_change' => 1,
-                'email' => $request->email,
-                'password' => Hash::make($password),
-
-            ]);
-    
-    
-            $user_role = UserRole::create([
-                'user_id' => $user->id,
-                'role_id' => $role_admin->id
-            ]);
-    
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $directory = 'avatars/';
+            $fileName = uniqid() . '_' . $file->getClientOriginalName();
+           
+            $file->storeAs($directory, $fileName, 'public');
             
-    
-            $speaker = UserSpeakers::create([
-                'user_id' => $user->id,
-                'type_speaker' => $request->type_speaker,
-                'biographie' => $request->biographie,
-                'faceboock' => $request->facebook,
-                'linkdin' => $request->linkedin,
-                'instagram' => $request->instagram
-            ]);    
-
-            return redirect()->back()->with('status' , 'Un utilisateur intervenant a été créé avec succès.');
         }
 
+        $user = User::create([
+            'avatar' => $fileName,
+            'firstName' => $request->firstName,
+            'lastName' => $request->lastName,
+            'password_change' => 1,
+            'is_popular' =>$isPopulaire,
+            'email' => $request->email,
+            'password' => Hash::make($password),
+
+        ]);
+
+
+        $user_role = UserRole::create([
+            'user_id' => $user->id,
+            'role_id' => $role_admin->id
+        ]);
+
+        
+
+        $speaker = UserSpeakers::create([
+            'user_id' => $user->id,
+            'type_speaker' => $request->type_speaker,
+            'biographie' => $request->biographie,
+            'faceboock' => $request->facebook,
+            'linkdin' => $request->linkedin,
+            'instagram' => $request->instagram
+        ]); 
+        
+        
+
+        return redirect()->back()->with('status' , 'Un utilisateur intervenant a été créé avec succès.');
     }
 
 
@@ -993,6 +1002,23 @@ public function index_cours()
 
     }
 
+
+    public function show_short()
+    {
+        $shorts = ShortCours::paginate(10);
+
+        return view('Cours.show.short')->with('shorts' , $shorts);
+    }
+
+
+    //show detail short cours
+    public function detail_short(String $id)
+    {
+        $short = ShortCours::findOrFail(Crypt::decrypt($id));
+
+        return view('Cours.detail.short')->with('short' , $short);
+    }
+
     public function create_cours()
     {
         $souscategory = SousCategory::distinct()->get(['category_id']);
@@ -1019,6 +1045,115 @@ public function index_cours()
 
         return view('Cours.create.short.short')->with(['HostFromateur' => $HostFromateur ,
         'souscategory' => $souscategory]);
+    }
+
+    //update short cours
+    public function update_short(Request $request ,String $id)
+    {
+
+        $Cour = Cour::findOrFail(Crypt::decrypt($id));
+        $CourPodcast = CoursPodcast::where('cours_id' , $Cour->id)->first();
+        $goalCours = CoursGoals::where('cours_id' , $Cour->id)->get();
+        
+
+        $request->validate([
+            'title' => ['required' , 'string' , 'max:100'],
+            'description' => ['required' , 'string' , 'max:300'],
+            'tags' => ['required' , 'array'],
+            'cotegoryId' => ['required' , 'string'],
+            'goal' => ['required' , 'array'],
+            'coursDuration' => ['required'],
+            'slugAcroche' => ['required' , 'string' , 'max:100'],
+            'descriptionPodcast' => ['required' , 'string' , 'max:600'],
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif']
+        ]);
+
+        $url = $request->video;
+
+       
+
+        if ($request->hasFile('image')) {
+            $imagePath = 'upload/cour/image/'.$CourPodcast->image;
+            Storage::disk('public')->delete($imagePath);
+           
+            $file = $request->file('image');
+            $directory = 'upload/cour/image';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public');
+            
+            $CourPodcast->image = $fileNameImage;
+        }
+        if ($request->hasFile('coursImageflex')) {
+            $imagePath = 'upload/cour/image/flex/'.$CourPodcast->image_flex;
+            Storage::disk('public')->delete($imagePath);
+           
+            $file = $request->file('coursImageflex');
+            $directory = 'upload/cour/image/flex/';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public');
+            
+            $CourPodcast->image_flex = $fileNameImage;
+        }
+
+        if (strpos($url, 'watch?v=') !== false) {
+          
+            $queryString = parse_url($url, PHP_URL_QUERY);
+            parse_str($queryString, $params);
+            $videoId = $params['v'];
+            $CourPodcast->video = 'https://www.youtube.com/embed/'.$videoId;
+        }
+
+
+
+        $Cour->title = $request->title;
+
+        if ($request->iscoming == 'on') {
+            $iscoming = true;
+         }else{
+             $iscoming = false;
+         }
+
+
+         if ($request->isActive == 'on') {
+            $isActive = true;
+        }else{
+            $isActive = false;
+        }
+
+        $Cour->isComing = $iscoming;
+        $Cour->isActive = $isActive;
+
+        $Cour->description = $request->description;
+
+        $StringTag = $request->tags[0];
+
+        $tags = explode(',', $StringTag);
+ 
+        $tags = array_map('trim', $tags);
+
+        $Cour->tags = $tags;
+        $Cour->category_id = $request->cotegoryId;
+
+       
+        $goalCours->each->forceDelete();
+        foreach ($request->goal as $key => $goal) {
+            $goalCours = new CoursGoals();
+            $goalCours->cours_id = $Cour->id; 
+            $goalCours->goal_id = $goal;
+           
+            $goalCours->save();
+        }
+        
+        $CourPodcast->host_id = $request->hostPodcast;
+        $CourPodcast->slug = $request->slugAcroche;
+        $CourPodcast->description = $request->descriptionPodcast;
+        $CourPodcast->duration = $request->coursDuration;
+
+        $Cour->save();
+        $CourPodcast->save();
+
+        return redirect()->back()->with('status' , 'Vous avez mis à jour le podcast avec succès.');
+
     }
 
     public function getGoalsBySousCategorie(String $id)
@@ -1056,6 +1191,7 @@ public function index_cours()
         case 'conference':
             $additionalRules = [
                 'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
+                'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
                 'videoconference' => ['required', 'url'],
                 'hostConference' => ['required'],
                 'descriptionConference' => ['required', 'string', 'max:600'],
@@ -1064,6 +1200,7 @@ public function index_cours()
         case 'podcast':
             $additionalRules = [
                 'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
                 'hostPodcast' => ['required'],
                 'videocpodcast' => ['required', 'url'],
                 'slugAcroche' => ['required', 'string', 'max:255'],
@@ -1077,6 +1214,7 @@ public function index_cours()
                 'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
                 'iscertify' => ['sometimes'],
                 'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
                 'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
             ];
             break;
@@ -1117,6 +1255,12 @@ public function index_cours()
                 $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
                 $file->storeAs($directory, $fileNameImage, 'public'); 
             }
+            if ($request->hasFile('flexImageConference')) {
+                $file = $request->file('flexImageConference');
+                $directory = '/upload/cour/image/flex';
+                $fileNameImageFlex = uniqid() . '_' . $file->getClientOriginalName();
+                $file->storeAs($directory, $fileNameImageFlex, 'public'); 
+            }
 
             $url = $request->videoconference;
             $queryString = parse_url($url, PHP_URL_QUERY);
@@ -1128,6 +1272,7 @@ public function index_cours()
                 'cours_id' => $cours->id,
                 'host_id' => $request->hostConference,
                 'image' => $fileNameImage,
+                'image_flex' => $fileNameImageFlex,
                 'video' => 'https://www.youtube.com/embed/'.$videoId,
                 'duration' => $request->coursDuration,
                 'description' => $request->descriptionConference
@@ -1142,6 +1287,13 @@ public function index_cours()
                 $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
                 $file->storeAs($directory, $fileNameImage, 'public'); 
             }
+
+            if ($request->hasFile('flexImagePodcast')) {
+                $file = $request->file('flexImagePodcast');
+                $directory = '/upload/cour/image/flex';
+                $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
+                $file->storeAs($directory, $fileNameImageflex, 'public'); 
+            }
             
             $url = $request->videocpodcast;
             $queryString = parse_url($url, PHP_URL_QUERY);
@@ -1152,6 +1304,7 @@ public function index_cours()
                 'cours_id' => $cours->id,
                 'host_id' => $request->hostPodcast,
                 'image' => $fileNameImage,
+                'image_flex' => $fileNameImageflex,
                 'video' => 'https://www.youtube.com/embed/'.$videoId,
                 'duration' => $request->DurationPdcast,
                 'description' => $request->descriptionPodcast,
@@ -1168,6 +1321,13 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImage, 'public'); 
             }
 
+            if ($request->hasFile('flexImageFormation')) {
+                $file = $request->file('flexImageFormation');
+                $directory = '/upload/cour/image/flex';
+                $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
+                $file->storeAs($directory, $fileNameImageflex, 'public'); 
+            }
+
            
 
             $programId = ($request->programId == 0) ? null : $request->programId;
@@ -1176,6 +1336,7 @@ public function index_cours()
                 'cours_id' => $cours->id,
                 'host_id' => $request->hostFormation,
                 'image' => $fileNameImage,
+                'image_flex' => $fileNameImageflex,
                 'program_id' => $programId,
                 'condition' => $request->conditionformation?? 'text',
                 'isCertify' => $iscertify
@@ -1231,6 +1392,13 @@ public function store_short(Request $request)
         $file->storeAs($directory, $fileNameImage, 'public'); 
     }
 
+    if ($request->hasFile('imageFlex')) {
+        $file = $request->file('imageFlex');
+        $directory = '/upload/cour/image/flex';
+        $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
+        $file->storeAs($directory, $fileNameImageflex, 'public'); 
+    }
+
     $url = $request->video;
     $queryString = parse_url($url, PHP_URL_QUERY);
     parse_str($queryString, $params);
@@ -1242,7 +1410,8 @@ public function store_short(Request $request)
         'host_id' => $request->hostFormateur,
         'video' => 'https://www.youtube.com/embed/'.$videoId,
         'tags' => $tags,
-        'image' => $fileNameImage
+        'image' => $fileNameImage,
+        'image_flex' => $fileNameImageflex
     ]);
 
     $goals = $request->gaols_id;
@@ -1640,6 +1809,17 @@ public function getCoursVideo(String $id){
             
             $CourPodcast->image = $fileNameImage;
         }
+        if ($request->hasFile('coursImageflex')) {
+            $imagePath = 'upload/cour/image/flex/'.$CourPodcast->image_flex;
+            Storage::disk('public')->delete($imagePath);
+           
+            $file = $request->file('coursImageflex');
+            $directory = 'upload/cour/image/flex/';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public');
+            
+            $CourPodcast->image_flex = $fileNameImage;
+        }
 
         if (strpos($url, 'watch?v=') !== false) {
           
@@ -1915,7 +2095,7 @@ public function getCoursVideo(String $id){
             'tags' => ['required' , 'array'],
             'cotegoryId' => ['required' , 'string'],
             'goal' => ['required' , 'array'],
-            'conditionformation' => ['required' , 'string' , 'max:600'],
+            'conditionformation' => ['somtimes' , 'string' , 'max:600'],
             'image' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
             'document' => ['file' , 'mimes:pdf']
         ]);
@@ -1926,11 +2106,23 @@ public function getCoursVideo(String $id){
             Storage::disk('public')->delete($imagePath);
            
             $file = $request->file('image');
-            $directory = 'upload/cour/image';
+            $directory = 'upload/cour/image/';
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
             
             $coursFormation->image = $fileNameImage;
+        }
+
+        if ($request->hasFile('ImageFomationflex')) {
+            $imagePath = 'upload/cour/image/flex/'.$coursFormation->image_flex;
+            Storage::disk('public')->delete($imagePath);
+           
+            $file = $request->file('ImageFomationflex');
+            $directory = 'upload/cour/image/flex/';
+            $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImageflex, 'public');
+            
+            $coursFormation->image_flex = $fileNameImageflex;
         }
 
         if ($request->hasFile('document')) {
@@ -1987,8 +2179,10 @@ public function getCoursVideo(String $id){
             $goalCours->save();
         }
 
-     
-        $coursFormation->condition = $request->conditionformation;
+        if($request->has('conditionformation')){
+            $coursFormation->condition = $request->conditionformation;
+        }
+        
         $coursFormation->host_id = $request->hostPodcast ;
         $coursFormation->program_id = $request->programId;
         

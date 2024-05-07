@@ -63,7 +63,7 @@ Route::prefix('mobile')->group(function () {
     Route::post('personel/video/formation/{user}/{video}', [CoursController::class, 'personelvideoFormation'])->name('creat.personel.video.formation');
 
 
-    Route::get('/short', [CoursController::class, 'CourShort'])->name('cours.short');
+    Route::get('/short/{user}', [CoursController::class, 'CourShort'])->name('cours.short');
 
 
     //cours api
@@ -77,8 +77,10 @@ Route::prefix('mobile')->group(function () {
     //create question answer for user
     Route::post('user/answer/{user}/{cour}/{questionId}', [CoursController::class, 'user_answer'])->name('user.question.answer');
 
-    //cours tree 
-    Route::get('/Cour/tree/Formation', [CoursController::class, 'treeCoursFormation'])->name('cours.tree.formation');
+    //cours formation by goals 
+    Route::get('/Cour/tree/Formation/{user}', [CoursController::class, 'treeCoursFormation'])->name('cours.tree.formation');
+    // cours podcast by goals
+    Route::get('cours/podcast/goals/{id}', [CoursController::class, 'podcastgoals'])->name('podcast.goals');
     
     Route::get('Cours/formation/detail/{id}', [CoursController::class, 'Cour_Formation_detail'])->name('formation.detail');
     //Cours Comment

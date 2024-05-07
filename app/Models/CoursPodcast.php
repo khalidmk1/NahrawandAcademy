@@ -16,6 +16,7 @@ class CoursPodcast extends Model
         'cours_id',
         'host_id',
         'slug',
+        'image_flex',
         'image',
         'video',
         'description',

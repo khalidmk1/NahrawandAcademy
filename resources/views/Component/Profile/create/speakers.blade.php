@@ -1,8 +1,6 @@
 @extends('Layouts.master')
 
 @section('content')
-   
-
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -58,6 +56,16 @@
                                 </div>
                             </div>
 
+                            <div class="form-group clearfix text-center col-4">
+                                <div class="icheck-primary d-inline">
+                                    <input type="checkbox" name="isPopulaire" id="isPopulaire">
+                                    <label for="isPopulaire">
+                                        Populaire
+                                    </label>
+                                </div>
+
+                            </div>
+
                             <div class="form-group">
                                 <label for="firstName">Prénom</label>
                                 <input type="text" value="{{ old('firstName') }}" class="form-control" name="firstName"
@@ -68,6 +76,9 @@
                                 <input type="text" value="{{ old('lastName') }}" class="form-control" name="lastName"
                                     id="lastName" placeholder="Entrez Nom ...">
                             </div>
+
+
+
 
                             <div class="form-group">
                                 <label>Speaker biographie</label>
@@ -94,17 +105,17 @@
                             <div class="form-group">
                                 <label for="facebook">facebook</label>
                                 <input type="url" value="{{ old('facebook') }}" class="form-control" name="facebook"
-                                id="facebook" placeholder="Entrez url reseau social ...">
+                                    id="facebook" placeholder="Entrez url reseau social ...">
                             </div>
                             <div class="form-group">
                                 <label for="linkedin">linkedin</label>
                                 <input type="url" value="{{ old('linkedin') }}" class="form-control" name="linkedin"
-                                id="linkedin" placeholder="Entrez url reseau social ...">
+                                    id="linkedin" placeholder="Entrez url reseau social ...">
                             </div>
                             <div class="form-group">
                                 <label for="instagram">instagram</label>
                                 <input type="url" value="{{ old('instagram') }}" class="form-control" name="instagram"
-                                id="instagram" placeholder="Entrez url reseau social ...">
+                                    id="instagram" placeholder="Entrez url reseau social ...">
                             </div>
 
 
@@ -119,6 +130,4 @@
             </div>
         </div>
     </section>
-   
-   
 @endsection

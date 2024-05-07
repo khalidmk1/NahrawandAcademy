@@ -15,6 +15,7 @@ class ShortCours extends Model
         'host_id',
         'title',
         'image',
+        'image_flex',
         'video',
         'tags'
     ];

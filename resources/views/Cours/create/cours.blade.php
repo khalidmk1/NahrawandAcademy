@@ -160,6 +160,15 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="flexImageConference">Flex Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="flexImageConference"
+                                            id="flexImageConference">
+                                        <label class="custom-file-label" for="flexImageConference">Choisez image</label>
+                                    </div>
+                                </div>
+
 
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
@@ -232,6 +241,15 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="flexImagePodcast">Flex Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="flexImagePodcast"
+                                            id="flexImagePodcast">
+                                        <label class="custom-file-label" for="flexImagePodcast">Choisez image</label>
+                                    </div>
+                                </div>
+
 
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
@@ -277,6 +295,15 @@
                                         <input type="file" class="custom-file-input" name="introImageFormation"
                                             id="ImageFomation">
                                         <label class="custom-file-label" for="ImageFomation">Choisez image</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="flexImageFormation">Flex Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="flexImageFormation"
+                                            id="flexImageFormation">
+                                        <label class="custom-file-label" for="flexImageFormation">Choisez image</label>
                                     </div>
                                 </div>
 

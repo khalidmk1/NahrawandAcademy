@@ -38,8 +38,8 @@ interface apiRepositoryInterface {
     // personel video formation
     public function personelvideoFormation(String $user , String $video);
     
-    //all short cours
-    public function CourShort();
+    //all short cours by goals
+    public function CourShort(String $user);
 
     //cours
     public function Cour_Conference();
@@ -54,7 +54,10 @@ interface apiRepositoryInterface {
 
     
     //tree Cours first
-    public function treeCoursFormation();
+    public function treeCoursFormation(String $user);
+
+    // podcast by goals
+    public function podcastgoals(String $user);
 
 
     public function Cour_Formation_detail(String $id);

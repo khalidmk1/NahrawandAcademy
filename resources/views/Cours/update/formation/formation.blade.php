@@ -113,6 +113,14 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="ImageFomationflex">Image de Fomation flex</label>
+                <div class="custom-file">
+                    <input type="file" name="ImageFomationflex" class="custom-file-input" id="ImageFomationflex">
+                    <label class="custom-file-label" for="ImageFomationflex">Choisez image</label>
+                </div>
+            </div>
+
             @if ($coursFormation->condition == 'text')
             @else
                 <!-- textarea -->

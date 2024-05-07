@@ -20,6 +20,7 @@ class CoursFormation extends Model
         'isCertify',
         'documents',
         'image',
+        'image_flex',
         'condition'
     ];
 

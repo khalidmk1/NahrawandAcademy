@@ -37,6 +37,15 @@ class CoursController extends Controller
         return view('Cours.create.cours')->with('CoursInfo' , $CoursInfo);
     }
 
+    public function show_short(){
+        return $this->userRepository->show_short();
+    }
+
+    //show detail short cours
+    public function detail_short(String $id){
+        return $this->userRepository->detail_short($id);
+    }
+
     // create short
     public function create_short(){
         return $this->userRepository->create_short();
@@ -46,6 +55,11 @@ class CoursController extends Controller
     public function store_short(Request $request)
     {
         return $this->userRepository->store_short($request);
+    }
+
+    //update short cours
+    public function update_short(Request $request ,String $id){
+        return $this->userRepository->update_short($request , $id);
     }
 
 

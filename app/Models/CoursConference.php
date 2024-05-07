@@ -16,6 +16,7 @@ class CoursConference extends Model
         'cours_id',
         'host_id',
         'image',
+        'image_flex',
         'duration',
         'description',
         'video',

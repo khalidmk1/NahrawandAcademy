@@ -121,7 +121,12 @@
             var tagInputEle = $('#tags-input');
             tagInputEle.tagsinput();
 
+            function scrollToBottom() {
+                window.scrollTo(0, document.body.scrollHeight);
+            }
 
+            // Call the scrollToBottom function when the page is loaded or reloaded
+            window.onload = scrollToBottom;
 
             /* $('#create_videos').submit(function(e) {
                 e.preventDefault();
