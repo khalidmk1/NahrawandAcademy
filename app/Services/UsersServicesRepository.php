@@ -521,55 +521,46 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
 
     public function store_speaker(Request $request){
-
-        
-        $role_admin = Role::where('role_name' , 'Speaker')->first();
-
-        
+        $role_admin = Role::where('role_name', 'Speaker')->first();
+    
         $request->validate([
-            'avatar' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
+            'avatar' => ['required', 'file', 'mimes:jpeg,png,jpg,gif'],
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
-            'type_speaker' => ['required' , 'string' , 'max:255'],
-            'biographie' => ['required' , 'string' , 'max:300'],
+            'type_speaker' => ['required', 'string', 'max:255'],
+            'biographie' => ['required', 'string', 'max:300'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'facebook' => ['nullable','url'],
+            'facebook' => ['nullable', 'url'],
             'linkedin' => ['nullable', 'url'],
             'instagram' => ['nullable', 'url'],
         ]);
         
-        
         $isPopulaire = $request->isPopulaire == 'on';
         $password  = Str::random(10);
-
         $request->password_confirmation = $password;
-
+    
         $invalidUrls = [];
-
-        if ($request->has('facebook') && !str_contains($request->facebook, 'facebook.com')) {
+    
+        // Check URLs only if they are not empty
+        if (!empty($request->facebook) && !str_contains($request->facebook, 'facebook.com')) {
             $invalidUrls[] = 'Facebook';
         }
-        if ($request->has('linkedin') && !str_contains($request->linkedin, 'linkedin.com')) {
+        if (!empty($request->linkedin) && !str_contains($request->linkedin, 'linkedin.com')) {
             $invalidUrls[] = 'LinkedIn';
         }
-        if ($request->has('instagram') && !str_contains($request->instagram, 'instagram.com')) {
+        if (!empty($request->instagram) && !str_contains($request->instagram, 'instagram.com')) {
             $invalidUrls[] = 'Instagram';
         }
         
-        /* if (!empty($invalidUrls) && count(array_filter($invalidUrls)) > 0) {
-            return redirect()->back()->with(['faild' => 'Invalid URLs for: ' . implode(', ', $invalidUrls)]);
-        } */
-        
-
+       
+    
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $directory = 'avatars/';
             $fileName = uniqid() . '_' . $file->getClientOriginalName();
-           
             $file->storeAs($directory, $fileName, 'public');
-            
         }
-
+    
         $user = User::create([
             'avatar' => $fileName,
             'firstName' => $request->firstName,
@@ -578,17 +569,13 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             'is_popular' =>$isPopulaire,
             'email' => $request->email,
             'password' => Hash::make($password),
-
         ]);
-
-
+    
         $user_role = UserRole::create([
             'user_id' => $user->id,
             'role_id' => $role_admin->id
         ]);
-
-        
-
+    
         $speaker = UserSpeakers::create([
             'user_id' => $user->id,
             'type_speaker' => $request->type_speaker,
@@ -597,11 +584,16 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             'linkdin' => $request->linkedin,
             'instagram' => $request->instagram
         ]); 
-        
-        
 
-        return redirect()->back()->with('status' , 'Un utilisateur intervenant a été créé avec succès.');
+        if (!empty($invalidUrls)) {
+            return redirect()->back()->with(['faild' => 'Invalid URLs for: ' . implode(', ', $invalidUrls)]);
+        }else{
+            return redirect()->back()->with('status', 'Un utilisateur intervenant a été créé avec succès.');
+        }
+    
+        
     }
+    
 
 
     public function delete_speaker(Request $request ,String $id)
