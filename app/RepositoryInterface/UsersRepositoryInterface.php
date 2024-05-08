@@ -87,6 +87,8 @@ interface UsersRepositoryInterface{
     public function create_cours();
     public function getGoalsBySousCategorie(String $id);
     public function store_cours(Request $request);
+    //search cours
+    public function search_cours(Request $request);
 
     //show short
     public function show_short();

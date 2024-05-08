@@ -87,8 +87,8 @@
                                         data-toggle="tab">Detail</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Modifier</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
-                                </li>
+                               {{--  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
+                                </li> --}}
                             </ul>
                         </div><!-- /.card-header -->
                         <div class="card-body">
@@ -139,21 +139,6 @@
                                     </div>
                                     <!-- /.post -->
 
-                                    <!-- Post -->
-                                    <div class="post">
-                                        <div class="d-flex">
-                                            <i class="fa fa-exclamation-circle" style="font-size: x-large"
-                                                aria-hidden="true"></i>
-                                            <div class="ml-2"><strong>Description.</strong></div>
-
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            {{ $short->description }}
-                                        </p>
-                                    </div>
-                                    <!-- /.post -->
-
 
                                     <!-- Post -->
                                     <div class="post">
@@ -164,16 +149,38 @@
 
                                         </div>
                                         <!-- /.user-block -->
-                                        @foreach ($short->tags as $tag)
-                                            <h2 class="badge badge-info">
-                                                {{ $tag }}
-                                            </h2>
+                                        <div class="row" style="gap: 2px">
+                                            @foreach ($short->tags as $tag)
+                                            <h3 class="pt-1 ">
+                                                <span class="badge badge-info">{{ $tag }}</span>
+                                            </h3>
                                         @endforeach
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- /.post -->
+
+
+                                      <!-- Post -->
+                                      <div class="post">
+                                        <div class="d-flex">
+
+                                            <i class="fa fa-bullseye" style="font-size: x-large" aria-hidden="true"></i>
+                                            <div class="ml-2"><strong>Objectifs.</strong></div>
+
+                                        </div>
+                                        <!-- /.user-block -->
+                                        @foreach ($CoursGols as $goal)
+                                            <h4 >
+                                                <span class="badge badge-info mt-2">{{ $goal->Goal->goals }}</span>
+                                            </h4>
+                                        @endforeach
+
                                     </div>
                                     <!-- /.post -->
                                 </div>
 
-                              {{--   @include('Cours.update.podcast.podcast') --}}
+                                @include('Cours.update.short')
 
                             {{--     <div class="tab-pane" id="settings">
                                     <div class="form-group">

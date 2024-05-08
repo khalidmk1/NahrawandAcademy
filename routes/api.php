@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy_api'])->name('logout');
     Route::post('/update/client/{id}', [ProfileClientController::class, 'update_client'])->name('update.client');
+    Route::post('update/client/image/{id}', [ProfileClientController::class, 'update_image_client'])->name('update.client.image');
     Route::post('update/password', [ProfileClientController::class, 'password_update'])->name('update.password');
     
 });

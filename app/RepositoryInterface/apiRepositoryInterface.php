@@ -13,6 +13,7 @@ interface apiRepositoryInterface {
     public function getClientById(String $id);
     //update client
     public function update_client(Request $request , String $id); 
+    public function update_image_client(Request $request , String $id);
     //get populaire speaker
     public function populaire_speaker(); 
 

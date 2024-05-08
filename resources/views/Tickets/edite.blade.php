@@ -42,54 +42,6 @@
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-md-7 col-sm-12">
-                                <div class="form-group row">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label">Type du ticket</label>
-                                    <div class="col-sm-10">
-                                        <select class="custom-select" name="type">
-                                            <option value="Commercial" @if ($ticket->Type_Ticket == 'Commercial') selected @endif>
-                                                Commercial</option>
-                                            <option value="Technique" @if ($ticket->Type_Ticket == 'Technique') selected @endif>
-                                                Technique</option>
-                                            <option value="Administratif" @if ($ticket->Type_Ticket == 'Administratif') selected @endif>
-                                                Administratif</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-
-
-                            <div class="col-md-7 col-sm-12">
-                                <div class="form-group row">
-                                    <label for="userclient" class="col-sm-2 col-form-label">Utilisateurs</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2" name="userClient" id="userclient"
-                                            style="width: 100%;">
-                                            @foreach ($userclients as $userclient)
-                                                {{-- Check if the current user is the ticket user --}}
-                                                @if ($ticket->user->id === $userclient->user->id)
-                                                    <option value="{{ $ticket->user->id }}" selected>
-                                                        {{ $ticket->user->email }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $userclient->user->id }}">
-                                                        {{ $userclient->user->email }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <!-- /.row -->
-
                             <div class="col-md-8 col-sm-12">
                                 <div class="form-group row">
                                     <label for="ticket" class="col-sm-2 col-form-label">Statut du Ticket</label>
@@ -125,8 +77,8 @@
                             <div class="col-sm-12" id="Commentcontain">
                                 <!-- textarea -->
                                 <div class="form-group position-relative">
-                                    <input type="text" name="comment" value="{{ old('comment', optional($personnaleTicket)->comment) }}"
-                                    class="form-control" placeholder="Enter ...">
+                                  {{--   <input type="text" name="comment" value="{{ old('comment', optional($personnaleTicket)->comment) }}"
+                                    class="form-control" placeholder="Enter ..."> --}}
 
                                 </div>
                             </div>

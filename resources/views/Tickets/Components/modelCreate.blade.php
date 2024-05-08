@@ -9,7 +9,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ Route('dashboard.tickets.store') }}" method="post">
+            <form action="{{ Route('dashboard.tickets.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
 
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile" multiple>
+                        <input type="file" name="file" class="custom-file-input" id="customFile" multiple>
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
 

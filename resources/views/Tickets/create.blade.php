@@ -21,7 +21,7 @@
 
     <section class="content">
         <div class="container-fluid">
-
+            @include('Layouts.errorshandler')
             <div class="row">
                 <div class="col-12 mb-2">
                     <button class="btn btn-block btn-default w-25" data-toggle="modal" data-target="#staticBackdrop"

@@ -70,7 +70,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('search/category', [CategoriesController::class, 'search_categorie'])->name('search.categorie');
    Route::get('search/goals', [GoalsController::class, 'search_goals'])->name('search.goals');
    Route::get('search/soucategory', [SousCategoryController::class, 'search_souscategory'])->name('search.souscategory');
-   
+   Route::get('search/cours', [CoursController::class, 'search_cours'])->name('search.cours');
 
    //crud of profile of admin
    Route::get('edit/{id}', [PorfileEditeController::class, 'edit_profile'])->name('profile.edit');
@@ -151,7 +151,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    //store short
    Route::post('short/store', [CoursController::class, 'store_short'])->name('short.store');
    //update short cours
-   Route::put('short/update/{id}', [CoursController::class, 'update_short'])->name('short.update');
+   Route::patch('short/update/{id}', [CoursController::class, 'update_short'])->name('short.update');
 
    //upload cours video 
    Route::post('upload/video', [CoursController::class, 'upload_video_cours'])->name('upload.video');

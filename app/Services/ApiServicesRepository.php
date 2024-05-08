@@ -80,26 +80,6 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         ]);
 
-
-        if ($request->has('avatar')) {
-            $avatarData = $request->avatar;
-            $avatarData = str_replace('data:image/png;base64,', '', $avatarData);
-            $avatarData = str_replace(' ', '+', $avatarData);
-            $avatarImage = base64_decode($avatarData);
-            $fileName = 'avatar_' . Str::uuid() . '.png'; 
-            Storage::disk('public')->put('avatars/' . $fileName, $avatarImage);
-
-            // Delete the old avatar if it exists
-            if ($user->avatar) {
-                Storage::disk('public')->delete('avatars/' . $user->avatar);
-            }
-
-            /* dd($fileName);
- */
-            // Update user's avatar field with the new filename
-            $user->avatar = $fileName;
-        }
-
         $user->update([
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
@@ -112,6 +92,35 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     
         return response()->json([$user]);
+    }
+
+    public function update_image_client(Request $request , String $id)
+    {
+
+        $user = User::findOrFail($id);
+        
+        if ($request->has('avatar')) {
+            $avatarData = $request->avatar;
+        
+            $avatarData = preg_replace('/^data:image\/(png|jpeg|jpg);base64,/', '', $avatarData);
+        
+            $avatarImage = base64_decode($avatarData);
+        
+            $fileName = 'avatar_' . Str::uuid() . '.png';
+        
+            Storage::disk('public')->put('avatars/' . $fileName, $avatarImage);
+        
+            if ($user->avatar) {
+                Storage::disk('public')->delete('avatars/' . $user->avatar);
+            }
+    
+            $user->avatar = $fileName;
+ 
+        }
+
+        $user->save();
+        return response()->json([$user]);
+
     }
 
 
@@ -615,8 +624,6 @@ public function Cour_Conference(){
 
         $user = User::findOrFail($id);
 
-        
-
         $request->validate([
             'ticketType' => ['required' , 'string' , 'max:100'],
             'manager' => ['required'],
@@ -631,9 +638,13 @@ public function Cour_Conference(){
             'detail' => $request->detail
         ]);
 
+
+
         return response()->json($ticket);
 
     }
+
+    // 
 
     public function get_ticket(String $id){
 

@@ -50,4 +50,15 @@ class ShortCours extends Model
         return $this->hasMany(ShortGoal::class, 'cour_id');
     }
 
+    /**
+     * Get all of the shortgoal for the ShortCours
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shortgoal(): HasMany
+    {
+        return $this->hasMany(ShortGoal::class, 'cour_id');
+    }
+    
+
 }

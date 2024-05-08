@@ -22,6 +22,7 @@ use App\Mail\SendInfoUser;
 use App\Models\CoursGoals;
 use App\Models\Permission;
 use App\Models\ShortCours;
+use App\Models\TicketFile;
 use App\Models\QuizSeccess;
 use Illuminate\Support\Str;
 use App\Models\CoursPodcast;
@@ -219,6 +220,52 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     
         return response()->json(['output' => $output]);
     }
+
+
+//serch cours
+public function search_cours(Request $request)
+{
+    $output = "";
+    $Cours = Cour::query();
+
+    // Search by title
+    if ($request->has('title')) {
+        $title_cours = $request->input('title');
+        $Cours->where('title', 'like', '%' . $title_cours . '%');
+    }
+
+    // Search by host_id in CoursFormation
+    if ($request->has('user')) {
+        $host_id = $request->input('user');
+        $Cours->whereHas('CoursFormation', function ($query) use ($host_id) {
+            $query->where('host_id', $host_id);
+        });
+    }
+
+    // Search by host_id in CoursPodcast
+    if ($request->has('user')) {
+        $host_id = $request->input('user');
+        $Cours->orWhereHas('CoursPodcast', function ($query) use ($host_id) {
+            $query->where('host_id', $host_id);
+        });
+    }
+
+    if ($request->has('category')) {
+        $category_cours = $request->input('category');
+        $Cours->where('category_id', 'like', '%' . $category_cours . '%');
+    }
+
+
+    $Cours = $Cours->get();
+
+    foreach ($Cours as $key => $cour) {
+        $output .= view('Cours.cherche.CoursCard')->with('cour', $cour)->render();
+    }
+
+    return response()->json(['output' => $output]);
+}
+
+
 
 
     //crud profile
@@ -881,9 +928,6 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             ]);
     
         }
-
-        
-
        
     }
 
@@ -913,9 +957,13 @@ public function index_cours()
 
     $cours->load(['CoursConference' , 'CoursPodcast' , 'CoursFormation']);
 
+    $RoleUser = UserRole::where('role_id' , 3)->get();
+
+    $category = Category::all();
     
-    
-    return view('Cours.show.Cours')->with(['cours' => $cours]);
+    return view('Cours.show.Cours')->with(['cours' => $cours , 'RoleUser' => $RoleUser ,
+    'category' => $category
+]);
 }
     
 
@@ -999,7 +1047,14 @@ public function index_cours()
     {
         $shorts = ShortCours::paginate(10);
 
-        return view('Cours.show.short')->with('shorts' , $shorts);
+        $shortGoals = [];
+
+        foreach ($shorts as $short) {
+            $goals = ShortGoal::where('cour_id', $short->id)->get();
+            $shortGoals[$short->id] = $goals;
+        }
+
+        return view('Cours.show.short')->with(['shorts' => $shorts , 'goals' => $goals]);
     }
 
 
@@ -1007,8 +1062,15 @@ public function index_cours()
     public function detail_short(String $id)
     {
         $short = ShortCours::findOrFail(Crypt::decrypt($id));
+        $HostFromateur = UserSpeakers::where('type_speaker' , 'Formateur')->get();
+        $souscategory = SousCategory::distinct()->get(['category_id']);
+        $goals = Goal::all();
+        $CoursGols = ShortGoal::where('cour_id' , $short->id)->get();
 
-        return view('Cours.detail.short')->with('short' , $short);
+        return view('Cours.detail.short')->with(['short' => $short , 
+        'HostFromateur' => $HostFromateur , 'souscategory' => $souscategory ,
+        'goals' => $goals , 'CoursGols' => $CoursGols
+    ]);
     }
 
     public function create_cours()
@@ -1043,21 +1105,16 @@ public function index_cours()
     public function update_short(Request $request ,String $id)
     {
 
-        $Cour = Cour::findOrFail(Crypt::decrypt($id));
-        $CourPodcast = CoursPodcast::where('cours_id' , $Cour->id)->first();
-        $goalCours = CoursGoals::where('cours_id' , $Cour->id)->get();
-        
+        $Cour = ShortCours::findOrFail(Crypt::decrypt($id));
+        $goalCours = ShortGoal::where('cour_id' , $Cour->id)->get();
 
         $request->validate([
             'title' => ['required' , 'string' , 'max:100'],
-            'description' => ['required' , 'string' , 'max:300'],
             'tags' => ['required' , 'array'],
-            'cotegoryId' => ['required' , 'string'],
+            'host' => ['required' , 'string'],
             'goal' => ['required' , 'array'],
-            'coursDuration' => ['required'],
-            'slugAcroche' => ['required' , 'string' , 'max:100'],
-            'descriptionPodcast' => ['required' , 'string' , 'max:600'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif']
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
+            'coursImageflex' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
         ]);
 
         $url = $request->video;
@@ -1065,7 +1122,7 @@ public function index_cours()
        
 
         if ($request->hasFile('image')) {
-            $imagePath = 'upload/cour/image/'.$CourPodcast->image;
+            $imagePath = 'upload/cour/image/'.$Cour->image;
             Storage::disk('public')->delete($imagePath);
            
             $file = $request->file('image');
@@ -1073,10 +1130,10 @@ public function index_cours()
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
             
-            $CourPodcast->image = $fileNameImage;
+            $Cour->image = $fileNameImage;
         }
         if ($request->hasFile('coursImageflex')) {
-            $imagePath = 'upload/cour/image/flex/'.$CourPodcast->image_flex;
+            $imagePath = 'upload/cour/image/flex/'.$Cour->image_flex;
             Storage::disk('public')->delete($imagePath);
            
             $file = $request->file('coursImageflex');
@@ -1084,7 +1141,7 @@ public function index_cours()
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
             
-            $CourPodcast->image_flex = $fileNameImage;
+            $Cour->image_flex = $fileNameImage;
         }
 
         if (strpos($url, 'watch?v=') !== false) {
@@ -1092,30 +1149,13 @@ public function index_cours()
             $queryString = parse_url($url, PHP_URL_QUERY);
             parse_str($queryString, $params);
             $videoId = $params['v'];
-            $CourPodcast->video = 'https://www.youtube.com/embed/'.$videoId;
+            $Cour->video = 'https://www.youtube.com/embed/'.$videoId;
         }
 
 
 
         $Cour->title = $request->title;
 
-        if ($request->iscoming == 'on') {
-            $iscoming = true;
-         }else{
-             $iscoming = false;
-         }
-
-
-         if ($request->isActive == 'on') {
-            $isActive = true;
-        }else{
-            $isActive = false;
-        }
-
-        $Cour->isComing = $iscoming;
-        $Cour->isActive = $isActive;
-
-        $Cour->description = $request->description;
 
         $StringTag = $request->tags[0];
 
@@ -1124,27 +1164,22 @@ public function index_cours()
         $tags = array_map('trim', $tags);
 
         $Cour->tags = $tags;
-        $Cour->category_id = $request->cotegoryId;
 
        
         $goalCours->each->forceDelete();
         foreach ($request->goal as $key => $goal) {
-            $goalCours = new CoursGoals();
-            $goalCours->cours_id = $Cour->id; 
+            $goalCours = new ShortGoal();
+            $goalCours->cour_id = $Cour->id; 
             $goalCours->goal_id = $goal;
            
             $goalCours->save();
         }
         
-        $CourPodcast->host_id = $request->hostPodcast;
-        $CourPodcast->slug = $request->slugAcroche;
-        $CourPodcast->description = $request->descriptionPodcast;
-        $CourPodcast->duration = $request->coursDuration;
+        $Cour->host_id = $request->host;
 
         $Cour->save();
-        $CourPodcast->save();
-
-        return redirect()->back()->with('status' , 'Vous avez mis à jour le podcast avec succès.');
+    
+        return redirect()->back()->with('status' , 'Vous avez mis à jour le short avec succès.');
 
     }
 
@@ -2738,11 +2773,21 @@ public function getCoursVideo(String $id){
 
     public function store_ticket(Request $request)
     {
+        
         $request->validate([
             'type_ticket' => ['required' , 'string' , 'max:100'],
             'user' => ['required'],
-            'detail' => ['required' , 'string' , 'max:500']
+            'detail' => ['required' , 'string' , 'max:500'],
+            'file' => ['file' , 'mimes:jpeg,png,jpg,gif,pdf'],
         ]);
+
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $directory = '/ticket';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public'); 
+        } 
 
         $ticket = Ticket::create([
             'user_id' => $request->user,
@@ -2750,6 +2795,11 @@ public function getCoursVideo(String $id){
             'Type_Ticket' => $request->type_ticket,
             'status' => false,
             'detail' => $request->detail,
+        ]);
+
+        $fileticket = TicketFile::create([
+            'ticket_id' => $ticket->id,
+            'file' => $fileNameImage
         ]);
 
         return redirect()->back()->with('status' , 'Vous avez Crée Ticket');
@@ -2780,15 +2830,10 @@ public function getCoursVideo(String $id){
         
         $personnaleTicket = CommentTicket::where(['user_id' => Auth::user()->id , 'ticket_id' => $ticket->id])->first(); 
         $request->validate([
-            'type' => ['required' , 'string' , 'max:100'],
-            'userClient' => ['required'],
             'status' => ['required' , 'boolean' ],
             'detail' => ['required' , 'string' , 'max:500'],
         ]);
-
-
     
-        $ticket->Type_Ticket = $request->type;
         $ticket->manager_id = Auth::user()->id;
         $ticket->status = $request->status;
         $ticket->detail = $request->detail;

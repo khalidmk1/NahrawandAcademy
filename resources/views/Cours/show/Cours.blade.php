@@ -29,24 +29,69 @@
             <div class="row">
                 <div class="card card-default col-12">
                     <div class="card-header row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <h3 class="card-title">Voir les Contenu</h3>
                         </div>
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <select class="form-control select2" name="user" id="search_user"
+                                            style="width: 100%;">
+                                            <option selected="selected">Choisez Speaker</option>
+                                            @foreach ($RoleUser as $role)
+                                                @if ($role->user->userspeaker && in_array($role->user->userspeaker->type_speaker, ['Animateur', 'Formateur']))
+                                                    <option value="{{ $role->user->id }}">{{ $role->user->email }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <select class="form-control select2" name="category" id="search_category" style="width: 100%;">
+                                            <option selected="selected">Choisez Category</option>
+                                            @foreach ($category as $category)
+                                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" id="search_title" name="title"
+                                                class="form-control float-right" placeholder="Search">
+
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!-- /.card-header -->
 
                     <div class="card-body">
 
 
-                        <div class="row row-cols-1 row-cols-md-3  event_conatine">
+                        <div class="row row-cols-1 row-cols-md-3  event_conatine " id="resultcours">
                             @foreach ($cours as $cour)
                                 <div class="col ">
 
                                     <div class="card">
                                         <div class="position-relative">
-                                            <h5 class="position-absolute badge {{$cour->isActive ? 'badge-success' : ''}} ">
+                                            <h5
+                                                class="position-absolute badge {{ $cour->isActive ? 'badge-success' : '' }} ">
                                                 {{ $cour->isActive ? 'Active' : '' }}</h5>
-                                            <h5 class="position-absolute badge {{$cour->isComing ? 'badge-warning' : ''}}" style="right: 0">
+                                            <h5 class="position-absolute badge {{ $cour->isComing ? 'badge-warning' : '' }}"
+                                                style="right: 0">
                                                 {{ $cour->isComing ? 'A Venir' : '' }}</h5>
 
                                             @if ($cour->cours_type == 'conference')
@@ -56,14 +101,12 @@
                                                 <img src="{{ asset('storage/upload/cour/image/' . $cour->CoursPodcast->image) }}"
                                                     class="card-img-top about_img" alt="Skyscrapers" />
                                             @elseif($cour->cours_type == 'formation' && $cour->CoursFormation)
-                                           
-                                            
                                                 <img src="{{ asset('storage/upload/cour/image/' . $cour->CoursFormation->image) }}"
                                                     class="card-img-top about_img" alt="Skyscrapers" />
                                             @endif
 
                                         </div>
-                                        {{-- <img src="thumbnail.jpg" class="card-img-top" alt="Thumbnail"> --}}
+
                                         <div class="card-body">
                                             <h5 class="card-title"> {{ $cour->title }}</h5>
                                             <p class="card-text">{{ Str::limit($cour->description, '100', '...') }}...</p>
@@ -97,4 +140,126 @@
 
             </div>
     </section>
+
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script>
+        $(function() {
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            $('.select3').select2();
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+
+        })
+
+        $(document).ready(function() {
+
+            //search with title
+            $('#search_title').on('keyup', function() {
+
+                var title = $(this).val()
+
+                var url = '/backoffice/search/cours'
+
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                        'title': title,
+                    },
+                    success: function(data) {
+                        console.log(data.output);
+
+                        $('#resultcours').empty();
+
+                        $('#resultcours').append(data.output)
+
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+
+            })
+
+            //search with user speaker
+
+            $('#search_user').on('change', function() {
+
+                var user = $(this).val()
+
+                var url = '/backoffice/search/cours'
+
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                        'user': user,
+                    },
+                    success: function(data) {
+                        console.log(data.output);
+
+                        $('#resultcours').empty();
+
+                        $('#resultcours').append(data.output)
+
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+
+            })
+
+
+            //search with category
+            $('#search_category').on('change', function() {
+
+                var category = $(this).val()
+
+                var url = '/backoffice/search/cours'
+
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                        'category': category,
+                    },
+                    success: function(data) {
+                        console.log(data.output);
+
+                        $('#resultcours').empty();
+
+                        $('#resultcours').append(data.output)
+
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+
+            })
+
+        })
+    </script>
 @endsection

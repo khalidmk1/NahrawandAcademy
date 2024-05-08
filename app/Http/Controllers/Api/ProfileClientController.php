@@ -23,7 +23,11 @@ class ProfileClientController extends Controller
 
     public function update_client(Request $request , String $id){
         return  $this->apiRepository->update_client($request , $id);
-    }  
+    } 
+    
+    public function update_image_client(Request $request , String $id){
+        return  $this->apiRepository->update_image_client($request , $id);
+    }
 
     //client password
     public function password_update(Request $request ){

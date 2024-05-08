@@ -47,7 +47,11 @@
                                     {{-- <img src="thumbnail.jpg" class="card-img-top" alt="Thumbnail"> --}}
                                     <div class="card-body">
                                         <h5 class="card-title"> {{ $cour->title }}</h5>
-                                        <p class="card-text">{{ Str::limit($cour->description, '100', '...') }}...</p>
+                                        <p class="card-text"><h4>
+                                            @foreach ($goals as $goal)
+                                            <span class="badge badge-info">{{ $goal->Goal->goals }}</span>
+                                        @endforeach
+                                        </h4></p>
                                         <a href="{{ Route('dashboard.short.detail', Crypt::encrypt($cour->id)) }}"
                                             class="btn btn-primary">Detail</a>
                                     </div>

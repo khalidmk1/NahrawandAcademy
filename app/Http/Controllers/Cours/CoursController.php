@@ -28,6 +28,11 @@ class CoursController extends Controller
         return $this->userRepository->show_cour($id);
     }
 
+    //search cours
+    public function search_cours(Request $request){
+        return $this->userRepository->search_cours($request);
+    }
+
     // cours function
     public function create_cours()
     {
