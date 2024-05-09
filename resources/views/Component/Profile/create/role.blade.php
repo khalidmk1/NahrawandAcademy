@@ -1,6 +1,7 @@
 @extends('Layouts.master')
 
 @section('content')
+    
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -18,8 +19,8 @@
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Titre</label>
-                            <input type="text" name="title" value="{{old('title')}}"  class="form-control" id="exampleInputEmail1"
-                                placeholder="Entrez titre">
+                            <input type="text" name="title" value="{{ old('title') }}" class="form-control"
+                                id="exampleInputEmail1" placeholder="Entrez titre">
                         </div>
                         <div class="form-group">
                             <label>Description</label>
@@ -52,7 +53,7 @@
     </section>
 
     <section class="content">
-        <div class="container-fluid">
+        <div class="container-fluid position-relative" style="overflow: hidden">
 
             @if (session('status'))
                 <div class="alert  alert-success alert-dismissible fade show ml-1" role="alert">
@@ -66,7 +67,7 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card card-position">
                         <div class="card-header">
                             <h3 class="card-title">
                                 <button class="btn btn-block btn-default" data-toggle="modal"
@@ -75,8 +76,8 @@
 
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" id="search_role" name="role"
-                                        class="form-control float-right" placeholder="Search">
+                                    <input type="text" id="search_role" name="role" class="form-control float-right"
+                                        placeholder="Search">
 
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-default">
@@ -87,8 +88,8 @@
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0" style="height: 440px;" >
-                            <table class="table table-head-fixed text-nowrap" id="searchedRole">
+                        <div class="card-body table-responsive p-0" style="height: 440px;">
+                            <table class="table table-head-fixed text-nowrap position-relative" id="searchedRole">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Roles</th>
@@ -111,7 +112,7 @@
                                                         <div class="icheck-primary d-inline">
 
                                                             <input type="checkbox" class="checkbox make_permission"
-                                                                data-role = "{{ $role->id }}" {!! $role->id == 1  ? 'disabled' : '' !!}
+                                                                data-role = "{{ $role->id }}" {!! $role->id == 1 ?: '' !!}
                                                                 {{ isset($role_permissions['RolePermissioncheck'][$role->id]) &&
                                                                 $role_permissions['RolePermissioncheck'][$role->id]->contains('permission_id', $permission->id) &&
                                                                 $role_permissions['RolePermissioncheck'][$role->id]->contains('confirmed', 1)
@@ -155,6 +156,7 @@
                 var permission_id = $(this).attr("data-permission");
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
+
                 $.ajax({
                     url: '/backoffice/role-permission/' + role_id + '/' + permission_id,
                     method: 'POST',
@@ -181,19 +183,19 @@
                 e.preventDefault()
                 var search_role = $(this).val();
 
-                
+
                 $.ajax({
-                    url: '/backoffice/search/role', 
+                    url: '/backoffice/search/role',
                     method: 'GET',
                     data: {
                         role: search_role
                     },
                     success: function(response) {
                         console.log(response);
-                        
+
                         $('#searchedRole tbody').empty();
                         $('#searchedRole tbody').append(response.output)
-                       
+
                     },
                     error: function(error) {
                         console.log(error);

@@ -32,6 +32,12 @@
         'confirmed' => '1',
     ])->exists();
 
+    $rolePermissionreporting = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 9,
+        'confirmed' => '1',
+    ])->exists();
+
 @endphp
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -64,34 +70,37 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                @if ($rolePermissionreporting)
+                    <li class="nav-item menu-open">
 
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ Route('dashboard.index') }}" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Reporting</p>
-                            </a>
-                        </li>
-                    </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ Route('dashboard.index') }}" class="nav-link active">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Reporting</p>
+                                </a>
+                            </li>
+                        </ul>
 
 
-                </li>
+                    </li>
+                @endif
+
                 <li class="nav-header">Gestion Acteur</li>
 
                 @if ($rolePermissionRole || auth()->user()->userRole->role_id == 1)
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.roles.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Rôles
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.roles.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>
+                                Rôles
 
-                        </p>
-                    </a>
-                </li>
+                            </p>
+                        </a>
+                    </li>
                 @endif
 
-                
+
 
                 @if (auth()->user()->userRole->role_id === 1 || auth()->user()->userRole->role_id == 2)
                     <li class="nav-item">
@@ -134,7 +143,7 @@
 
 
                 <li class="nav-item">
-                    <a href="{{Route('dashboard.client.show')}}" class="nav-link">
+                    <a href="{{ Route('dashboard.client.show') }}" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
                             Utitlisateurs
@@ -217,10 +226,6 @@
                             </p>
                         </a>
                     </li>
-
-                   
-
-                    
                 @endif
 
                 <li class="nav-item">
@@ -228,20 +233,20 @@
                         <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}" alt="">
                         <p>
                             Voir Contenu
-                        </p> 
+                        </p>
                     </a>
                 </li>
 
                 @if ($rolePermissionContent || auth()->user()->userRole->role_id === 1)
-                <li class="nav-item">
-                    <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
+                    <li class="nav-item">
+                        <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
 
-                        <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
-                        <p>
-                            Quiqly
-                        </p>
-                    </a>
-                </li>
+                            <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
+                            <p>
+                                Quiqly
+                            </p>
+                        </a>
+                    </li>
                 @endif
 
                 <li class="nav-item">
@@ -254,7 +259,7 @@
                     </a>
                 </li>
 
-              
+
 
                 @if ($rolePermissionTicket || auth()->user()->userRole->role_id === 1)
                     <li class="nav-header">Gestion Tickets</li>

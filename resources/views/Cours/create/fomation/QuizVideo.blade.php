@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="d-flex justify-content-around  align-items-center" id="addsection">
+                        <div class="d-flex justify-content-around  align-items-center" style="gap: 29px" id="addsection">
 
                             <div class="form-group row">
                                 <label for="Rate">Sccess Rate ?</label>

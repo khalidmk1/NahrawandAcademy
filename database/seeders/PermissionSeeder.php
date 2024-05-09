@@ -20,7 +20,10 @@ class PermissionSeeder extends Seeder
             'Gestion Tickets',
             'Manager Emails',
             'Manager Spearks',
-            'Manager Role'
+            'Manager Role',
+            'Gestion Achat Abonement',
+            'Reporting',
+            'Correction Quiz'
         ];
 
         // Loop through each permission and insert it into the database

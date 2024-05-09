@@ -1,3 +1,20 @@
+@php
+    use App\Models\RolePermission;
+
+    $user_role = auth()->user()->userRole->role_id;
+    $rolePermissionmodifiction = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 2,
+        'confirmed' => '1',
+    ])->exists();
+    $rolePermissiondelete = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 3,
+        'confirmed' => '1',
+    ])->exists();
+
+@endphp
+
 @extends('Layouts.master')
 
 @section('content')
@@ -63,7 +80,7 @@
 
                             <p class="text-muted text-center">{{ $short->user->userspeaker->type_speaker }}</p>
 
-                        {{--     <ul class="list-group list-group-unbordered mb-3">
+                            {{--     <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                     <b>Nomber des invite</b> <a class="float-right">{{ $short->count() }}</a>
                                 </li>
@@ -85,9 +102,12 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#activity"
                                         data-toggle="tab">Detail</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Modifier</a>
-                                </li>
-                               {{--  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
+                                @if ($rolePermissionmodifiction)
+                                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Modifier</a>
+                                    </li>
+                                @endif
+
+                                {{--  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
                                 </li> --}}
                             </ul>
                         </div><!-- /.card-header -->
@@ -100,7 +120,7 @@
                                             <h1 class="username">
                                                 <div>{{ $short->title }}</div>
                                             </h1>
-                                           
+
                                         </div>
                                         <!-- /.user-block -->
 
@@ -151,18 +171,18 @@
                                         <!-- /.user-block -->
                                         <div class="row" style="gap: 2px">
                                             @foreach ($short->tags as $tag)
-                                            <h3 class="pt-1 ">
-                                                <span class="badge badge-info">{{ $tag }}</span>
-                                            </h3>
-                                        @endforeach
+                                                <h3 class="pt-1 ">
+                                                    <span class="badge badge-info">{{ $tag }}</span>
+                                                </h3>
+                                            @endforeach
                                         </div>
-                                        
+
                                     </div>
                                     <!-- /.post -->
 
 
-                                      <!-- Post -->
-                                      <div class="post">
+                                    <!-- Post -->
+                                    <div class="post">
                                         <div class="d-flex">
 
                                             <i class="fa fa-bullseye" style="font-size: x-large" aria-hidden="true"></i>
@@ -171,7 +191,7 @@
                                         </div>
                                         <!-- /.user-block -->
                                         @foreach ($CoursGols as $goal)
-                                            <h4 >
+                                            <h4>
                                                 <span class="badge badge-info mt-2">{{ $goal->Goal->goals }}</span>
                                             </h4>
                                         @endforeach
@@ -182,7 +202,7 @@
 
                                 @include('Cours.update.short')
 
-                            {{--     <div class="tab-pane" id="settings">
+                                {{--     <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_podcast"
                                             class="btn btn-danger w-50">suprimer</button>

@@ -46,6 +46,8 @@ interface apiRepositoryInterface {
     public function Cour_Conference();
     public function Cour_Podcast();
     public function Cour_Formation();
+    //get all the video of the cours
+    public function video_cours(String $id);
 
     
     //Qsm formation
@@ -88,5 +90,8 @@ interface apiRepositoryInterface {
     //create ticket
     public function store_ticket(Request $request , String $id);
     public function get_ticket(String $id);
+
+    // FAQ
+    public function FAQ();
 
 }

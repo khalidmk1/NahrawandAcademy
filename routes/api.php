@@ -69,10 +69,10 @@ Route::prefix('mobile')->group(function () {
 
     //cours api
     Route::get('/cours/coming', [CoursController::class, 'coming_cours'])->name('cours.coming');
-
     Route::get('/Cour/Conference', [CoursController::class, 'Cour_Conference'])->name('cours.conference');
     Route::get('/Cour/Podcast', [CoursController::class, 'Cour_Podcast'])->name('cours.podcast');
     Route::get('/Cour/Formation', [CoursController::class, 'Cour_Formation'])->name('cours.formation');
+    Route::get('Cour/video/{id}', [CoursController::class, 'video_cours'])->name('cour.video');
     //get Cour Qsm
     Route::get('/Cour/Formation/Qsm/{id}', [CoursController::class, 'Cour_Fourmation_Qsm'])->name('cours.formation.Qsm');
     //create question answer for user
@@ -108,6 +108,9 @@ Route::prefix('mobile')->group(function () {
    //store ticket
    Route::post('ticket/{id}', [TicketController::class, 'store_ticket'])->name('create.ticket');
    Route::get('ticket/user/{id}', [TicketController::class, 'get_ticket'])->name('ticket.user');
+
+   //FAQ
+   Route::get('FAQ/', [TicketController::class, 'FAQ'])->name('FAQ');
 
     Route::post('/login', [AuthenticatedSessionController::class, 'login_api'])
     ->middleware('guest')

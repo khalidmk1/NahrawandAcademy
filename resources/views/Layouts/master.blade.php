@@ -44,10 +44,6 @@
 
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 
-
-
-
-
 </head>
 
 
@@ -57,7 +53,7 @@
 
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-    <div class="wrapper">
+    <div class="wrapper position-relative">
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -71,7 +67,7 @@
         @include('Component.dashboard.Navigation.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper ">
 
 
 
@@ -85,12 +81,6 @@
 
     @include('Component.dashboard.Navigation.footer')
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-    </div>
 
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -101,7 +91,7 @@
         $.widget.bridge('uibutton', $.ui.button)
     </script>
 
-   
+
 
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

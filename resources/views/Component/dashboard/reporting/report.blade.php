@@ -22,16 +22,16 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Info boxes -->
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                        <span class="info-box-icon bg-info elevation-1"><i class="fa fa-credit-card"
+                                aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">CPU Traffic</span>
+                            <span class="info-box-text">Nomber Abonnement</span>
                             <span class="info-box-number">
                                 10
-                                <small>%</small>
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -40,12 +40,23 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
+                    <div class="form-group">
+                        <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input"
+                                data-target="#reservationdatetime" />
+                            <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.form group -->
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-eye"
+                                aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Likes</span>
-                            <span class="info-box-number">41,410</span>
+                            <span class="info-box-text">Nomber Abonement Non Renouvelés</span>
+                            <span class="info-box-number">0</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -56,28 +67,19 @@
                 <!-- fix for small devices only -->
                 <div class="clearfix hidden-md-up"></div>
 
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Sales</span>
-                            <span class="info-box-number">760</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-2">
+                <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3 pt-2">
 
                         <ul class="chart-legend clearfix m-0 p-2">
-                            <li class="info-box-text"><i class="far fa-circle text-success"></i> Enligne
-                                <span class="info-box-number" id="authUserCount"></span>
+                            <li class="info-box-text">
+                                <i class="far fa-circle text-success"><span class="pl-2"
+                                        style="font-family: Font Awesome 5 Free , font-weight:400"
+                                        id="authUserCount"></span></i>
                             </li>
-                            <li class="info-box-text"><i class="far fa-circle text-danger"></i> Horsligne
-                                <span class="info-box-number" id="notAuthUserCount"></span>
+
+                            <li class="info-box-text"> <i class="far fa-circle text-danger"><span class="pl-2"
+                                        style="font-family: Font Awesome 5 Free , font-weight:400"
+                                        id="notAuthUserCount"></span></i>
                             </li>
 
                         </ul>
@@ -167,11 +169,13 @@
 
 
             <!-- Info boxes -->
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-12 col-sm-6 col-md-4">
                     <div class="form-group">
 
-                        <select class="form-control select2" id="CategoryCours" name="CategoryCours" style="width: 100%;">
+                        <select class="form-control select2" id="CategoryCours" name="CategoryCours"
+                            style="width: 100%;">
+                            <option value="" selected>Filter par Categorie</option>
                             @foreach ($category as $categorie)
                                 <option value="{{ $categorie->id }}">{{ $categorie->category_name }}</option>
                             @endforeach
@@ -203,6 +207,7 @@
                     <div class="form-group">
                         <select class="form-control select2" id="CategorySpeaker" name="CategorySpeaker"
                             style="width: 100%;">
+                            <option value="" selected>Filter par Categorie</option>
                             @foreach ($category as $categorie)
                                 <option value="{{ $categorie->id }}">{{ $categorie->category_name }}</option>
                             @endforeach
@@ -227,27 +232,40 @@
 
                 <!-- /.form-group -->
                 <div class="col-12 col-sm-6 col-md-4">
+                    <!-- select -->
                     <div class="form-group">
-                        <select class="form-control select2" style="width: 100%;">
-                            <option selected="selected">Alabama</option>
-                            <option>Alaska</option>
-                            <option>California</option>
-                            <option>Delaware</option>
-                            <option>Tennessee</option>
-                            <option>Texas</option>
-                            <option>Washington</option>
+                        <select class="custom-select">
+                            <option selected>Filter par Type de Contenu</option>
+                            <option value="conference">Conféreance</option>
+                            <option value="podcast">Podcast</option>
+                            <option value="formation">Formation</option>
+
                         </select>
                     </div>
+
                     <div class="info-box mb-3">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                        <span class="info-box-icon bg-success elevation-1"><i class="fa fa-eye"
+                                aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Sales</span>
+                            <span class="info-box-text">Nomber Heur Visualisation</span>
                             <span class="info-box-number">760</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                     <!-- /.info-box -->
+                    <!-- Date and time -->
+                    <div class="form-group">
+                        <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input"
+                                data-target="#reservationdatetime1" />
+                            <div class="input-group-append" data-target="#reservationdatetime1"
+                                data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.form group -->
                 </div>
                 <!-- /.col -->
 
@@ -341,6 +359,19 @@
 
 
         $(function() {
+
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+            //Date and time picker
+            $('#reservationdatetime1').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
 
             //Initialize Select2 Elements
             $('.select2').select2()

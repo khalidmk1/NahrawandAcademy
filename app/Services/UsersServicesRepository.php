@@ -252,7 +252,7 @@ public function search_cours(Request $request)
 
     if ($request->has('category')) {
         $category_cours = $request->input('category');
-        $Cours->where('category_id', 'like', '%' . $category_cours . '%');
+        $Cours->orWhereHas('category_id', 'like', '%' . $category_cours . '%');
     }
 
 
@@ -2933,14 +2933,11 @@ public function getCoursVideo(String $id){
 
         $requestemail = $request->all();
 
-        
-
         foreach ($requestemail['users'] as $key => $user) {
 
             Mail::To($user)->send(new sendemail($requestemail));
 
         }
-       
       
         return redirect()->back()->with('status', 'Vous avez Envoyer l\'Email');
     }

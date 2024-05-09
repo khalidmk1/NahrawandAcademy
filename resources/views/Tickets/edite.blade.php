@@ -77,8 +77,8 @@
                             <div class="col-sm-12" id="Commentcontain">
                                 <!-- textarea -->
                                 <div class="form-group position-relative">
-                                  {{--   <input type="text" name="comment" value="{{ old('comment', optional($personnaleTicket)->comment) }}"
-                                    class="form-control" placeholder="Enter ..."> --}}
+                                    <input type="text" name="comment" value="{{ old('comment', optional($personnaleTicket)->comment) }}"
+                                    class="form-control" placeholder="Enter ...">
 
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                     <div class="post">
                                         <div class="user-block">
                                             <img class="img-circle img-bordered-sm"
-                                                src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="user image">
+                                                src="{{ asset('storage/avatars/' . $outherticket->user->avatar ) }}" alt="user image">
                                             <span class="username">
                                                 <a
                                                     href="#">{{ $outherticket->user->firstName . ' ' . $outherticket->user->lastName }}</a>

@@ -27,4 +27,9 @@ class TicketController extends Controller
     public function get_ticket(String $id){
         return $this->apiRepository->get_ticket($id);
     }
+
+    // FAQ
+    public function FAQ(){
+        return $this->apiRepository->FAQ();
+    }
 }

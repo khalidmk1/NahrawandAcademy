@@ -19,6 +19,10 @@ class CoursController extends Controller
         return $this->apiRepository->allCours();
     }
 
+    //get all the video of the cours
+    public function video_cours(String $id){
+        return $this->apiRepository->video_cours($id);
+    }
  
      //all short cours by goals
      public function CourShort(String $user){

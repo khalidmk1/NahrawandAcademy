@@ -1,3 +1,21 @@
+@php
+    use App\Models\RolePermission;
+
+    $user_role = auth()->user()->userRole->role_id;
+    $rolePermissionmodifiction = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 2,
+        'confirmed' => '1',
+    ])->exists();
+
+    $rolePermissiondelete = RolePermission::where([
+        'role_id' => $user_role,
+        'permission_id' => 3,
+        'confirmed' => '1',
+    ])->exists();
+
+@endphp
+
 @extends('Layouts.master')
 
 @section('content')
@@ -82,10 +100,14 @@
                                 <li class="nav-item"> <a class="nav-link active" id="pills-home-tab" data-toggle="pill"
                                         href="#pills-home" role="tab" aria-controls="pills-home"
                                         aria-selected="true">Detail</a></li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                        role="tab" aria-controls="pills-profile" aria-selected="false">Modifier</a>
-                                </li>
+
+                                @if ($rolePermissionmodifiction)
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                                            role="tab" aria-controls="pills-profile" aria-selected="false">Modifier</a>
+                                    </li>
+                                @endif
+
 
 
                                 @if (!$Qsm->isEmpty())
@@ -101,9 +123,12 @@
                                     </li>
                                 @else
                                 @endif
+                                @if ($rolePermissiondelete)
+                                    <li class="nav-item"><a class="nav-link" href="#settings"
+                                            data-toggle="tab">Parameter</a>
+                                    </li>
+                                @endif
 
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
-                                </li>
 
                             </ul>
                         </div><!-- /.card-header -->
@@ -129,7 +154,7 @@
                                                 <div class="col-sm-6">
                                                     <img class="img-fluid"
                                                         src="{{ asset('storage/upload/cour/image/' . $coursFormation->image) }}"
-                                                        alt="Photo" >
+                                                        alt="Photo">
 
                                                 </div>
                                                 <!-- /.col -->
@@ -261,11 +286,14 @@
 
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id)) }}"
-                                                    class="btn btn-block btn-info w-50" style="float: right;">Ajouter
-                                                    video</a>
-                                            </div>
+                                            @if ($rolePermissionmodifiction)
+                                                <div class="col-6">
+                                                    <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id)) }}"
+                                                        class="btn btn-block btn-info w-50" style="float: right;">Ajouter
+                                                        video</a>
+                                                </div>
+                                            @endif
+
                                         </div>
 
 
@@ -291,25 +319,32 @@
                                                                 <div class="text-white  m-2 "
                                                                     style="border-radius: 20px ; background: #343a4070 ">
                                                                     <div class="position-relative ">
-                                                                        <!-- Button trigger modal -->
-                                                                        <button style="right: 0;"
-                                                                            class="btn btn-sm bg-warning position-absolute update_video_btn"
-                                                                            data-toggle="modal"
-                                                                            data-id="{{ $video->id }}"
-                                                                            data-target="#update_video_{{ $video->id }}">
-                                                                            <img src="{{ asset('asset/update_icon.png') }}"
-                                                                                style="height: 18px;" alt="update_icon">
-                                                                        </button>
+                                                                        @if ($rolePermissionmodifiction)
+                                                                            <!-- Button trigger modal -->
+                                                                            <button style="right: 0;"
+                                                                                class="btn btn-sm bg-warning position-absolute update_video_btn"
+                                                                                data-toggle="modal"
+                                                                                data-id="{{ $video->id }}"
+                                                                                data-target="#update_video_{{ $video->id }}">
+                                                                                <img src="{{ asset('asset/update_icon.png') }}"
+                                                                                    style="height: 18px;"
+                                                                                    alt="update_icon">
+                                                                            </button>
+                                                                        @endif
 
 
+                                                                        @if ($rolePermissiondelete)
+                                                                            <button type="button" data-toggle="modal"
+                                                                                data-target="#delete_video_{{ $video->id }}"
+                                                                                class="btn btn-sm btn-danger position-absolute"
+                                                                                style="float: right"
+                                                                                data-id="{{ $video->id }}">
+                                                                                <i class="fa fa-trash"
+                                                                                    aria-hidden="true"></i>
+                                                                            </button>
+                                                                        @endif
 
-                                                                        <button type="button" data-toggle="modal"
-                                                                            data-target="#delete_video_{{ $video->id }}"
-                                                                            class="btn btn-sm btn-danger position-absolute"
-                                                                            style="float: right"
-                                                                            data-id="{{ $video->id }}">
-                                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                                        </button>
+
                                                                     </div>
 
                                                                     <div class="card-body">

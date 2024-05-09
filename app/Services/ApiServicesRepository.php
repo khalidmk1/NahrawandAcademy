@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\FAQ;
 use App\Models\Cour;
 use App\Models\Goal;
 use App\Models\Role;
@@ -15,14 +16,17 @@ use App\Models\ViewCour;
 use App\Models\ShortGoal;
 use App\Models\CoursGoals;
 use App\Models\ShortCours;
+use App\Models\TicketFile;
 use App\Models\UserClient;
 use App\Models\QuizSeccess;
 use Illuminate\Support\Str;
 use App\Models\CoursComment;
 use App\Models\CoursFavoris;
+use App\Models\CoursPodcast;
 use App\Models\QuizQuestion;
 use App\Models\UserObjectif;
 use Illuminate\Http\Request;
+use App\Models\CoursFormation;
 use App\Models\RolePermission;
 use App\Models\QuestionAnswers;
 use App\Models\CoursPadcastVideo;
@@ -195,6 +199,34 @@ class ApiServicesRepository  implements apiRepositoryInterface
     return response()->json($cours);
     }
 
+    //get all the video of the cours
+    public function video_cours(String $id)
+    {
+        $cour = Cour::findOrFail($id);
+
+        if($cour->cours_type == 'podcast'){
+            $courPodcast = CoursPodcast::where('cours_id' , $cour->id)->get();
+            $videoPodcast = CoursPadcastVideo::whereIn('podacast_id' , $courPodcast->pluck('id'))->get();
+
+            $videoPodcast->load('guestvideo' , 'guestvideo.user' , 
+            'guestvideo.user.userspeaker');
+
+            return response()->json($videoPodcast);
+        }
+
+        if ($cour->cours_type == 'formation') {
+            $courFormation = CoursFormation::where('cours_id' , $cour->id)->get();
+            $videoFormation = CoursFormationVideo::whereIn('CourFormation_id' , $courFormation->pluck('id'))->get();
+
+           /*  $videoFormation->load('guestvideo' , 'guestvideo.user' , 
+            'guestvideo.user.userspeaker'); */
+
+            return response()->json($videoFormation);
+        }
+
+        return response()->json('somthing whent wrong');
+    }
+
     public function CoursByGoals(String $user)
     {
         $user =  User::findOrFail($user);
@@ -330,11 +362,7 @@ public function Cour_Conference(){
         $courPodcast->load('category');
         $courPodcast->load(['CoursPodcast' , 
         'CoursPodcast.user' , 
-        'CoursPodcast.user.userspeaker',
-        'CoursPodcast.videopodcast',
-        'CoursPodcast.videopodcast.guestvideo.user' , 
-        'CoursPodcast.videopodcast.guestvideo.user.userspeaker'
-    ]);
+        'CoursPodcast.user.userspeaker']);
 
         return response()->json(['contentPodcast' => $courPodcast]);
 
@@ -347,8 +375,7 @@ public function Cour_Conference(){
         $courFormation->load('category');
 
         $courFormation->load(['CoursFormation' , 
-        'CoursFormation.user' , 'CoursFormation.user.userspeaker',
-        'CoursFormation.CoursFormationVideo']);
+        'CoursFormation.user' , 'CoursFormation.user.userspeaker']);
        
 
         return response()->json(['contentFormation' => $courFormation]);
@@ -369,6 +396,9 @@ public function Cour_Conference(){
         return response()->json(['Cour_Qsm' => $Cour_Qsm , 'Cour_Question' => $Cour_Question]);
 
     }
+
+
+
 
     //create question answer for user
     public function user_answer(Request $request, String $user, String $cour, String $questionId)
@@ -620,7 +650,7 @@ public function Cour_Conference(){
 
     //ticket store
     public function store_ticket(Request $request , String $id)
-    {
+    { 
 
         $user = User::findOrFail($id);
 
@@ -629,6 +659,7 @@ public function Cour_Conference(){
             'manager' => ['required'],
             'detail' => ['required' , 'string' , 'max:500']
         ]);
+        
 
         $ticket = Ticket::create([
             'user_id'=> $user->id,
@@ -638,7 +669,23 @@ public function Cour_Conference(){
             'detail' => $request->detail
         ]);
 
+        if ($request->has('file')) {
+            $avatarData = $request->file;
+        
+            $avatarData = preg_replace('/^data:image\/(png|jpeg|jpg);base64,/', '', $avatarData);
+        
+            $avatarImage = base64_decode($avatarData);
+        
+            $fileName = 'avatar_' . Str::uuid() . '.png';
+        
+            Storage::disk('public')->put('ticket/' . $fileName, $avatarImage);
 
+            $fielticket = TicketFile::create([
+                'ticket_id' => $ticket->id,
+                'file' => $fileName
+            ]);
+ 
+        }
 
         return response()->json($ticket);
 
@@ -655,6 +702,13 @@ public function Cour_Conference(){
         return response()->json($tickets);
 
         
+    }
+
+    // FAQ
+    public function FAQ(){
+        $FAQ = FAQ::all();
+
+        return response()->json($FAQ);
     }
 
   
