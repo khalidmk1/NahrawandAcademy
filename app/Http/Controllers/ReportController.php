@@ -30,5 +30,9 @@ class ReportController extends Controller
         return $this->userRepository->FilterCount($request);
     }
 
+    // progress of user in the cours
+    public function view_video(String $user , String $cour){
+        return $this->userRepository->view_video($user , $cour); 
+    }
     
 }

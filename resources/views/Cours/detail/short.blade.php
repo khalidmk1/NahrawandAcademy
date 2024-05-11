@@ -107,8 +107,8 @@
                                     </li>
                                 @endif
 
-                                {{--  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
-                                </li> --}}
+                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
+                                </li>
                             </ul>
                         </div><!-- /.card-header -->
                         <div class="card-body">
@@ -202,13 +202,13 @@
 
                                 @include('Cours.update.short')
 
-                                {{--     <div class="tab-pane" id="settings">
+                                    <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_podcast"
                                             class="btn btn-danger w-50">suprimer</button>
                                     </div>
-                                    @include('Cours.delete.podcast')
-                                </div> --}}
+                                    @include('Cours.delete.short')
+                                </div>
                                 <!-- /.tab-pane -->
                             </div>
                             <!-- /.tab-content -->

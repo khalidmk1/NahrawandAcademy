@@ -100,6 +100,38 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         
     }
 
+    // progress of user in the cours
+    public function view_video(String $user , String $cour) 
+    {
+        $Cour = Cour::findOrFail($cour);
+        $user = User::findOrFail($cour);
+
+        $CourFormation = CoursFormation::where('cours_id' , $Cour)->get();
+
+        $CourVideo = VideoProgressFormation::where(['user_id' => $user , ]);
+
+
+        $Cour = Cour::findOrFail($cour);
+        $user = User::findOrFail($user);
+ 
+        $CourFormation = CoursFormation::where('cours_id' , $Cour->id)->get();
+
+        $CourVideoIds = $CourFormation->pluck('id')->toArray();
+        $CourVideo = CoursFormationVideo::whereIn('CourFormation_id' , $CourVideoIds)->get();
+        $videoCount = $CourVideo->count();
+
+        $Videoprogress = VideoProgressFormation::whereIn('video_id' , $CourVideo->pluck('id'))
+        ->where('user_id' , $user->id)
+        ->count();
+
+        if($videoCount == $Videoprogress)
+        {
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+    }
+
 
     // serch functionality
     public function search_filtter(Request $request)
@@ -263,6 +295,62 @@ public function search_cours(Request $request)
     }
 
     return response()->json(['output' => $output]);
+}
+
+//search short
+public function search_short(Request $request)
+{
+    $output = "";
+    $shorts = ShortCours::query();
+
+    // Search by title
+    if ($request->has('title')) {
+        $title_cours = $request->input('title');
+        $shorts->where('title', 'like', '%' . $title_cours . '%');
+    }
+
+    // Search by host_id in CoursFormation
+    if ($request->has('user')) {
+        $host_id = $request->input('user');
+        $shorts->where('host_id', 'like', '%' . $host_id . '%');
+    }
+
+    if ($request->has('goals')) {
+        $goal = $request->input('goals');
+        $shorts->whereHas('shortCours', function ($query) use ($goal) {
+            $query->where('goal_id', $goal);
+        });
+    }
+
+
+    $shorts = $shorts->get();
+    $output .= view('Cours.cherche.short.ShortCard')->with('shorts', $shorts)->render();
+
+    return response()->json(['output' => $output]);
+}
+
+//search history
+public function search_history(Request $request)
+{
+    $output = "";
+    $shorts = ShortCours::query();
+    $Cours = Cour::query();
+
+    // Search by title
+    if ($request->has('title')) {
+        $title_cours = $request->input('title');
+        $shorts->onlyTrashed('title', 'like', '%' . $title_cours . '%');
+        
+    }
+   /*  // Search by title
+    if ($request->has('title')) {
+        $title_cours = $request->input('title');
+        $Cours->where('title', 'like', '%' . $title_cours . '%'); 
+    } */
+    $shorts = $shorts->get();
+    $output .= view('Hisotry.chereche.CardCours')->with(['shorts'=> $shorts ])->render();
+
+    return response()->json($output);
 }
 
 
@@ -1046,15 +1134,13 @@ public function index_cours()
     public function show_short()
     {
         $shorts = ShortCours::paginate(10);
+        $RoleUser = UserRole::where('role_id' , 3)->get();
+        $category = Category::all();
 
         $shortGoals = [];
 
-        foreach ($shorts as $short) {
-            $goals = ShortGoal::where('cour_id', $short->id)->get();
-            $shortGoals[$short->id] = $goals;
-        }
-
-        return view('Cours.show.short')->with(['shorts' => $shorts , 'goals' => $goals]);
+        return view('Cours.show.short')->with(['shorts' => $shorts  ,
+        'RoleUser' => $RoleUser , 'category' => $category]);
     }
 
 
@@ -1181,6 +1267,17 @@ public function index_cours()
     
         return redirect()->back()->with('status' , 'Vous avez mis à jour le short avec succès.');
 
+    }
+
+    //delete short cours
+    public function delete_short(Request $request , String $id){
+        $courshort = ShortCours::findOrFail(Crypt::decrypt($id));
+
+        if(Hash::check( $request->password, Auth::user()->password )){
+            $courshort->delete();
+            return redirect()->route('dashboard.show.short')->with('status' , 'you have deleted a cours');
+        }
+        return redirect()->back()->with('faild' , 'Voter Mots de Passe et Incorrec');
     }
 
     public function getGoalsBySousCategorie(String $id)
@@ -2547,6 +2644,7 @@ public function getCoursVideo(String $id){
     {
         $courId = $request->courId;
 
+        $CourFormation = CoursFormation::where('cours_id' , $courId)->first();
         $checkCountRate = QuizSeccess::where('cours_id' , $courId)->first();
 
         $request->validate([
@@ -2554,7 +2652,7 @@ public function getCoursVideo(String $id){
             'RightAwnser' => ['required' , 'string' , 'max:200'],
         ]);
 
-        CoursFormation::create([
+        $CourFormation->update([
             'quiz_type' => 0
         ]);
 
@@ -2616,7 +2714,7 @@ public function getCoursVideo(String $id){
     public function store_quiz_qustion(Request $request){
         $courId = $request->courId;
 
-
+        $CourFormation = CoursFormation::where('cours_id' , $courId)->first();
 
         $request->validate([
             'Question' => ['required']
@@ -2635,7 +2733,8 @@ public function getCoursVideo(String $id){
     
         }
 
-        CoursFormation::create([
+        
+        $CourFormation->update([
             'quiz_type' => 1
         ]);
 
@@ -2736,8 +2835,9 @@ public function getCoursVideo(String $id){
     public function cours_history()
     {
         $cours = Cour::onlyTrashed()->paginate(10);
+        $shorts = ShortCours::onlyTrashed()->paginate(10);
 
-        return view('Hisotry.show')->with('cours' , $cours);
+        return view('Hisotry.show')->with(['cours' => $cours , 'shorts' => $shorts]);
     }
 
     //restore history cours
@@ -2759,6 +2859,17 @@ public function getCoursVideo(String $id){
 
         return redirect()->back()->with('status' , 'Vous Restore votre Cours');
 
+    }
+
+    //restore history short
+    public function restore_history_short(String $id)
+    {
+        $short = ShortCours::withTrashed()->findOrFail(Crypt::decrypt($id));
+
+        $short->restore();
+  
+        return redirect()->back()->with('status' , 'Vous Restore votre Cours');
+  
     }
 
 

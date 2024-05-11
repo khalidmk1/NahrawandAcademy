@@ -294,7 +294,6 @@
                                                                         <h5 class="pink-text text-right">
                                                                             {{ $video->duration }}</h5>
 
-
                                                                     </div>
                                                                 </div>
                                                             </div>

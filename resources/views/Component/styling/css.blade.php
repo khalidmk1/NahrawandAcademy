@@ -1,12 +1,16 @@
 <style>
+    .select2-container--default .select2-selection--multiple .select2-selection__rendered li:first-child.select2-search.select2-search--inline .select2-search__field {
+        color: #000;
+    }
 
-.select2-container--default 
-    .select2-selection--multiple 
-    .select2-selection__rendered li:first-child.select2-search.select2-search--inline 
+    *:-webkit-autofill {
+        color: black !important;
+    }
+
     .select2-search__field {
         color: #000;
     }
-    
+
     .card-box {
         padding: 20px;
         margin-bottom: 30px;
@@ -83,36 +87,36 @@
 
 
     .select2-container--default .select2-selection--single {
-            height: 40px !important;
-        }
+        height: 40px !important;
+    }
 
-        .bootstrap-tagsinput {
-            border: #ffffff solid 1px;
-            padding: 4px;
-            border-radius: 3px;
+    .bootstrap-tagsinput {
+        border: #ffffff solid 1px;
+        padding: 4px;
+        border-radius: 3px;
 
-        }
+    }
 
-        .bootstrap-tagsinput:first-child {
-            border: none,
+    .bootstrap-tagsinput:first-child {
+        border: none,
 
-        }
+    }
 
-        .bootstrap-tagsinput .tag {
-            background: rgb(163, 159, 154);
-            padding: 4px;
-            font-size: 14px;
-        }
+    .bootstrap-tagsinput .tag {
+        background: rgb(163, 159, 154);
+        padding: 4px;
+        font-size: 14px;
+    }
 
-        .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-            color: black
-        }
+    .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+        color: black
+    }
 
-        .custom-file-input:lang(en)~.custom-file-label::after {
-            content: "Cherchez" !important;
-        }
+    .custom-file-input:lang(en)~.custom-file-label::after {
+        content: "Cherchez" !important;
+    }
 
-        [class*=icheck-]>input:first-child+label::before{
-            border: 1px solid #1c49ff !important;
-        }
+    [class*=icheck-]>input:first-child+label::before {
+        border: 1px solid #1c49ff !important;
+    }
 </style>

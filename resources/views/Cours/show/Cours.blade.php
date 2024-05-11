@@ -35,7 +35,8 @@
                             <h3 class="card-title">Voir les Contenu</h3>
                         </div>
                         <div class="col-8">
-                            <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModal">
                                 <i class="fa fa-filter" aria-hidden="true"></i>
                             </button>
 
@@ -111,7 +112,9 @@
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <script>
         $(function() {
-
+            $('#exampleModal').on('shown.modal', function() {
+                $('.select2').select2();
+            });
             $("input[data-bootstrap-switch]").each(function() {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             })

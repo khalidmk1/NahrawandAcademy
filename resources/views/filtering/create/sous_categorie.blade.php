@@ -17,7 +17,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
-    @include('Layouts.errorshandler')
+
 
 
     {{--  @include('filtering.create.model.sousscategorie') --}}
@@ -77,6 +77,7 @@
     <!-- Main content -->
     <section class="content m-auto">
         <div class="container-fluid">
+            @include('Layouts.errorshandler')
             <div class="row justify-content-center">
 
                 <div class="col-12 mb-3 d-flex justify-content-end">
@@ -120,14 +121,14 @@
                                         <th>Categorie</th>
                                         <th>SousCatégorie</th>
                                         <th>Modifier</th>
-                                        
+
                                     </tr>
                                 </thead>
 
                                 <tbody class="text-center" id="resultsouscategory">
                                     @foreach ($souscategories['souscategories'] as $souscategory)
                                         @include('filtering.update.souscategory')
-                                        
+
 
                                         <tr>
                                             <td>{{ $souscategory->id }}</td>
@@ -142,7 +143,7 @@
                                                         alt="update_icon">
                                                 </a>
                                             </td>
-                                           
+
                                         </tr>
                                     @endforeach
 

@@ -57,12 +57,14 @@ Route::get('verify/email', [AuthenticatedSessionController::class, 'email_verify
 ->middleware('isSpeaker')
 ->name('email.verify');
 
+
 Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('dashboard.')->prefix('/backoffice')->group(function () {
    Route::get('/authCount', [ReportController::class, 'authCount'])->name('auth.count');
    Route::get('/FilterCount', [ReportController::class, 'FilterCount'])->name('filter.count');
 
    //report analyse
    Route::get('', [ReportController::class, 'index'])->name('index');
+   Route::get('progress/video/{user}/{cour}', [ReportController::class, 'view_video'])->name('progress.video');
 
    //search functionality
    Route::get('search/pofile', [PorfileEditeController::class, 'search_profile'])->name('search.profile');
@@ -71,6 +73,8 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('search/goals', [GoalsController::class, 'search_goals'])->name('search.goals');
    Route::get('search/soucategory', [SousCategoryController::class, 'search_souscategory'])->name('search.souscategory');
    Route::get('search/cours', [CoursController::class, 'search_cours'])->name('search.cours');
+   Route::get('search/short', [CoursController::class, 'search_short'])->name('search.short');
+   Route::get('search/history', [CoursController::class, 'search_history'])->name('search.history');
 
    //crud of profile of admin
    Route::get('edit/{id}', [PorfileEditeController::class, 'edit_profile'])->name('profile.edit');
@@ -142,16 +146,15 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('cours/create', [CoursController::class, 'create_cours'])->name('cours.create');
    Route::get('goals-bySouscategory/{id}', [CoursController::class, 'getGoalsBySousCategorie'])->name('goals.Souscategory');
    Route::post('cours/store', [CoursController::class, 'store_cours'])->name('cours.store');
-   //show short
+
+   //crud short
    Route::get('short', [CoursController::class, 'show_short'])->name('show.short');
-   //show detail short
    Route::get('short/detail/{id}', [CoursController::class, 'detail_short'])->name('short.detail');
-   //create short
    Route::get('cours/short', [CoursController::class, 'create_short'])->name('create.short');
-   //store short
    Route::post('short/store', [CoursController::class, 'store_short'])->name('short.store');
-   //update short cours
    Route::patch('short/update/{id}', [CoursController::class, 'update_short'])->name('short.update');
+   Route::delete('short/delete/{id}', [CoursController::class, 'delete_short'])->name('short.delete');
+   Route::post('short/restore/{id}', [CoursController::class, 'restore_history_short'])->name('short.restore');
 
    //upload cours video 
    Route::post('upload/video', [CoursController::class, 'upload_video_cours'])->name('upload.video');

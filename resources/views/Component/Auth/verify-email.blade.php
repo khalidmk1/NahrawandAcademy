@@ -46,7 +46,7 @@
                 <form method="POST" class="col-8" action="{{ route('verification.send') }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-primary">
-                        Renvoyer l'e-mail de vérification
+                        Envoyer l'e-mail de vérification
                     </button>
 
                 </form>

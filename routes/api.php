@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::prefix('mobile')->group(function () {
 
+    Route::get('progress/video/{user}/{cour}', [CoursController::class, 'view_video'])->name('progress.video');
+
     // Get client by id
     Route::get('/client/{id}', [ProfileClientController::class, 'getClientById'])->name('client');
     //api speaker populaire 

@@ -42,6 +42,34 @@ use App\RepositoryInterface\apiRepositoryInterface;
 class ApiServicesRepository  implements apiRepositoryInterface
 {
 
+    //reporting
+    // progress of user in the cours
+    public function view_video(String $user , String $cour) 
+    {
+        $Cour = Cour::findOrFail($cour);
+        $user = User::findOrFail($user);
+ 
+        $CourFormation = CoursFormation::where('cours_id' , $Cour->id)->get();
+
+        $CourVideoIds = $CourFormation->pluck('id')->toArray();
+        $CourVideo = CoursFormationVideo::whereIn('CourFormation_id' , $CourVideoIds)->get();
+        $videoCount = $CourVideo->count();
+
+        $Videoprogress = VideoProgressFormation::whereIn('video_id' , $CourVideo->pluck('id'))
+        ->where('user_id' , $user->id)
+        ->count();
+
+        if($videoCount == $Videoprogress)
+        {
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+
+      
+      
+    }
+
     //client password
     public function password_update(Request $request )
     {
@@ -387,7 +415,8 @@ public function Cour_Conference(){
         $Cour =  Cour::findOrFail($id);
         $QuizSeccess = QuizSeccess::where('cours_id', $Cour->id)->first();
 
-        $Cour_Qsm = QuizSeccess::where('cours_id' , $Cour->id)->get();
+        $Cour_Qsm = QuizSeccess::where('cours_id' , $Cour->id)->inRandomOrder()
+        ->take($QuizSeccess->Answercount)->get();
 
         $Cour_Question = QuizQuestion::where('cours_id' , $Cour->id )->get();
 

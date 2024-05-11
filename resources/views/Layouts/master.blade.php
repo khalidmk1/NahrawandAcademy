@@ -47,12 +47,8 @@
 </head>
 
 
-
-
-@include('Component.styling.css')
-
-
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    @include('Component.styling.css')
     <div class="wrapper position-relative">
 
         <!-- Preloader -->

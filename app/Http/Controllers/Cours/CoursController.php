@@ -33,6 +33,10 @@ class CoursController extends Controller
         return $this->userRepository->search_cours($request);
     }
 
+    public function search_history(Request $request){
+        return $this->userRepository->search_history($request);
+    }
+
     // cours function
     public function create_cours()
     {
@@ -42,8 +46,14 @@ class CoursController extends Controller
         return view('Cours.create.cours')->with('CoursInfo' , $CoursInfo);
     }
 
+    //crud short
     public function show_short(){
         return $this->userRepository->show_short();
+    }
+
+    //search short
+    public function search_short(Request $request){
+        return $this->userRepository->search_short($request);
     }
 
     //show detail short cours
@@ -65,6 +75,16 @@ class CoursController extends Controller
     //update short cours
     public function update_short(Request $request ,String $id){
         return $this->userRepository->update_short($request , $id);
+    }
+
+    //delete short cours
+    public function delete_short(Request $request , String $id){
+        return $this->userRepository->delete_short($request , $id);
+    }
+
+    //restore history short
+    public function restore_history_short(String $id){
+        return $this->userRepository->restore_history_short($id);
     }
 
 

@@ -12,11 +12,15 @@ interface UsersRepositoryInterface{
     public function reportindex();
     public function ReportCount();
     public function FilterCount(Request $request);
+    // progress of user in the cours
+    public function view_video(String $user , String $cour);
 
     //search functionality
     public function search_profile(Request $request );
     public function search_role(Request $request);
     public function search_filtter(Request $request);
+    //search history
+    public function search_history(Request $request);
     
     //crud profile
     public function edit_profile(String $id); 
@@ -89,6 +93,8 @@ interface UsersRepositoryInterface{
     public function store_cours(Request $request);
     //search cours
     public function search_cours(Request $request);
+    //search short
+    public function search_short(Request $request);
 
     //show short
     public function show_short();
@@ -100,7 +106,10 @@ interface UsersRepositoryInterface{
     public function store_short(Request $request);
     //update short cours
     public function update_short(Request $request ,String $id);
-
+    //delete short cours
+    public function delete_short(Request $request , String $id);
+    //restore history short
+    public function restore_history_short(String $id);
 
     //upload video cours
     public function upload_video_cours(Request $request);

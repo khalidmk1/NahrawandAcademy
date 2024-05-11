@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 
 interface apiRepositoryInterface {
     
+
+    //reporting
+    // progress of user in the cours
+    public function view_video(String $user , String $cour);
+
     //client password
     public function password_update(Request $request );
-
+   
     // get client by id
     public function getClientById(String $id);
     //update client

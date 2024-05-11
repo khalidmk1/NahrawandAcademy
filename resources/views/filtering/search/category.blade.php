@@ -10,11 +10,11 @@
                 <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;" alt="update_icon">
             </a>
         </td>
-        <td>
+      {{--   <td>
             <button type="button" data-toggle="modal" data-target="#delete_category_{{ $category->id }}"
                 class="btn btn-sm btn-danger">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
-        </td>
+        </td> --}}
     </tr>
 @endforeach

@@ -17,7 +17,6 @@
         </div><!-- /.container-fluid -->
     </section>
 
-    @include('Layouts.errorshandler')
 
 
 
@@ -87,6 +86,7 @@
     <!-- Main content -->
     <section class="content m-auto">
         <div class="container-fluid">
+            @include('Layouts.errorshandler')
             <div class="row justify-content-center">
 
                 <div class="col-12 mb-3 d-flex justify-content-end">
@@ -126,7 +126,7 @@
                                         <th>SouCatégorie</th>
                                         <th>Objetifs</th>
                                         <th>Modifier</th>
-                                        
+
                                     </tr>
                                 </thead>
 
@@ -134,7 +134,7 @@
                                     @foreach ($goals['goals'] as $goal)
                                         @include('filtering.update.goal')
 
-                                     
+
                                         <tr>
                                             <td>{{ $goal->id }}</td>
                                             <td>{{ $goal->souscategory->souscategory_name }}</td>
@@ -148,7 +148,7 @@
                                                         alt="update_icon">
                                                 </a>
                                             </td>
-                                            
+
                                         </tr>
                                     @endforeach
 

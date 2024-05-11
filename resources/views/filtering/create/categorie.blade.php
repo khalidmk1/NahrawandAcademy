@@ -17,7 +17,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
-    @include('Layouts.errorshandler')
+
 
 
 
@@ -79,6 +79,7 @@
     <!-- Main content -->
     <section class="content m-auto">
         <div class="container-fluid">
+            @include('Layouts.errorshandler')
             <div class="row justify-content-center">
 
                 <div class="col-12 mb-3 d-flex justify-content-end">
@@ -100,7 +101,7 @@
                                         class="form-control float-right" placeholder="Search">
 
                                     <div class="input-group-append">
-                                        <button type="submit"  class="btn btn-default">
+                                        <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
                                     </div>
@@ -117,14 +118,14 @@
                                         <th>Domain</th>
                                         <th>Catégorie</th>
                                         <th>Modifier</th>
-                                      
+
                                     </tr>
                                 </thead>
 
                                 <tbody class="text-center" id="resultcategory">
                                     @foreach ($categories['categories'] as $categorie)
                                         @include('filtering.update.categorie')
-                                        
+
                                         <tr>
                                             <td>{{ $categorie->id }}</td>
                                             <td>{{ $categorie->domain->domain }}</td>
@@ -138,7 +139,7 @@
                                                         alt="update_icon">
                                                 </a>
                                             </td>
-                                           
+
                                         </tr>
                                     @endforeach
 
@@ -164,42 +165,42 @@
 
     </section>
 
-     <!-- jQuery -->
-     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 
-     <script>
-         $(document).ready(function() {
- 
-             $('#search_category').on('keyup', function() {
- 
-                 var category = $(this).val()
- 
-                 var url = '/backoffice/search/category'
- 
- 
-                 $.ajax({
-                     url: url,
-                     method: 'get',
-                     data: {
-                         'category': category,
-                     },
-                     success: function(response) {
-                         console.log(response);
- 
-                         $('#resultcategory').empty();
- 
-                         $('#resultcategory').append(response)
- 
+    <script>
+        $(document).ready(function() {
 
-                     },
-                     error: function(error) {
-                         console.log(error);
- 
-                     }
-                 });
- 
-             })
- 
-         })
-     </script>
+            $('#search_category').on('keyup', function() {
+
+                var category = $(this).val()
+
+                var url = '/backoffice/search/category'
+
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                        'category': category,
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        $('#resultcategory').empty();
+
+                        $('#resultcategory').append(response)
+
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+
+            })
+
+        })
+    </script>
 @endsection

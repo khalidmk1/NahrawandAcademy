@@ -81,7 +81,13 @@
 
                             <p class="text-muted text-center">{{ $coursFormation->user->userspeaker->type_speaker }}</p>
 
+                            <ul class="list-group list-group-unbordered mb-3">
+            
+                                <li class="list-group-item">
+                                    <b>Views</b> <a class="float-right">{{$Cour->viewcour->count()}}</a>
+                                </li>
 
+                            </ul>
 
                         </div>
                         <!-- /.card-body -->
@@ -362,7 +368,7 @@
 
                                                                         <p class="text">{{ $video->description }}.</p>
 
-
+                                                                        <p class="text-right">Views : {{$video->videoProgressFormation->count()}}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

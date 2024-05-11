@@ -14,6 +14,12 @@ class CoursController extends Controller
         $this->apiRepository = $apiRepository;
     }
 
+    //reporting
+    // progress of user in the cours
+    public function view_video(String $user , String $cour){
+        return $this->apiRepository->view_video($user , $cour);
+    }
+
     //all cours 
     public function allCours(){
         return $this->apiRepository->allCours();

@@ -16,7 +16,7 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
+    @include('Hisotry.chereche.ModalCours')
 
     <!-- Main content -->
     <section class="content">
@@ -26,13 +26,20 @@
 
                 <div class="card card-default col-12">
                     <div class="card-header row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <h3 class="card-title">Voir les Contenu</h3>
                         </div>
+                       {{--  <div class="col-8">
+                            <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModal">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>
+
+                        </div> --}}
                     </div>
                     <!-- /.card-header -->
 
-                    <div class="card-body">
+                    <div class="card-body" id="resultcours">
 
 
                         @include('Hisotry.cour.show')
@@ -59,4 +66,42 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            //search with title
+            $('#search_title').on('keyup', function() {
+
+                var title = $(this).val()
+
+                var url = '/backoffice/search/history'
+
+
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    data: {
+                        'title': title,
+                    },
+                    success: function(data) {
+                        console.log(data);
+
+                         $('#resultcours').empty();
+
+                         $('#resultcours').append(data)
+
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+
+                    }
+                });
+
+            })
+        })
+    </script>
 @endsection

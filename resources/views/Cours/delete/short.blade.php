@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Suprimer Admin</h5>
             </div>
-            <form action="{{Route('dashboard.delete.podcast' , Crypt::encrypt($coursPodcast->id))}}" method="post">
+            <form action="{{Route('dashboard.short.delete' , Crypt::encrypt($short->id))}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body">

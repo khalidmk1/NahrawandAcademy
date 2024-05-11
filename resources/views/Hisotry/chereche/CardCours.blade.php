@@ -1,5 +1,5 @@
 <div class="row">
-    @foreach ($cours as $cour)
+{{--     @foreach ($cours as $cour)
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-    @endforeach
+    @endforeach --}}
 
     @foreach ($shorts as $cour)
         <div class="col-md-4">
