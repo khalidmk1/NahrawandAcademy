@@ -2017,7 +2017,7 @@ public function getCoursVideo(String $id){
             'descriptionVideo'  => ['required', 'string', 'max:100'],
             'image' => ['required' ,'file' ,  'mimes:jpeg,png,jpg,gif'],
             'videoTags' => ['required', 'array'],
-            'guestIds' => ['required'],
+            'guestIds' => ['sometimes', 'nullable'],
             'videoPodcast' => ['sometimes' , 'url']
         ]);
 
@@ -2053,20 +2053,20 @@ public function getCoursVideo(String $id){
             'duration' => $request->videoduration
         ]);
 
-        foreach ($request->guestIds as $key => $guest) {
+        foreach ($request->guestIds ?? [] as $key => $guest) {
             $guestVideo = CoursPadcastGuest::create([
                 'podcastvideo_id' => $conferenceVideos->id,
                 'guest_id' => $guest
             ]);
         }
-
+        
         $output = '';
 
         $getPodcastVideos = CoursPadcastVideo::where('podacast_id' , $request->podcastId)->get();
 
         foreach ($getPodcastVideos as $key => $video) {
 
-            $output .= view('Cours.create.podcast.videoCard')->with(['video' => $video , 'guestVideo' => $guestVideo ])->render();
+            $output .= view('Cours.create.podcast.videoCard')->with(['video' => $video])->render();
         }
        
 
@@ -2148,10 +2148,12 @@ public function getCoursVideo(String $id){
 
         // Delete associated guest videos first
         $guests = CoursPadcastGuest::where('podcastvideo_id', $video->id)->get();
-
-        foreach ($guests as $key => $guest) {
-            $guest->forceDelete();
+        if (!$video->guestvideo->isEmpty()) {
+            foreach ($guests as $key => $guest) {
+                $guest->forceDelete();
+            }
         }
+       
        
       
         // Now delete the CoursConferenceVideo instance

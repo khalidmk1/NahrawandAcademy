@@ -8,7 +8,7 @@
             </div>
             <form action="{{Route('dashboard.delete.podcast' , Crypt::encrypt($coursPodcast->id))}}" method="post">
                 @csrf
-                @method('delete')
+    
                 <div class="modal-body">
                     Vous éte sure que tu veux suprimer ?
                     <div class="form-group mt-3">
