@@ -182,7 +182,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::patch('podcast/video/update/{id}', [CoursController::class, 'update_video_podcast'])->name('update.podcast.video');
 
    //delete video podcast
-   Route::post('delete/video/podcast/{id}', [CoursController::class, 'delete_video_podcast'])->name('delete.podcast.video');
+   Route::delete('delete/video/podcast/{id}', [CoursController::class, 'delete_video_podcast'])->name('delete.podcast.video');
    //delete updated podcast
    Route::delete('delete/update/podcast/{id}', [CoursController::class, 'deleteVidoe_podcast_update'])->name('delete.updated.podcast');
    //delete cours podcast

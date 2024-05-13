@@ -2126,18 +2126,19 @@ public function getCoursVideo(String $id){
 
         
         
+    
         $videoPodcast->guestvideo()->forceDelete();
 
-        foreach ($request->guestIds as $guestId) {
-            $videoPodcast->guestvideo()->create(['guest_id' => $guestId]);
-        
+        // Check if guestIds is provided in the request and is an array
+        if ($request->has('guestIds') && is_array($request->guestIds)) {
+            foreach ($request->guestIds as $guestId) {
+                $videoPodcast->guestvideo()->create(['guest_id' => $guestId]);
+            }
         }
-
+        
         $videoPodcast->save();
-
-
+       
         return redirect()->back()->with('status' , 'Vous avez mis à jour la vidéo de podcast avec succès.');
-
 
     }
 
@@ -2174,7 +2175,8 @@ public function getCoursVideo(String $id){
         if(Hash::check( $request->password, Auth::user()->password )){
             $video->delete();
 
-            foreach ($$video->guestvideo() as $key => $guest) {
+
+            foreach ($video->guestvideo as $key => $guest) {
                 $guest->Delete();
             }
 

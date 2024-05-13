@@ -3,9 +3,10 @@
     <!-- Card -->
     <div class="card card-image ui_delete"
         style="background-image: url('{{ asset('storage/upload/cour/video/image/' . $video->image) }}'); opacity: 1;">
-        <form action="{{ Route('dashboard.delete.podcast', Crypt::encrypt($video->id)) }}" method="post"
+        <form action="{{ Route('dashboard.delete.podcast.video', Crypt::encrypt($video->id)) }}" method="post"
             class="delete_video">
             @csrf
+            @method('delete')
             <button type="button" class="btn btn-sm btn-danger position-absolute" style="right: 6px; top: 4px;">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
@@ -45,7 +46,7 @@
 
             $.ajax({
                 url: $(this).attr('action'),
-                method: $(this).attr('method'),
+                method: 'DELETE',
                 processData: false,
                 contentType: false,
                 headers: {
