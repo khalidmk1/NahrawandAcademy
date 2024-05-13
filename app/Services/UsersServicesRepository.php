@@ -1060,10 +1060,8 @@ public function index_cours()
     {
         $Cour = Cour::findOrFail(Crypt::decrypt($id));
 
-        $souscategory = SousCategory::distinct()->get(['category_id']);
+        $category = Category::whereHas('souscategories.goals')->get();
 
-       
-        $goals = Goal::all();
         $CoursGols = CoursGoals::where('cours_id' , $Cour->id)->get();
 
 
@@ -1081,7 +1079,7 @@ public function index_cours()
             
             return view('Cours.detail.conference')->with(['Cour' => $Cour , 
             'coursCoference' =>$coursCoference , 'ConfrenceGuest' => $ConfrenceGuest , 
-            'souscategory' => $souscategory , 'CoursGols' =>$CoursGols , 'goals' => $goals,
+            'category' => $category , 'CoursGols' =>$CoursGols , 
             'HostConfrence' => $HostConfrence , 'GuestConfrence' => $GuestConfrence]);
 
         }elseif ($Cour->cours_type == 'podcast') {
@@ -1102,8 +1100,8 @@ public function index_cours()
            
 
             return view('Cours.detail.podcast')->with(['Cour' => $Cour , 
-            'coursPodcast' =>$coursPodcast , 'PodcastGuest' => $PodcastGuest , 'goals' => $goals,
-            'souscategory' => $souscategory , 'CoursGols' => $CoursGols , 
+            'coursPodcast' =>$coursPodcast , 'PodcastGuest' => $PodcastGuest , 
+            'category' => $category , 'CoursGols' => $CoursGols , 
             'HostPodcast' => $HostPodcast , 'GuestPodcastAll' => $GuestPodcastAll]);
         
         }elseif ($Cour->cours_type == 'formation') {
@@ -1122,7 +1120,7 @@ public function index_cours()
 
             return view('Cours.detail.formation')->with(['Cour' => $Cour , 
             'coursFormation' =>$coursFormation ,'Qsm' => $Qsm , 'programs' => $programs,
-            'goals' => $goals ,  'souscategory' => $souscategory , 'CoursGols' => $CoursGols,
+            'category' => $category , 'CoursGols' => $CoursGols,
             'HostFromateur' => $HostFromateur , 'Questions' => $Questions
         ]);
 
@@ -1161,7 +1159,7 @@ public function index_cours()
 
     public function create_cours()
     {
-        $souscategory = SousCategory::distinct()->get(['category_id']);
+        $category = Category::whereHas('souscategories.goals')->get();
 
         $HostConfrence = UserSpeakers::where('type_speaker' , 'Modérateur')->get();
 
@@ -1172,7 +1170,7 @@ public function index_cours()
         $Programs = Program::all();
 
 
-        return ['souscategory' =>$souscategory , 'HostConfrence' => $HostConfrence , 'HostPodcast' => $HostPodcast 
+        return ['category' =>$category , 'HostConfrence' => $HostConfrence , 'HostPodcast' => $HostPodcast 
         , 'HostFormateur' => $HostFormation , 'Programs' => $Programs] ;
     }
 
@@ -1282,7 +1280,9 @@ public function index_cours()
 
     public function getGoalsBySousCategorie(String $id)
     {
-        $goals = Goal::where('souscategory_id', $id)->get();
+        $Category = Category::findOrFail($id);
+        $SousCategory = SousCategory::where('category_id' , $Category->id)->get();
+        $goals = Goal::whereIn('souscategory_id', $SousCategory->pluck('id'))->get();
         return response()->json(['goals' => $goals]);
     }
 

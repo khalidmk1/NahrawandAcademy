@@ -1,6 +1,11 @@
 @extends('Layouts.master')
 
 @section('content')
+    <style>
+        .select2-search__field {
+            color: #000 !important;
+        }
+    </style>
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -79,14 +84,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>SousCategorie</label>
+                                        <label>Catégorie</label>
                                         <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                                             style="width: 100%;">
-                                            <option value="">Choisissez Votre Sous-Catégorie</option>
-                                            @foreach ($CoursInfo['souscategory'] as $souscategory)
-                                                <option value="{{ $souscategory->category->id }}"
-                                                    {{ old('cotegoryId') == $souscategory->category->id ? 'selected' : '' }}>
-                                                    {{ $souscategory->category->category_name }}
+                                            <option value="">Choisissez Votre Catégorie</option>
+                                            @foreach ($CoursInfo['category'] as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->category_name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -463,6 +467,7 @@
 
             $('#souscategory_goals').on('change', function() {
                 var sousCategorieId = $(this).val();
+                console.log(sousCategorieId);
 
                 $.ajax({
                     url: '/backoffice/goals-bySouscategory/' +

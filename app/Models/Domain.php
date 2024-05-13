@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Domain extends Model
@@ -19,10 +19,10 @@ class Domain extends Model
     /**
      * Get the user associated with the Domain
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function category(): HasOne
+    public function category(): hasMany
     {
-        return $this->hasOne(category::class,);
+        return $this->hasMany(category::class,);
     }
 }

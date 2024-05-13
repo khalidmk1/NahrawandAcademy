@@ -197,6 +197,7 @@
                                         @endforeach
                                     </div>
                                     <!-- /.post -->
+                                   
 
                                     <!-- Post -->
                                     <div class="post clearfix">

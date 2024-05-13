@@ -58,14 +58,13 @@
               <div class="row">
                   <div class="col-6">
                       <div class="form-group">
-                          <label>SousCategorie</label>
+                          <label>Catégorie <span>({{$Cour->category->category_name}})</span></label>
                           <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                               style="width: 100%;">
-                              <option>Choise Votre SousCategorie</option>
-                              @foreach ($souscategory as $souscategory)
-                                  <option value="{{ $souscategory->category->id }}"
-                                      {{ $Cour->category->id == $souscategory->category->id ? 'selected' : '' }}>
-                                      {{ $souscategory->category->category_name }}
+                              <option selected value="{{$Cour->category->id}}">Choise Votre Catégorie</option>
+                              @foreach ($category as $category)
+                                  <option value="{{ $category->id }}">
+                                      {{ $category->category_name }}
                                   </option>
                               @endforeach
 
@@ -81,33 +80,14 @@
                   </div>
                   <div class="col-6">
 
-                   {{--  <div class="form-group">
-                        <label for="goals_option">Objectifs</label>
-                        <select class="select3" name="goal[]" multiple="multiple" id="goals_option" data-placeholder="Select a State" style="width: 100%;">
-                            @foreach ($CoursGols as $CoursGol)
-                                @if($CoursGol->goal) <!-- Check if the goal relationship is loaded -->
-                                    <option selected value="{{ $CoursGol->goal->id }}">{{ $CoursGol->goal->goals }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div> --}}
-
                     <div class="form-group">
                         <label for="goals_option">Objectifs</label>
                         <select class="select3" name="goal[]" multiple="multiple" id="goals_option" data-placeholder="Select a State" style="width: 100%;">
-                            @php
-                                $uniqueGoals = $goals->unique('goals'); 
-                            @endphp
-                            @foreach ($uniqueGoals as $goal)
-                                @php
-                                    $selected = $CoursGols->contains('goal_id', $goal->id) ? 'selected' : '';
-                                @endphp
-                                <option {{ $selected }} value="{{ $goal->id }}">{{ $goal->goals }}</option>
+                            @foreach ($CoursGols as $CoursGol)
+                                <option selected value="{{ $CoursGol->goalcours->id }}">{{ $CoursGol->goalcours->goals }}</option>
                             @endforeach
                         </select>
                     </div>
-                    
-
 
 
                   </div>

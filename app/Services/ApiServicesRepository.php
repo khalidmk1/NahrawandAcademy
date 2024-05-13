@@ -184,21 +184,8 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     public function domain(){
         $domain = Domain::all();
-    
-     foreach ($domain as $d) {
-        if ($d->category) {
-            $d->category->load(['souscategories' => function ($query) {
-                $query->has('goals');
-            }]);
-            
-            if ($d->category->souscategories) {
-                $d->category->souscategories->each(function ($souscategory) {
-                    $souscategory->load('goals');
-                });
-            }
-        }
 
-        }
+        $domain->load('category.souscategories.goals');
     
         return response()->json($domain);
     }
