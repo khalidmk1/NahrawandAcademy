@@ -118,6 +118,7 @@
                                         <th>Domain</th>
                                         <th>Catégorie</th>
                                         <th>Modifier</th>
+                                        <th>Suprimer</th>
 
                                     </tr>
                                 </thead>
@@ -125,6 +126,7 @@
                                 <tbody class="text-center" id="resultcategory">
                                     @foreach ($categories['categories'] as $categorie)
                                         @include('filtering.update.categorie')
+                                        @include('filtering.delete.Category')
 
                                         <tr>
                                             <td>{{ $categorie->id }}</td>
@@ -138,6 +140,12 @@
                                                     <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
                                                         alt="update_icon">
                                                 </a>
+                                            </td>
+                                            <td>
+                                                <button type="button" data-toggle="modal" data-target="#delete_category_{{ $categorie->id }}"
+                                                    class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
                                             </td>
 
                                         </tr>

@@ -874,6 +874,34 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $category->save();
     }
 
+    public function delete_category(Request $request ,String $id)
+    {
+        $category =  Category::findOrFail(Crypt::decrypt($id));
+
+        $request->validate([
+            'password' => ['required'],
+        ]);
+
+        $CheckExiseciteInCours = Cour::where('category_id' , $category->id)->exists();
+    
+        if(Hash::check( $request->password, Auth::user()->password) && !$CheckExiseciteInCours){
+            foreach ($category->souscategories as $souscategory) {
+                $souscategory->delete();
+            }
+    
+            $category->delete();
+            return redirect()->back()->with('status' , 'Vous Avez Suprimer le Categorie');
+        }else{
+    
+            return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect ou La categorie déja exists dans un contenu');
+        }
+    
+    }
+
+
+ 
+
+
 
 
 
@@ -1358,7 +1386,7 @@ public function index_cours()
         $videoId = isset($params['v']) ? $params['v'] : null;
 
 
-        if ($videoId) {
+       
             // Create cours
             $cours = Cour::create([
                 'title' => $request->title,
@@ -1393,18 +1421,22 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImageFlex, 'public'); 
             }
 
+            if ($videoId) {
+                $coursCoference = CoursConference::create([
+                    'cours_id' => $cours->id,
+                    'host_id' => $request->hostConference,
+                    'image' => $fileNameImage,
+                    'image_flex' => $fileNameImageFlex,
+                    'video' => 'https://www.youtube.com/embed/'.$videoId,
+                    'duration' => $request->coursDuration,
+                    'description' => $request->descriptionConference
+                ]);
+                return redirect()->route('dashboard.create.video', $coursCoference->id);
+            }else{
+                return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
+            }
 
-
-            $coursCoference = CoursConference::create([
-                'cours_id' => $cours->id,
-                'host_id' => $request->hostConference,
-                'image' => $fileNameImage,
-                'image_flex' => $fileNameImageFlex,
-                'video' => 'https://www.youtube.com/embed/'.$videoId,
-                'duration' => $request->coursDuration,
-                'description' => $request->descriptionConference
-            ]);
-            return redirect()->route('dashboard.create.video', $coursCoference->id);
+          
             break;
         case 'podcast':
 
@@ -1422,19 +1454,23 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImageflex, 'public'); 
             }
             
-        
+            if ($videoId) {
+                $coursPodcast = CoursPodcast::create([
+                    'cours_id' => $cours->id,
+                    'host_id' => $request->hostPodcast,
+                    'image' => $fileNameImage,
+                    'image_flex' => $fileNameImageflex,
+                    'video' => 'https://www.youtube.com/embed/'.$videoId,
+                    'duration' => $request->DurationPdcast,
+                    'description' => $request->descriptionPodcast,
+                    'slug' => $request->slugAcroche
+                ]);
+                return redirect()->route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id));
+            }else{
+                return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
+            }
 
-            $coursPodcast = CoursPodcast::create([
-                'cours_id' => $cours->id,
-                'host_id' => $request->hostPodcast,
-                'image' => $fileNameImage,
-                'image_flex' => $fileNameImageflex,
-                'video' => 'https://www.youtube.com/embed/'.$videoId,
-                'duration' => $request->DurationPdcast,
-                'description' => $request->descriptionPodcast,
-                'slug' => $request->slugAcroche
-            ]);
-            return redirect()->route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id));
+          
             break;
         case 'formation':
 
@@ -1492,9 +1528,7 @@ public function index_cours()
             break;
     }
 
-        }else{
-            return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
-        }
+       
     
     }
 

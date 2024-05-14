@@ -121,6 +121,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('category', [CategoriesController::class, 'create_category'])->name('category.create');
    Route::post('category/store', [CategoriesController::class, 'store_category'])->name('category.store');
    Route::patch('category/update/{id}', [CategoriesController::class, 'update_category'])->name('category.update');
+   Route::delete('categorie/delete/{id}', [CategoriesController::class, 'delete_category'])->name('category.delete');
 
    //crud souscategorie
    Route::get('souscategory', [SousCategoryController::class, 'create_souscategory'])->name('souscategorie.create');
@@ -162,7 +163,7 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    //Conference video
    Route::get('video/{id}', [CoursController::class, 'getCoursVideo'])->name('create.video');
    Route::post('video/store', [CoursController::class, 'store_video'])->name('store.video');
-   Route::patch('vidoe/update/{id}', [CoursController::class, 'update_video_conference'])->name('update.video');
+   Route::patch('video/update/{id}', [CoursController::class, 'update_video_conference'])->name('update.video');
    //update Conference 
    Route::patch('cours/conference', [CoursController::class, 'update_conference'])->name('update.conference');
 

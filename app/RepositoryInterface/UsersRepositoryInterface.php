@@ -65,6 +65,7 @@ interface UsersRepositoryInterface{
     public function create_category();
     public function store_category(Request $request);
     public function update_category(Request $request , String $id);
+    public function delete_category(Request $request ,String $id);
 
     //crud SousCategory
     public function create_souscategory();

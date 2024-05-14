@@ -46,32 +46,10 @@ class CategoriesController extends Controller
     }
 
 
-    /* public function delete_category(Request $request ,String $id)
+    public function delete_category(Request $request ,String $id)
     {
-         $category =  Category::findOrFail(Crypt::decrypt($id));
-
-        $request->validate([
-            'password' => ['required'],
-        ]);
-
-        if(Hash::check( $request->password, Auth::user()->password )){
-            foreach ($category->souscategories as $souscategory) {
-                $souscategory->delete();
-            }
-    
-            $category->delete();
-        }
-
-        if(Hash::check( $request->password, Auth::user()->password ) ){
-
-            return redirect()->back()->with('status' , 'Vous Avez Suprimer le Categorie');
-
-        }else{
-
-            return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect');
-        }
-
-    } */
+        return  $this->userRepository->delete_category($request , $id);
+    }
 
     public function search_categorie(Request $request)
     {
