@@ -409,14 +409,15 @@ public function Cour_Conference(){
         $Cour =  Cour::findOrFail($id);
         $QuizSeccess = QuizSeccess::where('cours_id', $Cour->id)->first();
 
-        $Cour_Qsm = QuizSeccess::where('cours_id' , $Cour->id)->inRandomOrder()
-        ->take($QuizSeccess->Answercount)->get();
-
-        $Cour_Question = QuizQuestion::where('cours_id' , $Cour->id )->get();
-
-        $Cour_Qsm->load(['Question' ,'Answer' , 'Question.Answers']);
-
-        return response()->json(['Cour_Qsm' => $Cour_Qsm , 'Cour_Question' => $Cour_Question]);
+        if($QuizSeccess){
+            $Cour_Qsm = QuizSeccess::where('cours_id' , $Cour->id)->inRandomOrder()
+            ->take($QuizSeccess->Answercount)->get();       
+            $Cour_Qsm->load(['Question' ,'Answer' , 'Question.Answers']);
+            return response()->json(['Cour_Qsm' => $Cour_Qsm]);
+        }else{
+            $Cour_Question = QuizQuestion::where('cours_id' , $Cour->id )->get();
+            return response()->json(['Cour_Question' => $Cour_Question]);
+        }
 
     }
 
