@@ -10,8 +10,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">User Profile</li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -59,10 +58,10 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Nomber de Favoris</b> <a class="float-right">1,322</a>
+                                    <b>Number of Favorites</b> <a class="float-right">1,322</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Nomber de formation </b> <a class="float-right">543</a>
+                                    <b>Number of Content </b> <a class="float-right">543</a>
                                 </li>
 
                             </ul>
@@ -76,11 +75,11 @@
                     <!-- About Me Box -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">A propo</h3>
+                            <h3 class="card-title">About</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <strong><i class="fa fa-plus mr-1"></i> Date d'inscription</strong>
+                            <strong><i class="fa fa-plus mr-1"></i> Registration date</strong>
 
                             <p class="text-muted">
                                 {{ $client->created_at }}
@@ -88,13 +87,13 @@
 
                             <hr>
 
-                            <strong><i class="fa fa-plug mr-1"></i> Date d'activation</strong>
+                            <strong><i class="fa fa-plug mr-1"></i>Activation date</strong>
 
                             <p class="text-muted">{{ $client->created_at }}</p>
 
                             <hr>
 
-                            <strong><i class="fa fa-retweet mr-1" aria-hidden="true"></i> Renouvellement</strong>
+                            <strong><i class="fa fa-retweet mr-1" aria-hidden="true"></i> Renewal Date</strong>
 
                             <p class="text-muted">{{ $client->updated_at }}</p>
 
@@ -112,8 +111,8 @@
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#activity"
-                                        data-toggle="tab">Activity</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Statistique</a>
+                                        data-toggle="tab">Objectives / Domain</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Statistic</a>
                                 </li>
                             </ul>
                         </div><!-- /.card-header -->
@@ -215,9 +214,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                                 <!-- /.tab-pane -->
                                 <div class="tab-pane" id="timeline">
@@ -226,7 +222,7 @@
                                         <!-- timeline item -->
                                         <div>
                                             <div class="timeline-item">
-                                                <h3 class="timeline-header">Formation en cours</h3>
+                                                <h3 class="timeline-header">Ongoing Formation</h3>
                                                 <div class="timeline-body">
                                                     @foreach ($filteredCourFormation as $filteredCourFormation)
                                                         <div class="image-with-text">
@@ -251,7 +247,7 @@
                                         <div>
                                             <div class="timeline-item">
 
-                                                <h3 class="timeline-header">Formation Terminer</h3>
+                                                <h3 class="timeline-header">Completed Formation</h3>
 
                                                 <div class="timeline-body">
                                                     @foreach ($filteredCourVideoFormation as $filteredCourVideoFormation)
@@ -270,62 +266,6 @@
                                         <!-- END timeline item -->
 
                                     </div>
-                                </div>
-                                <!-- /.tab-pane -->
-
-                                <div class="tab-pane" id="settings">
-                                    <form class="form-horizontal">
-                                        <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputName"
-                                                    placeholder="Name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail"
-                                                    placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName2"
-                                                    placeholder="Name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputExperience"
-                                                class="col-sm-2 col-form-label">Experience</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputSkills"
-                                                    placeholder="Skills">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="offset-sm-2 col-sm-10">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> I agree to the <a href="#">terms and
-                                                            conditions</a>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                                 <!-- /.tab-pane -->
                             </div>

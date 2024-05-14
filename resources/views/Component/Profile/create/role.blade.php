@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crée des Roles</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Roles</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -18,17 +18,17 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Titre</label>
+                            <label for="exampleInputEmail1">Title</label>
                             <input type="text" name="title" value="{{ old('title') }}" class="form-control"
-                                id="exampleInputEmail1" placeholder="Entrez titre">
+                                id="exampleInputEmail1" placeholder="Enter title">
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea class="form-control" name="description" rows="3" placeholder="Entrez description ..."></textarea>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Enter Description ..."></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-block btn-info w-25">Crée</button>
+                        <button type="submit" class="btn btn-block btn-info w-25">Create</button>
                     </div>
                 </form>
 
@@ -41,11 +41,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Rôles de gestionnaire.</h1>
+                    <h1>Manager Roles</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         <div class="card-header">
                             <h3 class="card-title">
                                 <button class="btn btn-block btn-default" data-toggle="modal"
-                                    data-target="#exampleModal">Crée Role</button>
+                                    data-target="#exampleModal">Create Role</button>
                             </h3>
 
                             <div class="card-tools">

@@ -11,11 +11,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestionnaire de gestion</h1>
+                    <h1>Management Manager.</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -36,11 +36,11 @@
 
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée Gestionnaire</h3>
+                            <h3 class="card-title">Create Manager</h3>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             <a href="{{ Route('dashboard.manager.view') }}" class="btn btn-block btn-default w-25">
-                                Voir Les Gestionnaire
+                                View the Managers
                             </a>
                         </div>
                     </div>
@@ -61,14 +61,14 @@
                                 </div>
                               </div>
                             <div class="form-group">
-                                <label for="firstName">Prénom</label>
+                                <label for="firstName">First name</label>
                                 <input type="text" value="{{ old('firstName') }}" class="form-control" name="firstName"
-                                    id="firstName" placeholder="Entrez Prénom ...">
+                                    id="firstName" placeholder="Enter First Name ...">
                             </div>
                             <div class="form-group">
-                                <label for="lastName">Nom</label>
+                                <label for="lastName">Last name</label>
                                 <input type="text" value="{{ old('lastName') }}" class="form-control" name="lastName"
-                                    id="lastName" placeholder="Entrez Nom ...">
+                                    id="lastName" placeholder="Enter Last name ...">
                             </div>
 
                             <div class="form-group">
@@ -82,24 +82,24 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
+                                <label for="exampleInputEmail1">Email</label>
                                 <input type="email" value="{{ old('email') }}" name="email" class="form-control"
-                                    id="exampleInputEmail1" placeholder="Entrez email ...">
+                                    id="exampleInputEmail1" placeholder="Enter email ...">
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Mots de Passe</label>
+                                <label for="exampleInputPassword1">Password</label>
                                 <input type="password" name="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="Entrez Mots de Passe ...">
+                                    placeholder="Enter Password ...">
                             </div>
                             <div class="form-group">
-                                <label for="password_confirmation">Confirme Mots de Passe</label>
+                                <label for="password_confirmation">Confirm the password</label>
                                 <input type="password" name="password_confirmation" class="form-control"
-                                    id="password_confirmation" placeholder="Entrez Confirme Mots de Passe ...">
+                                    id="password_confirmation" placeholder="Enter Confirm the password ...">
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Crée Manger</button>
+                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Create Manger</button>
 
                     </form>
 

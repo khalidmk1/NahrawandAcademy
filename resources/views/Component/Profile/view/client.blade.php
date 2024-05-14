@@ -12,11 +12,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manger Client</h1>
+                    <h1>Manage Clients</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -31,21 +31,18 @@
 
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">DataTable with default features</h3>
-                        </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Email</th>
-                                        <th>Prénom</th>
-                                        <th>Nom</th>
+                                        <th>First name</th>
+                                        <th>Last name</th>
                                         <th>Status</th>
-                                        <th>Date Abonnement</th>
-                                        <th>Date Renouvellement</th>
-                                        <th>Voir</th>
+                                        <th>Subscription Date</th>
+                                        <th>Renewal Date</th>
+                                        <th>View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,8 +56,8 @@
                                             <td>{{ $client->user->updated_at }}</td>
                                             <td>
                                                 <a class="btn btn-block btn-info"
-                                                    href="{{ Route('dashboard.client.detail' , Crypt::encrypt($client->user->id)) }}"><i class="fa fa-eye"
-                                                        aria-hidden="true"></i></a>
+                                                    href="{{ Route('dashboard.client.detail', Crypt::encrypt($client->user->id)) }}"><i
+                                                        class="fa fa-eye" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

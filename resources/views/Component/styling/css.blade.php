@@ -112,10 +112,7 @@
         color: black
     }
 
-    .custom-file-input:lang(en)~.custom-file-label::after {
-        content: "Cherchez" !important;
-    }
-
+   
     [class*=icheck-]>input:first-child+label::before {
         border: 1px solid #1c49ff !important;
     }

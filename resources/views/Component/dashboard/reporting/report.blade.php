@@ -10,7 +10,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,7 +29,7 @@
                                 aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Nomber Abonnement</span>
+                            <span class="info-box-text">Subscription Number.</span>
                             <span class="info-box-number">
                                 10
                             </span>
@@ -55,7 +55,7 @@
                                 aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Nomber Abonement Non Renouvelés</span>
+                            <span class="info-box-text">Number of Non-Renewed Subscriptions.</span>
                             <span class="info-box-number">0</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -99,7 +99,7 @@
                     <!-- LINE CHART -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Line Chart</h3>
+                            <h3 class="card-title">CA Total</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -136,10 +136,10 @@
                             <div class="card-tools">
                                 <ul class="nav nav-pills ml-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">CA Formation</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Subscriptions</a>
                                     </li>
                                 </ul>
                             </div>
@@ -175,7 +175,7 @@
 
                         <select class="form-control select2" id="CategoryCours" name="CategoryCours"
                             style="width: 100%;">
-                            <option value="" selected>Filter par Categorie</option>
+                            <option value="" selected>Filter by Category.</option>
                             @foreach ($category as $categorie)
                                 <option value="{{ $categorie->id }}">{{ $categorie->category_name }}</option>
                             @endforeach
@@ -193,7 +193,7 @@
                         </span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Nomber Content</span>
+                            <span class="info-box-text">Number of Content</span>
                             <span class="info-box-number" id="CoursCount">0</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -207,7 +207,7 @@
                     <div class="form-group">
                         <select class="form-control select2" id="CategorySpeaker" name="CategorySpeaker"
                             style="width: 100%;">
-                            <option value="" selected>Filter par Categorie</option>
+                            <option value="" selected>Filter by Category</option>
                             @foreach ($category as $categorie)
                                 <option value="{{ $categorie->id }}">{{ $categorie->category_name }}</option>
                             @endforeach
@@ -218,7 +218,7 @@
                         <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-users"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Nomber de Speaker</span>
+                            <span class="info-box-text">Number of Speakers</span>
                             <span class="info-box-number" id="SpeakerCount">0</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -235,7 +235,7 @@
                     <!-- select -->
                     <div class="form-group">
                         <select class="custom-select">
-                            <option selected>Filter par Type de Contenu</option>
+                            <option selected>Filter by Content Type</option>
                             <option value="conference">Conféreance</option>
                             <option value="podcast">Podcast</option>
                             <option value="formation">Formation</option>
@@ -248,7 +248,7 @@
                                 aria-hidden="true"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Nomber Heur Visualisation</span>
+                            <span class="info-box-text">Number of Viewing Hours</span>
                             <span class="info-box-number">760</span>
                         </div>
                         <!-- /.info-box-content -->

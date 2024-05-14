@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestion des intervenants</h1>
+                    <h1>Management of speakers</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -28,11 +28,11 @@
 
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée des intervenants</h3>
+                            <h3 class="card-title">Create of speakers</h3>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             <a href="{{ Route('dashboard.speaker.view') }}" class="btn btn-block btn-default w-25">
-                                Voir des intervenants
+                                View the speakers
                             </a>
                         </div>
                     </div>
@@ -60,33 +60,33 @@
                                 <div class="icheck-primary d-inline">
                                     <input type="checkbox" name="isPopulaire" id="isPopulaire">
                                     <label for="isPopulaire">
-                                        Populaire
+                                        Popular
                                     </label>
                                 </div>
 
                             </div>
 
                             <div class="form-group">
-                                <label for="firstName">Prénom</label>
+                                <label for="firstName">First name</label>
                                 <input type="text" value="{{ old('firstName') }}" class="form-control" name="firstName"
-                                    id="firstName" placeholder="Entrez Prénom ...">
+                                    id="firstName" placeholder="Enter First Name ...">
                             </div>
                             <div class="form-group">
-                                <label for="lastName">Nom</label>
+                                <label for="lastName">Last name</label>
                                 <input type="text" value="{{ old('lastName') }}" class="form-control" name="lastName"
-                                    id="lastName" placeholder="Entrez Nom ...">
+                                    id="lastName" placeholder="Enter Last name ...">
                             </div>
 
 
 
 
                             <div class="form-group">
-                                <label>Speaker biographie</label>
+                                <label>Speaker biography</label>
                                 <textarea class="form-control" name="biographie" rows="3" placeholder="Entrez biographie ..."></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label>Type de Speaker</label>
+                                <label>Type of Speaker</label>
                                 <select name="type_speaker" class="custom-select">
                                     <option value="Animateur">Animateur</option>
                                     <option value="Formateur">Formateur</option>
@@ -97,25 +97,25 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
+                                <label for="exampleInputEmail1">Email</label>
                                 <input type="email" value="{{ old('email') }}" name="email" class="form-control"
-                                    id="exampleInputEmail1" placeholder="Entrez email ...">
+                                    id="exampleInputEmail1" placeholder="Enter email ...">
                             </div>
 
                             <div class="form-group">
-                                <label for="facebook">facebook</label>
+                                <label for="facebook">Facebook</label>
                                 <input type="url" value="{{ old('facebook') }}" class="form-control" name="facebook"
-                                    id="facebook" placeholder="Entrez url reseau social ...">
+                                    id="facebook" placeholder="Enter Facebook URL ...">
                             </div>
                             <div class="form-group">
-                                <label for="linkedin">linkedin</label>
+                                <label for="linkedin">Linkedin</label>
                                 <input type="url" value="{{ old('linkedin') }}" class="form-control" name="linkedin"
-                                    id="linkedin" placeholder="Entrez url reseau social ...">
+                                    id="linkedin" placeholder="Enter Linkedin URL ...">
                             </div>
                             <div class="form-group">
-                                <label for="instagram">instagram</label>
+                                <label for="instagram">Instagram</label>
                                 <input type="url" value="{{ old('instagram') }}" class="form-control" name="instagram"
-                                    id="instagram" placeholder="Entrez url reseau social ...">
+                                    id="instagram" placeholder="Enter Instagram URL ...">
                             </div>
 
 

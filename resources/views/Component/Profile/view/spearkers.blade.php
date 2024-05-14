@@ -37,12 +37,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Contacts</h1>
+                    <h1>View the Speakers</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Contacts</li>
+                        <li class="breadcrumb-item"><a href="/backoffice">Home</a></li>
                     </ol>
                 </div>
             </div>
@@ -95,15 +94,15 @@
                                     <span class="idd">{{ $speaker->user->email }}</span>
                                     <div class="bottom" style=" padding: 0 20px">
                                         <a href="{{ $speaker->user->userspeaker->linkdin }}" class="btn btn-info btn-xs">
-                                            linkedin
+                                            Linkedin
                                         </a>
                                         <a href="{{ $speaker->user->userspeaker->faceboock }}"
                                             class="btn btn-primary btn-xs">
-                                            facebook
+                                            Facebook
                                         </a>
                                         <a href="{{ $speaker->user->userspeaker->instagram }}"
                                             class="btn btn-danger btn-xs">
-                                            instagram
+                                            Instagram
                                         </a>
                                     </div>
                                     <div class="d-flex flex-row justify-content-center align-items-center gap-2">
