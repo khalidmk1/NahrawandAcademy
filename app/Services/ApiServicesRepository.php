@@ -61,7 +61,10 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         if($videoCount == $Videoprogress)
         {
-            return response()->json(true);
+            $CourFormation->load('category', 'cours', 'user', 
+            'user.userspeaker', 'CoursFormationVideo');
+            return response()->json([true , $CourFormation]);
+
         }
 
         return response()->json(false);
@@ -279,7 +282,7 @@ public function getpersonelCours(String $user)
 {
     $users = User::findOrFail($user);
 
-    $courFormation = Cour::where(['cours_type' => 'formation'])->get();
+    $courFormation = Cour::where(['cours_type' => 'formation' , 'isComing' => 1])->get();
 
     $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
     'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');

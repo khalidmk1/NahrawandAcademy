@@ -254,104 +254,104 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     }
 
 
-//serch cours
-public function search_cours(Request $request)
-{
-    $output = "";
-    $Cours = Cour::query();
+    //serch cours
+    public function search_cours(Request $request)
+    {
+        $output = "";
+        $Cours = Cour::query();
 
-    // Search by title
-    if ($request->has('title')) {
-        $title_cours = $request->input('title');
-        $Cours->where('title', 'like', '%' . $title_cours . '%');
+        // Search by title
+        if ($request->has('title')) {
+            $title_cours = $request->input('title');
+            $Cours->where('title', 'like', '%' . $title_cours . '%');
+        }
+
+        // Search by host_id in CoursFormation
+        if ($request->has('user')) {
+            $host_id = $request->input('user');
+            $Cours->whereHas('CoursFormation', function ($query) use ($host_id) {
+                $query->where('host_id', $host_id);
+            });
+        }
+
+        // Search by host_id in CoursPodcast
+        if ($request->has('user')) {
+            $host_id = $request->input('user');
+            $Cours->orWhereHas('CoursPodcast', function ($query) use ($host_id) {
+                $query->where('host_id', $host_id);
+            });
+        }
+
+        if ($request->has('category')) {
+            $category_cours = $request->input('category');
+            $Cours->orWhereHas('category_id', 'like', '%' . $category_cours . '%');
+        }
+
+
+        $Cours = $Cours->get();
+
+        foreach ($Cours as $key => $cour) {
+            $output .= view('Cours.cherche.CoursCard')->with('cour', $cour)->render();
+        }
+
+        return response()->json(['output' => $output]);
     }
 
-    // Search by host_id in CoursFormation
-    if ($request->has('user')) {
-        $host_id = $request->input('user');
-        $Cours->whereHas('CoursFormation', function ($query) use ($host_id) {
-            $query->where('host_id', $host_id);
-        });
+    //search short
+    public function search_short(Request $request)
+    {
+        $output = "";
+        $shorts = ShortCours::query();
+
+        // Search by title
+        if ($request->has('title')) {
+            $title_cours = $request->input('title');
+            $shorts->where('title', 'like', '%' . $title_cours . '%');
+        }
+
+        // Search by host_id in CoursFormation
+        if ($request->has('user')) {
+            $host_id = $request->input('user');
+            $shorts->where('host_id', 'like', '%' . $host_id . '%');
+        }
+
+        if ($request->has('goals')) {
+            $goal = $request->input('goals');
+            $shorts->whereHas('shortCours', function ($query) use ($goal) {
+                $query->where('goal_id', $goal);
+            });
+        }
+
+
+        $shorts = $shorts->get();
+        $output .= view('Cours.cherche.short.ShortCard')->with('shorts', $shorts)->render();
+
+        return response()->json(['output' => $output]);
     }
 
-    // Search by host_id in CoursPodcast
-    if ($request->has('user')) {
-        $host_id = $request->input('user');
-        $Cours->orWhereHas('CoursPodcast', function ($query) use ($host_id) {
-            $query->where('host_id', $host_id);
-        });
+    //search history
+    public function search_history(Request $request)
+    {
+        $output = "";
+        $shorts = ShortCours::query();
+        $Cours = Cour::query();
+
+        // Search by title
+        if ($request->has('title')) {
+            $title_cours = $request->input('title');
+            $shorts->onlyTrashed('title', 'like', '%' . $title_cours . '%');
+            
+        }
+    /*  // Search by title
+        if ($request->has('title')) {
+            $title_cours = $request->input('title');
+            $Cours->where('title', 'like', '%' . $title_cours . '%'); 
+        } */
+        $shorts = $shorts->get();
+        $output .= view('Hisotry.chereche.CardCours')->with(['shorts'=> $shorts ])->render();
+
+        return response()->json($output);
     }
-
-    if ($request->has('category')) {
-        $category_cours = $request->input('category');
-        $Cours->orWhereHas('category_id', 'like', '%' . $category_cours . '%');
-    }
-
-
-    $Cours = $Cours->get();
-
-    foreach ($Cours as $key => $cour) {
-        $output .= view('Cours.cherche.CoursCard')->with('cour', $cour)->render();
-    }
-
-    return response()->json(['output' => $output]);
-}
-
-//search short
-public function search_short(Request $request)
-{
-    $output = "";
-    $shorts = ShortCours::query();
-
-    // Search by title
-    if ($request->has('title')) {
-        $title_cours = $request->input('title');
-        $shorts->where('title', 'like', '%' . $title_cours . '%');
-    }
-
-    // Search by host_id in CoursFormation
-    if ($request->has('user')) {
-        $host_id = $request->input('user');
-        $shorts->where('host_id', 'like', '%' . $host_id . '%');
-    }
-
-    if ($request->has('goals')) {
-        $goal = $request->input('goals');
-        $shorts->whereHas('shortCours', function ($query) use ($goal) {
-            $query->where('goal_id', $goal);
-        });
-    }
-
-
-    $shorts = $shorts->get();
-    $output .= view('Cours.cherche.short.ShortCard')->with('shorts', $shorts)->render();
-
-    return response()->json(['output' => $output]);
-}
-
-//search history
-public function search_history(Request $request)
-{
-    $output = "";
-    $shorts = ShortCours::query();
-    $Cours = Cour::query();
-
-    // Search by title
-    if ($request->has('title')) {
-        $title_cours = $request->input('title');
-        $shorts->onlyTrashed('title', 'like', '%' . $title_cours . '%');
-        
-    }
-   /*  // Search by title
-    if ($request->has('title')) {
-        $title_cours = $request->input('title');
-        $Cours->where('title', 'like', '%' . $title_cours . '%'); 
-    } */
-    $shorts = $shorts->get();
-    $output .= view('Hisotry.chereche.CardCours')->with(['shorts'=> $shorts ])->render();
-
-    return response()->json($output);
-}
 
 
 
@@ -1289,86 +1289,93 @@ public function index_cours()
 
 
     //store cours
-    public function store_cours(Request $request)
-{
-    // Validate common fields
-    $commonRules = [
-        'title' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string', 'max:300'],
-        'cotegoryId' => ['required', 'string', 'max:255'],
-        'tags' => ['required', 'array'],
-        'gaols_id' => ['required', 'array'],
-        'coursType' => ['required', 'string', 'max:255'],
-    ];
+        public function store_cours(Request $request)
+    {
+        // Validate common fields
+        $commonRules = [
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:300'],
+            'cotegoryId' => ['required', 'string', 'max:255'],
+            'tags' => ['required', 'array'],
+            'gaols_id' => ['required', 'array'],
+            'coursType' => ['required', 'string', 'max:255'],
+        ];
 
-    $request->validate($commonRules);
+        $request->validate($commonRules);
 
-    $additionalRules = [];
-    $iscoming = $request->iscoming == 'on';
-    $isActive = $request->isActive == 'on';
+        $additionalRules = [];
+        $iscoming = $request->iscoming == 'on';
+        $isActive = $request->isActive == 'on';
 
-    
-    
-    
+        
+        
+        
 
-    switch ($request->coursType) {
-        case 'conference':
-            $additionalRules = [
-                'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
-                'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
-                'videoconference' => ['required', 'url'],
-                'hostConference' => ['required'],
-                'descriptionConference' => ['required', 'string', 'max:600'],
-            ];
-            break;
-        case 'podcast':
-            $additionalRules = [
-                'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                'hostPodcast' => ['required'],
-                'videocpodcast' => ['required', 'url'],
-                'slugAcroche' => ['required', 'string', 'max:255'],
-                'descriptionPodcast' => ['required', 'string', 'max:600'],
-            ];
-            break;
-        case 'formation':
-            $additionalRules = [
-                'hostFormation' => ['required'],
-                'programId' => ['sometimes'],
-                'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
-                'iscertify' => ['sometimes'],
-                'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
-            ];
-            break;
-    }
+        switch ($request->coursType) {
+            case 'conference':
+                $additionalRules = [
+                    'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
+                    'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
+                    'videoconference' => ['required', 'url'],
+                    'hostConference' => ['required'],
+                    'descriptionConference' => ['required', 'string', 'max:600'],
+                ];
+                break;
+            case 'podcast':
+                $additionalRules = [
+                    'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'hostPodcast' => ['required'],
+                    'videocpodcast' => ['required', 'url'],
+                    'slugAcroche' => ['required', 'string', 'max:255'],
+                    'descriptionPodcast' => ['required', 'string', 'max:600'],
+                ];
+                break;
+            case 'formation':
+                $additionalRules = [
+                    'hostFormation' => ['required'],
+                    'programId' => ['sometimes'],
+                    'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
+                    'iscertify' => ['sometimes'],
+                    'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
+                ];
+                break;
+        }
 
-    $request->validate($additionalRules);
+        $request->validate($additionalRules);
 
 
-    $goals = $request->gaols_id;
-    $StringTag = $request->tags[0];
-    $tags = explode(',', $StringTag);
-    $tags = array_map('trim', $tags);
+        $goals = $request->gaols_id;
+        $StringTag = $request->tags[0];
+        $tags = explode(',', $StringTag);
+        $tags = array_map('trim', $tags);
 
-    // Create cours
-    $cours = Cour::create([
-        'title' => $request->title,
-        'isComing' => $iscoming,
-        'isActive' => $isActive,
-        'description' => $request->description,
-        'category_id' => $request->cotegoryId,
-        'tags' => $tags,
-        'cours_type' => $request->coursType,
-    ]);
+        $url = $request->videocpodcast;
+        $queryString = parse_url($url, PHP_URL_QUERY);
+        parse_str($queryString, $params);
+        $videoId = isset($params['v']) ? $params['v'] : null;
 
-    foreach ($goals as $key => $goal) {
-        $goalCours = CoursGoals::create([
-            'cours_id' => $cours->id,
-            'goal_id' => $goal
-        ]);
-    }
+
+        if ($videoId) {
+            // Create cours
+            $cours = Cour::create([
+                'title' => $request->title,
+                'isComing' => $iscoming,
+                'isActive' => $isActive,
+                'description' => $request->description,
+                'category_id' => $request->cotegoryId,
+                'tags' => $tags,
+                'cours_type' => $request->coursType,
+            ]);
+            
+            foreach ($goals as $key => $goal) {
+                $goalCours = CoursGoals::create([
+                    'cours_id' => $cours->id,
+                    'goal_id' => $goal
+                ]);
+            }
 
     // Create related model based on coursType
     switch ($request->coursType) {
@@ -1386,10 +1393,6 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImageFlex, 'public'); 
             }
 
-            $url = $request->videoconference;
-            $queryString = parse_url($url, PHP_URL_QUERY);
-            parse_str($queryString, $params);
-            $videoId = $params['v'];
 
 
             $coursCoference = CoursConference::create([
@@ -1419,10 +1422,7 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImageflex, 'public'); 
             }
             
-            $url = $request->videocpodcast;
-            $queryString = parse_url($url, PHP_URL_QUERY);
-            parse_str($queryString, $params);
-            $videoId = $params['v'];
+        
 
             $coursPodcast = CoursPodcast::create([
                 'cours_id' => $cours->id,
@@ -1452,7 +1452,7 @@ public function index_cours()
                 $file->storeAs($directory, $fileNameImageflex, 'public'); 
             }
 
-           
+        
 
             $programId = ($request->programId == 0) ? null : $request->programId;
             $iscertify = $request->iscertify == 'on';
@@ -1467,7 +1467,7 @@ public function index_cours()
             ]);
 
             if ($request->hasFile('document')) {
-               
+            
                 $file = $request->file('document');
                 
                 $directory = 'upload/cour/document/';
@@ -1491,7 +1491,12 @@ public function index_cours()
             return redirect()->back()->with('status', 'vous avez crée un contenu avec seccess');
             break;
     }
-}
+
+        }else{
+            return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
+        }
+    
+    }
 
 //store short
 public function store_short(Request $request)
