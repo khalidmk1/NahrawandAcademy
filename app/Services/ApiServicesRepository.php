@@ -61,7 +61,7 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         if($videoCount == $Videoprogress)
         {
-            $CourFormation->load('category', 'cours', 'user', 
+            $CourFormation->load('cours.category', 'cours', 'user', 
             'user.userspeaker', 'CoursFormationVideo');
             return response()->json([true , $CourFormation]);
 
@@ -277,25 +277,29 @@ class ApiServicesRepository  implements apiRepositoryInterface
        
     }
 
-//get personel cours 
 public function getpersonelCours(String $user)
 {
     $users = User::findOrFail($user);
 
-    $courFormation = Cour::where(['cours_type' => 'formation' , 'isComing' => 1])->get();
+    // Retrieve all courFormation
+    $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
 
+    // Load relationships
     $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
     'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');
 
-    $viewCours = ViewCour::where(['user_id' => $users->id])->get();
+    // Retrieve viewCours for the user
+    $viewCours = ViewCour::whereIn('cours_id', $courFormation->pluck('id'))
+        ->where('user_id', $users->id)
+        ->pluck('cours_id'); 
 
-    $courFormation->each(function ($formation) use ($viewCours) {
-      
-        $formation->viewExists = $viewCours->contains('cours_id', $formation->id);
+    $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours) {
+        return $viewCours->contains($cour->id);
     });
 
-    return response()->json(['contentFormation' => $courFormation]);
+    return response()->json(['contentFormation' => $filteredCourFormation]);
 }
+
 
 //personel video podcast
 
