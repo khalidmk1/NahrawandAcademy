@@ -17,6 +17,7 @@ use App\Models\Program;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserRole;
+use App\Models\ViewCour;
 use App\Models\ShortGoal;
 use App\Mail\SendInfoUser;
 use App\Models\CoursGoals;
@@ -28,6 +29,7 @@ use Illuminate\Support\Str;
 use App\Models\CoursPodcast;
 use App\Models\QuizQuestion;
 use App\Models\SousCategory;
+use App\Models\UserObjectif;
 use App\Models\UserSpeakers;
 use Illuminate\Http\Request;
 use App\Models\CommentTicket;
@@ -46,6 +48,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\VideoProgressFormation;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
@@ -822,13 +825,78 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         return view('Component.Profile.view.client')->with('Clients' , $Clients);
     }
 
-
     public function detail_client(String $id)
     {
         $client = User::findOrFail(Crypt::decrypt($id));
+        
+        // Retrieve all courFormation
+        $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
 
-        return view('Component.Profile.detail.client')->with('client' , $client);
+        $videoProgresse = VideoProgressFormation::where('user_id', $client->id)->get();
+
+        // Retrieve viewCours for the user
+        $viewCours = ViewCour::whereIn('cours_id', $courFormation->pluck('id'))
+        ->where('user_id', $client->id)
+        ->pluck('cours_id'); 
+        
+        $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours, $videoProgresse) {
+            if ($viewCours->contains($cour->id)) {
+                $totalVideos = $cour->CoursFormation->CoursFormationVideo->count();
+                $completedVideos = $videoProgresse->where('video_id', $cour->CoursFormation->id)->count();
+                return $totalVideos != $completedVideos; 
+            } else {
+                return false; 
+            }
+        });
+
+        $filteredCourVideoFormation = $courFormation->filter(function ($cour) use ($viewCours, $videoProgresse) {
+            if ($viewCours->contains($cour->id)) {
+                $totalVideos = $cour->CoursFormation->CoursFormationVideo->count();
+                $completedVideos = $videoProgresse->where('video_id', $cour->CoursFormation->id)->count();
+                return $totalVideos == $completedVideos;
+            } else {
+                return false;
+            }
+        });
+
+
+        // Retrieve the UserObjectifs related to the client
+        $doamin1 = UserObjectif::where('user_id', $client->id)
+            ->whereHas('goals.souscategory.category.domain', function ($query) {
+                // Filter the goals based on the domain_id
+                $query->where('domain_id', 1);
+            })
+            ->get();
+        $doamin2 = UserObjectif::where('user_id', $client->id)
+            ->whereHas('goals.souscategory.category.domain', function ($query) {
+                // Filter the goals based on the domain_id
+                $query->where('domain_id', 2);
+            })
+            ->get();
+        $doamin3 = UserObjectif::where('user_id', $client->id)
+            ->whereHas('goals.souscategory.category.domain', function ($query) {
+                // Filter the goals based on the domain_id
+                $query->where('domain_id', 3);
+            })
+            ->get();
+        $doamin4 = UserObjectif::where('user_id', $client->id)
+            ->whereHas('goals.souscategory.category.domain', function ($query) {
+                // Filter the goals based on the domain_id
+                $query->where('domain_id', 4);
+            })
+            ->get();
+
+    
+        return view('Component.Profile.detail.client')->with([
+            'client' => $client, 'filteredCourFormation' => $filteredCourFormation,
+            'doamin1' => $doamin1 , 'doamin2' =>$doamin2 , 
+            'filteredCourVideoFormation' => $filteredCourVideoFormation,
+            'doamin3' => $doamin3 , 'doamin4' => $doamin4
+        ]);
     }
+    
+
+    
     
 
 
