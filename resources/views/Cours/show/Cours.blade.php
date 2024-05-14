@@ -76,7 +76,7 @@
 
                                         <div class="card-body">
                                             <h5 class="card-title"> {{ $cour->title }}</h5>
-                                            <p class="card-text">{{ Str::limit($cour->description, '100', '...') }}...</p>
+                                            <p class="card-text">{{ Str::limit($cour->description, '100', '...') }}</p>
                                             <a href="{{ Route('dashboard.cours.show', Crypt::encrypt($cour->id)) }}"
                                                 class="btn btn-primary">Detail</a>
                                         </div>
