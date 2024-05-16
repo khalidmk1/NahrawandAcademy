@@ -2,6 +2,13 @@
 
 @section('content')
     <style>
+        .widget-header {
+            padding: 15px 15px 50px 15px;
+            min-height: 125px;
+            position: relative;
+            overflow: hidden;
+        }
+
         .name {
             font-size: 22px;
             font-weight: bold
@@ -80,48 +87,58 @@
                         @include('Component.Profile.delete.speaker')
 
 
-                        <div class=" mb-2 p-3 col-md-6 col-lg-4 col-sm-6">
-                            <div class="card bg-light p-4">
-                                <div class=" image d-flex flex-column justify-content-center align-items-center">
-                                    <img class="rounded mx-auto d-block"
-                                        src="{{ asset('storage/avatars/' . $speaker->user->avatar) }}" {{-- style="height: 89px;width: 89px;" --}}
-                                        alt="user-avatar" height="100" width="100" />
-                                    <div class="text mt-3">
-                                        <strong>{{ $speaker->user->userspeaker->type_speaker }}</strong>
+                        <div class=" mb-2 p-3 col-md-6 col-lg-4 col-sm-6 ">
+                            <div class="card bg-light p-4  hovercard">
+                                <div
+                                    class=" image d-flex flex-column justify-content-center align-items-center position-relative">
+                                    <div class="widget-header">
+                                        <img class="rounded mx-auto d-block"
+                                            src="{{ asset('storage/profile/' . $speaker->user->profile_image) }}"
+                                             alt="user-avatar" style="height: 50% ; width: 100%" />
                                     </div>
-                                    <span
-                                        class="name mt-3">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
-                                    <span class="idd">{{ $speaker->user->email }}</span>
-                                    <div class="bottom" style=" padding: 0 20px">
-                                        <a href="{{ $speaker->user->userspeaker->linkdin }}" class="btn btn-info btn-xs">
-                                            Linkedin
-                                        </a>
-                                        <a href="{{ $speaker->user->userspeaker->faceboock }}"
-                                            class="btn btn-primary btn-xs">
-                                            Facebook
-                                        </a>
-                                        <a href="{{ $speaker->user->userspeaker->instagram }}"
-                                            class="btn btn-danger btn-xs">
-                                            Instagram
-                                        </a>
-                                    </div>
-                                    <div class="d-flex flex-row justify-content-center align-items-center gap-2">
-                                        <span class="idd1"
-                                            style="max-width:300px">{{ $speaker->user->userspeaker->biographie }}</span>
+                                    <div class="position-relative" style="top: -97px;">
+                                        <img class="rounded mx-auto d-block"
+                                            src="{{ asset('storage/avatars/' . $speaker->user->avatar) }}"
+                                            {{-- style="height: 89px;width: 89px;" --}} alt="user-avatar" height="100" width="100" />
+                                        <div class="text mt-3">
+                                            <strong>{{ $speaker->user->userspeaker->type_speaker }}</strong>
+                                        </div>
+                                        <span
+                                            class="name mt-3">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
+                                        <span class="idd">{{ $speaker->user->email }}</span>
+                                        <div class="bottom" style=" padding: 0 20px">
+                                            <a href="{{ $speaker->user->userspeaker->linkdin }}"
+                                                class="btn btn-info btn-xs">
+                                                Linkedin
+                                            </a>
+                                            <a href="{{ $speaker->user->userspeaker->faceboock }}"
+                                                class="btn btn-primary btn-xs">
+                                                Facebook
+                                            </a>
+                                            <a href="{{ $speaker->user->userspeaker->instagram }}"
+                                                class="btn btn-danger btn-xs">
+                                                Instagram
+                                            </a>
+                                        </div>
+                                        <div class="d-flex flex-row justify-content-center align-items-center gap-2">
+                                            <span class="idd1"
+                                                style="max-width:300px">{{ $speaker->user->userspeaker->biographie }}</span>
+                                        </div>
+
+                                        <div class="text-right  mt-3">
+                                            <a href="{{ Route('dashboard.profile.edit', Crypt::encrypt($speaker->user->id)) }}"
+                                                class="btn btn-sm bg-warning mr-3">
+                                                <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
+                                                    alt="update_icon">
+                                            </a>
+                                            <button type="button" data-toggle="modal" style="float: right"
+                                                data-target="#delete_admin_{{ $speaker->user->id }}"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
                                     </div>
 
-                                    <div class="text-right  mt-3">
-                                        <a href="{{ Route('dashboard.profile.edit', Crypt::encrypt($speaker->user->id)) }}"
-                                            class="btn btn-sm bg-warning mr-3">
-                                            <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
-                                                alt="update_icon">
-                                        </a>
-                                        <button type="button" data-toggle="modal" style="float: right"
-                                            data-target="#delete_admin_{{ $speaker->user->id }}"
-                                            class="btn btn-sm btn-danger">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
