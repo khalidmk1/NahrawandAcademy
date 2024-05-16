@@ -695,18 +695,15 @@ public function Cour_Conference(){
 
     //get manager
     public function getmanager()
-    {
+{
+    $excludedRoleIds = [1, 2, 3, 4];
 
-        $excludedRoleIds = [1, 2, 3 , 4];
+    $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
+                    ->with('user')
+                    ->get();
 
-        $managers = RolePermission::where('permission_id' , 4)->get();
-
-        $managers->load('userrole.user');
-        
-        return response()->json($managers);
-        
-
-    }
+    return response()->json($managers);
+}
 
 
     //ticket store
