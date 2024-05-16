@@ -94,18 +94,25 @@
                                     <div class="widget-header">
                                         <img class="rounded mx-auto d-block"
                                             src="{{ asset('storage/profile/' . $speaker->user->profile_image) }}"
-                                             alt="user-avatar" style="height: 50% ; width: 100%" />
+                                            alt="user-avatar" style="height: 50% ; width: 100%" />
                                     </div>
                                     <div class="position-relative" style="top: -79px">
                                         <img class="rounded mx-auto d-block"
-                                            src="{{ asset('storage/avatars/' . $speaker->user->avatar) }}"
-                                            {{-- style="height: 89px;width: 89px;" --}} alt="user-avatar" height="100" width="100" />
-                                        <div class="text mt-3 text-center">
+                                            src="{{ asset('storage/avatars/' . $speaker->user->avatar) }}" alt="user-avatar"
+                                            height="100" width="100" />
+                                        <div class="text col mt-3 text-center">
                                             <strong>{{ $speaker->user->userspeaker->type_speaker }}</strong>
                                         </div>
-                                        <span
-                                            class="name mt-3 text-center">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
-                                        <span class="idd text-center">{{ $speaker->user->email }}</span>
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <span
+                                                    class="name mt-3 ">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <span class="idd ">{{ $speaker->user->email }}</span>
+                                            </div>
+                                        </div>
+
                                         <div class="bottom text-center mb-2" style=" padding: 0 20px">
                                             <a href="{{ $speaker->user->userspeaker->linkdin }}"
                                                 class="btn btn-info btn-xs">
@@ -125,7 +132,7 @@
                                                 style="max-width:300px">{{ $speaker->user->userspeaker->biographie }}</span>
                                         </div>
 
-                                        <div class="text-right  mt-3">
+                                        <div class="justify-content-center d-flex mt-3">
                                             <a href="{{ Route('dashboard.profile.edit', Crypt::encrypt($speaker->user->id)) }}"
                                                 class="btn btn-sm bg-warning mr-3">
                                                 <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
