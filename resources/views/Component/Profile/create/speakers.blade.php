@@ -55,6 +55,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="profile_image">Profile Image</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" name="profile_image" class="custom-file-input"
+                                            id="profile_image">
+                                        <label class="custom-file-label" for="profile_image">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Upload</span>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="form-group clearfix text-center col-4">
                                 <div class="icheck-primary d-inline">
@@ -114,8 +127,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="instagram">Instagram</label>
-                                <input type="url" value="{{ old('instagram') }}" class="form-control" name="instagram"
-                                    id="instagram" placeholder="Enter Instagram URL ...">
+                                <input type="url" value="{{ old('instagram') }}" class="form-control"
+                                    name="instagram" id="instagram" placeholder="Enter Instagram URL ...">
                             </div>
 
 

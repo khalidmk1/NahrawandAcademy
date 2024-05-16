@@ -45,6 +45,14 @@
                                         <label class="custom-file-label" for="avatar">Choisez image</label>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="profile_image">Profile Image</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="profile_image"
+                                            id="profile_image">
+                                        <label class="custom-file-label" for="profile_image">Choisez image</label>
+                                    </div>
+                                </div>
 
                                 @if ($user->userRole->role_id == 3)
                                     <div class="form-group clearfix text-center col-4">
@@ -77,7 +85,6 @@
                                 </div>
 
                                 @if ($user->userRole->role_id == 3)
-                                 
                                     <!-- textarea -->
                                     <div class="form-group">
                                         <label for="biographie">Biographie</label>

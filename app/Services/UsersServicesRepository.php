@@ -368,71 +368,95 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
     public function update_profile(Request $request , $id){
 
-        $profile = User::findOrFail(Crypt::decrypt($id));
-        $userSpeaker = UserSpeakers::where('user_id' , $profile->id)->first();
-            $request->validate([
-                'firstName' => ['required', 'string', 'max:255'],
-                'lastName' => ['required', 'string', 'max:255'],
-                'avatar' => ['file', 'mimes:jpeg,png,jpg,gif'],
-                'email' => 'required|email|unique:users,email,' . $profile->id,
-            ]);
 
-            $isPopulaire = $request->isPopulaire == 'on';
-
-            if ($request->hasFile('avatar')) {
-            
-                $imagePath = 'avatars/'.$profile->avatar;
-                Storage::disk('public')->delete($imagePath);
-               
-                $file = $request->file('avatar');
-                $directory = 'avatars/';
-                $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImage, 'public');
-                
-                $profile->avatar = $fileNameImage;
-            }
-          
-            
-            $profile->firstName = $request->firstName;
-            $profile->lastName = $request->lastName;
-            $profile->is_popular = $isPopulaire;
-            $profile->email = $request->email;
-            if($profile->userRole->role_id == 3)
-            {
-                $request->validate([
-                    'biographie' => ['required', 'string', 'max:255'],
-                    'facebook' => ['nullable', 'url'],
-                    'linkedin' => ['nullable', 'url'],
-                    'instagram' => ['nullable', 'url'],
-                ]);
-
-                
-
-                if ($request->has('facebook') && !str_contains($request->facebook, 'facebook.com')) {
-                    $invalidUrls[] = 'Facebook';
-                }
-                if ($request->has('linkedin') && !str_contains($request->linkedin, 'linkedin.com')) {
-                    $invalidUrls[] = 'LinkedIn';
-                }
-                if ($request->has('instagram') && !str_contains($request->instagram, 'instagram.com')) {
-                    $invalidUrls[] = 'Instagram';
-                }
-                
-                if (!empty($invalidUrls)) {
-                    return redirect()->back()->with(['faild' => 'Invalid URLs for: ' . implode(', ', $invalidUrls)]);
         
-                }else{
-                    $userSpeaker->biographie = $request->biographie;
-                    $userSpeaker->faceboock = $request->facebook;
-                    $userSpeaker->linkdin = $request->linkedin;
-                    $userSpeaker->instagram = $request->instagram;
-                    $userSpeaker->save();
-                }
+        $profile = User::findOrFail(Crypt::decrypt($id));
+        $userSpeaker = UserSpeakers::where('user_id', $profile->id)->first();
 
-               
+        $request->validate([
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
+            'avatar' => ['file', 'mimes:jpeg,png,jpg,gif', 'max:400'],
+            'profile_image' => ['file', 'mimes:jpeg,png,jpg,gif', 'max:400'],
+            'email' => 'required|email|unique:users,email,' . $profile->id,
+        ]);
+
+        $isPopulaire = $request->isPopulaire == 'on';
+
+        if ($request->hasFile('avatar')) {
+            $imagePath = 'avatars/'.$profile->avatar;
+            Storage::disk('public')->delete($imagePath);
+        
+            $file = $request->file('avatar');
+            $directory = 'avatars/';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public');
+            
+            $profile->avatar = $fileNameImage;
+        }
+
+        if ($request->hasFile('profile_image')) {
+            $imagePath = 'profile/'.$profile->profile_image;
+            Storage::disk('public')->delete($imagePath);
+
+            $file = $request->file('profile_image');
+            $directory = 'profile/';
+            $fileNameImageProfile = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImageProfile, 'public');
+            
+            $profile->update([
+                'profile_image' => $fileNameImageProfile
+            ]);
+        }
+
+        $profile->firstName = $request->firstName;
+        $profile->lastName = $request->lastName;
+        $profile->is_popular = $isPopulaire;
+        $profile->email = $request->email;
+
+        if ($profile->userRole->role_id == 3) {
+            $rules = [
+                'biographie' => ['required', 'string', 'max:255'],
+            ];
+
+            if ($request->filled('facebook')) {
+                $rules['facebook'] = ['nullable', 'url'];
+            }
+
+            if ($request->filled('linkedin')) {
+                $rules['linkedin'] = ['nullable', 'url'];
+            }
+
+            if ($request->filled('instagram')) {
+                $rules['instagram'] = ['nullable', 'url'];
+            }
+
+            $request->validate($rules);
+
+            $invalidUrls = [];
+
+            if ($request->has('facebook') && !str_contains($request->facebook, 'facebook.com')) {
+                $invalidUrls[] = 'Facebook';
+            }
+            if ($request->has('linkedin') && !str_contains($request->linkedin, 'linkedin.com')) {
+                $invalidUrls[] = 'LinkedIn';
+            }
+            if ($request->has('instagram') && !str_contains($request->instagram, 'instagram.com')) {
+                $invalidUrls[] = 'Instagram';
             }
             
-            $profile->save();
+            if (!empty($invalidUrls)) {
+                return redirect()->back()->with(['faild' => 'Invalid URLs for: ' . implode(', ', $invalidUrls)]);
+            } else {
+                $userSpeaker->biographie = $request->biographie;
+                $userSpeaker->faceboock = $request->facebook;
+                $userSpeaker->linkdin = $request->linkedin;
+                $userSpeaker->instagram = $request->instagram;
+                $userSpeaker->save();
+            }
+        }
+
+        $profile->save();
 
     }
 
@@ -592,7 +616,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     public function store_manager(Request $request){
 
         $request->validate([
-            'avatar' => ['required', 'file', 'mimes:jpeg,png,jpg,gif'],
+            'avatar' => ['required', 'file', 'mimes:jpeg,png,jpg,gif' , 'max:400'],
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'role_id' => ['required'],
@@ -662,7 +686,8 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $role_admin = Role::where('role_name', 'Speaker')->first();
     
         $request->validate([
-            'avatar' => ['required', 'file', 'mimes:jpeg,png,jpg,gif'],
+            'avatar' => ['required', 'file', 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+            'profile_image' => ['required', 'file', 'mimes:jpeg,png,jpg,gif' , 'max:400'],
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'type_speaker' => ['required', 'string', 'max:255'],
@@ -698,9 +723,16 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             $fileName = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileName, 'public');
         }
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $directory = 'profile/';
+            $fileNameProfile = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameProfile, 'public');
+        }
     
         $user = User::create([
             'avatar' => $fileName,
+            'profile_image' => $fileNameProfile,
             'firstName' => $request->firstName,
             'lastName' => $request->lastName,
             'password_change' => 1,
@@ -776,7 +808,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $role_admin = Role::where('role_name', 'Admin')->first();
     
         $request->validate([
-            'avatar' => ['required', 'file', 'mimes:png,jpg'],
+            'avatar' => ['required', 'file', 'mimes:png,jpg' , 'max:400'],
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
@@ -1293,8 +1325,8 @@ public function index_cours()
             'tags' => ['required' , 'array'],
             'host' => ['required' , 'string'],
             'goal' => ['required' , 'array'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
-            'coursImageflex' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif' , 'max:400'],
+            'coursImageflex' => ['file' ,  'mimes:jpeg,png,jpg,gif' , 'max:400'],
         ]);
 
         $url = $request->video;
@@ -1410,8 +1442,8 @@ public function index_cours()
         switch ($request->coursType) {
             case 'conference':
                 $additionalRules = [
-                    'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
-                    'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif'],
+                    'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                    'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
                     'videoconference' => ['required', 'url'],
                     'hostConference' => ['required'],
                     'descriptionConference' => ['required', 'string', 'max:600'],
@@ -1419,8 +1451,8 @@ public function index_cours()
                 break;
             case 'podcast':
                 $additionalRules = [
-                    'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                    'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                    'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
                     'hostPodcast' => ['required'],
                     'videocpodcast' => ['required', 'url'],
                     'slugAcroche' => ['required', 'string', 'max:255'],
@@ -1433,8 +1465,8 @@ public function index_cours()
                     'programId' => ['sometimes'],
                     'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
                     'iscertify' => ['sometimes'],
-                    'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
-                    'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' ],
+                    'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400' ],
+                    'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
                     'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
                 ];
                 break;
@@ -1608,7 +1640,7 @@ public function store_short(Request $request)
     $request->validate([
         'title' => ['required' , 'string' , 'max:100'],
         'tags' => ['required' , 'array'],
-        'image' => ['required' , 'file' , 'mimes:jpeg,png,jpg,gif'],
+        'image' => ['required' , 'file' , 'mimes:jpeg,png,jpg,gif', 'max:400'],
         'video' => ['required' , 'url']
     ]);
 
@@ -2022,7 +2054,7 @@ public function getCoursVideo(String $id){
             'coursDuration' => ['required'],
             'slugAcroche' => ['required' , 'string' , 'max:100'],
             'descriptionPodcast' => ['required' , 'string' , 'max:600'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif']
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:400']
         ]);
 
         $url = $request->video;
@@ -2122,7 +2154,7 @@ public function getCoursVideo(String $id){
         $request->validate([
             'titleVideo' => ['required', 'string', 'max:255'],
             'descriptionVideo'  => ['required', 'string', 'max:100'],
-            'image' => ['required' ,'file' ,  'mimes:jpeg,png,jpg,gif'],
+            'image' => ['required' ,'file' ,  'mimes:jpeg,png,jpg,gif', 'max:400'],
             'videoTags' => ['required', 'array'],
             'guestIds' => ['sometimes', 'nullable'],
             'videoPodcast' => ['sometimes' , 'url']
@@ -2191,7 +2223,7 @@ public function getCoursVideo(String $id){
             'titleVideo' => ['required' , 'string' , 'max:100'],
             'descriptionVideo' => ['required' , 'string' , 'max:100'],
             'videoTags' => ['required' , 'array'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:400'],
             'videoduration' => ['required'],
             'video' => ['required' , 'url']
         ]);
@@ -2331,8 +2363,8 @@ public function getCoursVideo(String $id){
             'cotegoryId' => ['required' , 'string'],
             'goal' => ['required' , 'array'],
             'conditionformation' => ['somtimes' , 'string' , 'max:600'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif'],
-            'document' => ['file' , 'mimes:pdf']
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:400'],
+            'document' => ['file' , 'mimes:pdf' , 'max:400']
         ]);
 
 
@@ -2531,7 +2563,7 @@ public function getCoursVideo(String $id){
         $request->validate([
             'titleVideo' => ['required' , 'string' , 'max:100'],
             'descriptionVideo' => ['required' , 'string' , 'max:100'],
-            'image' => ['required' , 'file' , 'mimes:jpeg,png,jpg,gif'],
+            'image' => ['required' , 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
             'videoFormation' => ['sometimes' , 'url'],
             'videoTags' => ['required' , 'array'],
         ]);
@@ -3000,7 +3032,7 @@ public function getCoursVideo(String $id){
             'type_ticket' => ['required' , 'string' , 'max:100'],
             'user' => ['required'],
             'detail' => ['required' , 'string' , 'max:500'],
-            'file' => ['file' , 'mimes:jpeg,png,jpg,gif,pdf'],
+            'file' => ['file' , 'mimes:jpeg,png,jpg,gif,pdf' , 'max:400'],
         ]);
 
 
