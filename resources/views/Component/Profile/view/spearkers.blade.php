@@ -96,32 +96,32 @@
                                             src="{{ asset('storage/profile/' . $speaker->user->profile_image) }}"
                                              alt="user-avatar" style="height: 50% ; width: 100%" />
                                     </div>
-                                    <div class="position-relative" style="top: -97px;">
+                                    <div class="position-relative" style="top: -79px">
                                         <img class="rounded mx-auto d-block"
                                             src="{{ asset('storage/avatars/' . $speaker->user->avatar) }}"
                                             {{-- style="height: 89px;width: 89px;" --}} alt="user-avatar" height="100" width="100" />
-                                        <div class="text mt-3">
+                                        <div class="text mt-3 text-center">
                                             <strong>{{ $speaker->user->userspeaker->type_speaker }}</strong>
                                         </div>
                                         <span
-                                            class="name mt-3">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
-                                        <span class="idd">{{ $speaker->user->email }}</span>
-                                        <div class="bottom" style=" padding: 0 20px">
+                                            class="name mt-3 text-center">{{ $speaker->user->firstName . ' ' . $speaker->user->lastName }}</span>
+                                        <span class="idd text-center">{{ $speaker->user->email }}</span>
+                                        <div class="bottom text-center mb-2" style=" padding: 0 20px">
                                             <a href="{{ $speaker->user->userspeaker->linkdin }}"
                                                 class="btn btn-info btn-xs">
                                                 Linkedin
                                             </a>
                                             <a href="{{ $speaker->user->userspeaker->faceboock }}"
-                                                class="btn btn-primary btn-xs">
+                                                class="btn btn-primary btn-xs text-center">
                                                 Facebook
                                             </a>
                                             <a href="{{ $speaker->user->userspeaker->instagram }}"
-                                                class="btn btn-danger btn-xs">
+                                                class="btn btn-danger btn-xs text-center">
                                                 Instagram
                                             </a>
                                         </div>
                                         <div class="d-flex flex-row justify-content-center align-items-center gap-2">
-                                            <span class="idd1"
+                                            <span class="idd1 text-center"
                                                 style="max-width:300px">{{ $speaker->user->userspeaker->biographie }}</span>
                                         </div>
 

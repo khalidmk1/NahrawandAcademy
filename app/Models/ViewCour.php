@@ -36,4 +36,6 @@ class ViewCour extends Model
         return $this->belongsTo(Cour::class, 'cours_id');
     }
 
+    
+
 }

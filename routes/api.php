@@ -65,6 +65,9 @@ Route::prefix('mobile')->group(function () {
     Route::post('personel/video/podcast/{user}/{video}', [CoursController::class, 'personelvideoPodcast'])->name('creat.personel.video.podcast');
     Route::post('personel/video/formation/{user}/{video}', [CoursController::class, 'personelvideoFormation'])->name('creat.personel.video.formation');
 
+    //get finshed cours
+    Route::get('finshed/cours/{id}', [CoursController::class, 'fineshedCours'])->name('finished.cours');
+
 
     Route::get('/short/{user}', [CoursController::class, 'CourShort'])->name('cours.short');
 

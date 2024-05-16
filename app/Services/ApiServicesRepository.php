@@ -340,6 +340,43 @@ public function personelvideoFormation(String $user , String $video)
     }
 }
 
+// get fineshed formtion
+public function fineshedCours(String $id){
+    $user = User::findOrFail($id);
+        
+    $Cour = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
+
+    $videoProgresse = VideoProgressFormation::where('user_id', $user->id)->get();
+    $videoFormation = CoursFormationVideo::whereIn('id' , $videoProgresse->pluck('video_id'))->get();
+
+    $viewCours = ViewCour::whereIn('cours_id', $Cour->pluck('id'))
+    ->where('user_id', $user->id)
+    ->pluck('cours_id'); 
+
+    
+
+    /* $CourView = Cour::whereIn('id' , $viewCours)->get();
+
+    $finishedCourses = [];
+    foreach ($CourView as $cour) {
+        $allVideos = $cour->CoursFormation->CoursFormationVideo->pluck('id')->toArray();
+        $watchedVideos = $videoProgresse->where('video_id', $allVideos)->pluck('video_id')->toArray();
+        
+        if (count(array_intersect($allVideos, $watchedVideos)) == count($allVideos)) {
+            $finishedCourses[] = $cour;
+        }
+    }
+     */
+/* 
+    foreach ($videoProgresse as $key => $videoProgresse) {
+        $allprogress = $videoProgresse->videoFrmation;
+    } */
+
+    
+    return response()->json($videoFormation);
+}
+
+
 public function Cour_Conference(){
     $courConference = Cour::where('cours_type' , 'conference')->get();
 
@@ -715,7 +752,7 @@ public function Cour_Conference(){
 
     }
 
-    // 
+    // get ticket
 
     public function get_ticket(String $id){
 

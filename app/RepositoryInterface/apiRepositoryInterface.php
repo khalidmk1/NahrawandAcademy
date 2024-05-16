@@ -43,6 +43,8 @@ interface apiRepositoryInterface {
     public function personelvideoPodcast(String $user , String $video);
     // personel video formation
     public function personelvideoFormation(String $user , String $video);
+    // get fineshed formtion
+    public function fineshedCours(String $user);
     
     //all short cours by goals
     public function CourShort(String $user);
