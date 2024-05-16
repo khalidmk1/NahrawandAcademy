@@ -698,11 +698,16 @@ public function Cour_Conference(){
 {
     $excludedRoleIds = [1, 2, 3, 4];
 
-    $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
-                    ->with('user')
-                    ->get();
+  /*   $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
+    ->with('user')
+    ->get(); */
 
-    return response()->json($managers);
+    $permission = RolePermission::whereNotIn('role_id' , $excludedRoleIds)
+    ->where('permission_id' , 4)
+    ->get();
+    $permission->load(['userrole' , 'userrole.user']);
+
+    return response()->json($permission);
 }
 
 
