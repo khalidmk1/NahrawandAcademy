@@ -54,9 +54,15 @@ class CoursController extends Controller
     public function personelvideoFormation(String $user , String $video){
         return $this->apiRepository->personelvideoFormation($user , $video);
     }
-    // get fineshed formtion
-    public function fineshedCours(String $user){
-        return $this->apiRepository->fineshedCours($user);
+
+    //get finshed cours
+    public function GetFinshedCours(String $id){
+        return $this->apiRepository->GetFinshedCours($id);
+    }
+
+    // store fineshed formtion
+    public function fineshedCours(String $id , String $cours){
+        return $this->apiRepository->fineshedCours($id , $cours);
     }
 
     public function coming_cours(){

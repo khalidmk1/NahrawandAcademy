@@ -148,4 +148,14 @@ class Cour extends Model
         return $this->hasMany(ViewCour::class, 'cours_id');
     }
 
+    /**
+     * Get all of the FineshedCours for the Cour
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function FineshedCours(): HasMany
+    {
+        return $this->hasMany(FineshedCours::class, 'cours_id');
+    }
+
 }

@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ViewCour extends Model
+class FineshedCours extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'cours_id',
+        'cours_id'
     ];
 
 
     /**
-     * Get the user that owns the ViewCour
+     * Get the user that owns the FineshedCours
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -27,7 +27,7 @@ class ViewCour extends Model
     }
 
     /**
-     * Get the cour that owns the ViewCour
+     * Get the Cours that owns the FineshedCours
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -36,6 +36,5 @@ class ViewCour extends Model
         return $this->belongsTo(Cour::class, 'cours_id');
     }
 
-    
 
 }

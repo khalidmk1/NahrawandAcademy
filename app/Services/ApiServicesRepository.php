@@ -26,6 +26,7 @@ use App\Models\CoursPodcast;
 use App\Models\QuizQuestion;
 use App\Models\UserObjectif;
 use Illuminate\Http\Request;
+use App\Models\FineshedCours;
 use App\Models\CoursFormation;
 use App\Models\RolePermission;
 use App\Models\QuestionAnswers;
@@ -340,41 +341,43 @@ public function personelvideoFormation(String $user , String $video)
     }
 }
 
-// get fineshed formtion
-public function fineshedCours(String $id){
+//get finshed cours
+public function GetFinshedCours(String $id){
     $user = User::findOrFail($id);
-        
-    $Cour = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
+    $finishedCourses = FineshedCours::where('user_id' , $user->id)->get();
 
-    $videoProgresse = VideoProgressFormation::where('user_id', $user->id)->get();
-    $videoFormation = CoursFormationVideo::whereIn('id' , $videoProgresse->pluck('video_id'))->get();
+    $Cours = Cour::whereIn('id' , $finishedCourses->pluck('cours_id'))->get();
 
-    $viewCours = ViewCour::whereIn('cours_id', $Cour->pluck('id'))
-    ->where('user_id', $user->id)
-    ->pluck('cours_id'); 
+    $Cours->load(['category' , 
+    'CoursFormation.user.userspeaker' , 
+    'CoursFormation.CoursFormationVideo']);
 
-    
-
-    /* $CourView = Cour::whereIn('id' , $viewCours)->get();
-
-    $finishedCourses = [];
-    foreach ($CourView as $cour) {
-        $allVideos = $cour->CoursFormation->CoursFormationVideo->pluck('id')->toArray();
-        $watchedVideos = $videoProgresse->where('video_id', $allVideos)->pluck('video_id')->toArray();
-        
-        if (count(array_intersect($allVideos, $watchedVideos)) == count($allVideos)) {
-            $finishedCourses[] = $cour;
-        }
-    }
-     */
-/* 
-    foreach ($videoProgresse as $key => $videoProgresse) {
-        $allprogress = $videoProgresse->videoFrmation;
-    } */
-
-    
-    return response()->json($videoFormation);
+    return response()->json($Cours);
 }
+
+// store fineshed formtion
+public function fineshedCours(String $id , String $cours) {
+    $user = User::findOrFail($id);
+    $cours = Cour::findOrFail($cours);
+
+    $checkFinishedCours = FineshedCours::where(['user_id' => $user->id, 'cours_id' => $cours->id])->exists();
+
+    if (!$checkFinishedCours) {
+        $finishedCours = FineshedCours::create([
+            'user_id' => $user->id,
+            'cours_id' => $cours->id
+        ]);
+        return response()->json([
+            'finishedCours' => $finishedCours,
+        ]);
+    }
+
+    return false;
+    
+}
+
+
+
 
 
 public function Cour_Conference(){
@@ -698,16 +701,14 @@ public function Cour_Conference(){
 {
     $excludedRoleIds = [1, 2, 3, 4];
 
-  /*   $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
-    ->with('user')
-    ->get(); */
+    $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
+            ->whereHas('userpermission', function ($query) {
+                $query->where('permission_id', 4);
+            })
+            ->with('user')
+            ->get();
 
-    $permission = RolePermission::whereNotIn('role_id' , $excludedRoleIds)
-    ->where('permission_id' , 4)
-    ->get();
-    $permission->load(['userrole' , 'userrole.user']);
-
-    return response()->json($permission);
+    return response()->json($managers);
 }
 
 
