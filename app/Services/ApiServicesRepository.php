@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Domain;
 use App\Models\Ticket;
 use App\Models\Program;
+use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserRole;
 use App\Models\ViewCour;
@@ -188,9 +189,11 @@ class ApiServicesRepository  implements apiRepositoryInterface
     public function domain(){
         $domain = Domain::all();
 
-        $domain->load('category.souscategories.goals');
+        $Category = Category::whereIn('domain_id' ,  $domain->pluck('id'))->get();
+
+       /*  $domain->load('category.souscategories.goals'); */
     
-        return response()->json($domain);
+        return response()->json($Category);
     }
     
 
