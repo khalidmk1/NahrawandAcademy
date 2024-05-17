@@ -191,9 +191,9 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         $Category = Category::whereIn('domain_id' ,  $domain->pluck('id'))->get();
 
-       /*  $domain->load('category.souscategories.goals'); */
+        $domain->load('category.souscategories.goals');
     
-        return response()->json($Category);
+        return response()->json($domain);
     }
     
 
