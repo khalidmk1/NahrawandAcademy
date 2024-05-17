@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use Carbon\Carbon;
 use App\Models\FAQ;
 use App\Models\Cour;
 use App\Models\Goal;
@@ -9,7 +11,6 @@ use App\Models\User;
 use App\Models\Domain;
 use App\Models\Ticket;
 use App\Models\Program;
-use App\Models\Category;
 use App\Models\Question;
 use App\Models\UserRole;
 use App\Models\ViewCour;
@@ -104,7 +105,6 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         $user = User::findOrFail($id);
 
-
         $request->validate([
             'firstName' => [ 'string', 'max:255'],
             'lastName' => [ 'string', 'max:255'],
@@ -125,7 +125,6 @@ class ApiServicesRepository  implements apiRepositoryInterface
             'Numchild' => $request->numchild,
             'profission' => $request->profission
         ]);
-
     
         return response()->json([$user]);
     }
@@ -278,28 +277,30 @@ class ApiServicesRepository  implements apiRepositoryInterface
        
     }
 
-public function getpersonelCours(String $user)
-{
-    $users = User::findOrFail($user);
-
-    // Retrieve all courFormation
-    $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
-
-    // Load relationships
-    $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
-    'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');
-
-    // Retrieve viewCours for the user
-    $viewCours = ViewCour::whereIn('cours_id', $courFormation->pluck('id'))
-        ->where('user_id', $users->id)
-        ->pluck('cours_id'); 
-
-    $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours) {
-        return $viewCours->contains($cour->id);
-    });
-
-    return response()->json(['contentFormation' => $filteredCourFormation]);
-}
+    public function getpersonelCours(String $user)
+    {
+        $users = User::findOrFail($user);
+    
+        // Retrieve all courFormation
+        $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
+    
+        $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
+            'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');
+    
+        $FineshedCours = FineshedCours::all();
+    
+        $viewCours = ViewCour::whereNotIn('cours_id', $FineshedCours->pluck('cours_id'))
+            ->where('user_id', $users->id)
+            ->pluck('cours_id');
+    
+        // Filtered and keyed array of courFormation
+        $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours) {
+            return $viewCours->contains($cour->id);
+        })->values(); 
+    
+        return response()->json(['contentFormation' => $filteredCourFormation]);
+    }
+    
 
 
 //personel video podcast

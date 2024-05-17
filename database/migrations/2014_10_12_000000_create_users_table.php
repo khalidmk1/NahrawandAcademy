@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('is_popular')->default(false);
             $table->boolean('password_change')->default(false);
             $table->string('email')->unique();
-            $table->date('datebirt')->nullable();
+            $table->string('datebirt')->nullable();
             $table->string('status_matrimonial')->nullable();
             $table->integer('Numchild')->nullable();
             $table->string('profission')->nullable();
