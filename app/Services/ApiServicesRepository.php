@@ -697,19 +697,24 @@ public function Cour_Conference(){
     }
 
     //get manager
-    public function getmanager()
-{
-    $excludedRoleIds = [1, 2, 3, 4];
-
-    $managers = UserRole::whereNotIn('role_id', $excludedRoleIds)
-            ->whereHas('userpermission', function ($query) {
-                $query->where('permission_id', 4);
-            })
+    public function getManager()
+    {
+        $excludedRoleIds = [1, 2, 3, 4];
+    
+        // Get roles that are not excluded and have the required permission
+        $roleIdsWithPermission = RolePermission::where('permission_id', 4)
+            ->where('confirmed', 1)
+            ->whereNotIn('role_id', $excludedRoleIds)
+            ->pluck('role_id');
+    
+        // Get users with the required roles
+        $usersWithRoles = UserRole::whereIn('role_id', $roleIdsWithPermission)
             ->with('user')
             ->get();
-
-    return response()->json($managers);
-}
+    
+        return response()->json($usersWithRoles);
+    }
+    
 
 
     //ticket store
