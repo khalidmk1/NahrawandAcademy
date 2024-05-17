@@ -281,28 +281,34 @@ class ApiServicesRepository  implements apiRepositoryInterface
     }
 
     public function getpersonelCours(String $user)
-    {
-        $users = User::findOrFail($user);
-    
-        // Retrieve all courFormation
-        $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
-    
-        $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
-            'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');
-    
-        $FineshedCours = FineshedCours::all();
-    
+{
+    $users = User::findOrFail($user);
+
+    $FineshedCours = FineshedCours::where('user_id' , $users->id)->get();
+
+    $viewCours = [];
+
+    if ($FineshedCours->isEmpty()) {
+        // If FineshedCours is empty, retrieve all viewCours
+        $viewCours = ViewCour::where('user_id', $users->id)->get();
+    } else {
+        // Retrieve viewCours for the user excluding finished courses
         $viewCours = ViewCour::whereNotIn('cours_id', $FineshedCours->pluck('cours_id'))
-            ->where('user_id', $users->id)
-            ->pluck('cours_id');
-    
-        // Filtered and keyed array of courFormation
-        $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours) {
-            return $viewCours->contains($cour->id);
-        })->values(); 
-    
-        return response()->json(['contentFormation' => $filteredCourFormation]);
+                             ->where('user_id', $users->id)
+                             ->get(); 
     }
+
+    // Retrieve all courFormation based on viewCours
+    $courFormation = Cour::whereIn('id', $viewCours->pluck('cours_id'))
+                         ->where('isComing', 0)
+                         ->get();
+
+    $courFormation->load('category', 'CoursFormation', 'CoursFormation.user', 
+                         'CoursFormation.user.userspeaker', 'CoursFormation.CoursFormationVideo');
+
+    return response()->json(['contentFormation' => $courFormation]);
+}
+
     
 
 
@@ -616,13 +622,14 @@ public function Cour_Conference(){
         $user = User::findOrFail($id);
         
         $favoris = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
-        $favoris->load('cours');
-        //formation
-        $favoris->load(['cours.CoursFormation' ,'cours.CoursFormation.user' ,
-        'cours.CoursPodcast' , 'cours.CoursPodcast.user' , 'cours.CoursConference' ,
-        'cours.CoursConference.user' ]);
 
-        return response()->json($favoris);
+        $FavoriteCours = Cour::whereIn('id' , $favoris->pluck('cours_id'))->get();
+
+        $FavoriteCours->load(['category' , 'CoursFormation' ,'CoursFormation.user.userspeaker' ,
+        'CoursFormation.CoursFormationVideo' , 'CoursPodcast' , 'CoursPodcast.user' , 'CoursConference' ,
+        'CoursConference.user' ]);
+
+        return response()->json($FavoriteCours);
     }
 
     //Cours Comment

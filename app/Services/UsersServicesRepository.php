@@ -33,6 +33,7 @@ use App\Models\UserObjectif;
 use App\Models\UserSpeakers;
 use Illuminate\Http\Request;
 use App\Models\CommentTicket;
+use App\Models\FineshedCours;
 use App\Models\CoursFormation;
 use App\Models\RolePermission;
 use App\Models\CoursConference;
@@ -863,34 +864,12 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         
         // Retrieve all courFormation
         $courFormation = Cour::where(['cours_type' => 'formation', 'isComing' => 0])->get();
-
-        $videoProgresse = VideoProgressFormation::where('user_id', $client->id)->get();
+        $FineshedCours = FineshedCours::where('user_id' , $client->id)->get();
 
         // Retrieve viewCours for the user
-        $viewCours = ViewCour::whereIn('cours_id', $courFormation->pluck('id'))
-        ->where('user_id', $client->id)
-        ->pluck('cours_id'); 
+        $viewCours = ViewCour::whereNotIn('cours_id' , $FineshedCours->pluck('cours_id'))
+        ->where('user_id', $client->id)->get(); 
         
-        $filteredCourFormation = $courFormation->filter(function ($cour) use ($viewCours, $videoProgresse) {
-            if ($viewCours->contains($cour->id)) {
-                $totalVideos = $cour->CoursFormation->CoursFormationVideo->count();
-                $completedVideos = $videoProgresse->where('video_id', $cour->CoursFormation->id)->count();
-                return $totalVideos != $completedVideos; 
-            } else {
-                return false; 
-            }
-        });
-
-        $filteredCourVideoFormation = $courFormation->filter(function ($cour) use ($viewCours, $videoProgresse) {
-            if ($viewCours->contains($cour->id)) {
-                $totalVideos = $cour->CoursFormation->CoursFormationVideo->count();
-                $completedVideos = $videoProgresse->where('video_id', $cour->CoursFormation->id)->count();
-                return $totalVideos == $completedVideos;
-            } else {
-                return false;
-            }
-        });
-
 
         // Retrieve the UserObjectifs related to the client
         $doamin1 = UserObjectif::where('user_id', $client->id)
@@ -920,10 +899,9 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
     
         return view('Component.Profile.detail.client')->with([
-            'client' => $client, 'filteredCourFormation' => $filteredCourFormation,
-            'doamin1' => $doamin1 , 'doamin2' =>$doamin2 , 
-            'filteredCourVideoFormation' => $filteredCourVideoFormation,
-            'doamin3' => $doamin3 , 'doamin4' => $doamin4
+            'client' => $client, 'FineshedCours' => $FineshedCours,
+            'viewCours' => $viewCours,'doamin1' => $doamin1 , 
+            'doamin2' =>$doamin2 , 'doamin3' => $doamin3 , 'doamin4' => $doamin4
         ]);
     }
     

@@ -58,11 +58,11 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Number of Favorites</b> <a class="float-right">1,322</a>
+                                    <b>Number of Favorites</b> <a class="float-right">{{$client->Favoris->count()}}</a>
                                 </li>
-                                <li class="list-group-item">
+                               {{--  <li class="list-group-item">
                                     <b>Number of Content </b> <a class="float-right">543</a>
-                                </li>
+                                </li> --}}
 
                             </ul>
 
@@ -224,16 +224,14 @@
                                             <div class="timeline-item">
                                                 <h3 class="timeline-header">Ongoing Formation</h3>
                                                 <div class="timeline-body">
-                                                    @foreach ($filteredCourFormation as $filteredCourFormation)
+                                                    @foreach ($viewCours as $viewCour)
                                                         <div class="image-with-text">
-                                                            <img src="{{ asset('storage/upload/cour/image/' . $filteredCourFormation->CoursFormation->image) }}"
+                                                            <img src="{{ asset('storage/upload/cour/image/' . $viewCour->Cours->CoursFormation->image) }}"
                                                                 alt="..." style="height: 141px">
-                                                            <div class="image-text">{{ $filteredCourFormation->title }}
+                                                            <div class="image-text">{{ $viewCour->Cours->title }}
                                                             </div>
                                                         </div>
                                                     @endforeach
-
-
 
                                                 </div>
                                             </div>
@@ -250,12 +248,12 @@
                                                 <h3 class="timeline-header">Completed Formation</h3>
 
                                                 <div class="timeline-body">
-                                                    @foreach ($filteredCourVideoFormation as $filteredCourVideoFormation)
+                                                    @foreach ($FineshedCours as $FineshedCour)
                                                         <div class="image-with-text">
-                                                            <img src="{{ asset('storage/upload/cour/image/' . $filteredCourVideoFormation->CoursFormation->image) }}"
+                                                            <img src="{{ asset('storage/upload/cour/image/' . $FineshedCour->Cours->CoursFormation->image) }}"
                                                                 alt="..." style="height: 141px">
                                                             <div class="image-text">
-                                                                {{ $filteredCourVideoFormation->title }}
+                                                                {{ $FineshedCour->Cours->title }}
                                                             </div>
                                                         </div>
                                                     @endforeach
