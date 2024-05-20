@@ -7,7 +7,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestion Tickets</h1>
+                    <h1>Ticket Management</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,9 +28,9 @@
                         style="float: right">Crée</button>
                 </div>
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card">                    
                         <div class="card-header">
-                            <h3 class="card-title">Table de Ticket</h3>
+                            <h3 class="card-title">Ticket Table</h3>
 
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -51,10 +51,10 @@
                                 <thead>
                                     <tr  class="text-center">
                                         <th>Type</th>
-                                        <th>Date Création</th>
-                                        <th>Utilisateur</th>
+                                        <th>Created at</th>
+                                        <th>Client</th>
                                         <th>Statu</th>
-                                        <th>Derniere Modifier</th>
+                                        <th>Update at</th>
                                         <th>Date</th>
                                     </tr>
                                 </thead>
@@ -65,7 +65,7 @@
                                             <td>{{ \Carbon\Carbon::parse( $ticket->created_at)->format('d/m/Y')  }}</td>
                                             <td>{{ $ticket->user->firstName . ' ' . $ticket->user->lastName }}</td>
                                             <td><span
-                                                    class="tag tag-success">{{ $ticket->status == 1 ? 'traité' : 'Encours' }}
+                                                    class="tag tag-success">{{ $ticket->status == 1 ? 'Handled' : 'In Progress' }}
                                                     <a href="{{Route('dashboard.tickets.edite' , Crypt::encrypt($ticket->id))}}">
                                                         <i class="fa fa-plus mt-1" aria-hidden="true"
                                                         style="cursor: pointer ; float: right;"></i>

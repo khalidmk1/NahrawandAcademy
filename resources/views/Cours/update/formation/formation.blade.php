@@ -7,9 +7,9 @@
     <div class="card-body">
 
         <div class="form-group">
-            <label for="title">Titre</label>
+            <label for="title">Title</label>
             <input type="text" value="{{ old('title', $Cour->title) }}" class="form-control" name="title"
-                id="title" placeholder="Entrez Titre ...">
+                id="title" placeholder="Enter Title ...">
         </div>
 
         <div class="row">
@@ -25,7 +25,7 @@
             <div class="col-6">
                 <!-- Bootstrap Switch -->
                 <label for="boostrap-switch" class="mr-5">
-                    Affichage
+                    Display
                 </label>
                 <input type="checkbox" name="isActive" id="boostrap-switch" {{$Cour->isActive == 1 ? 'checked' : '' }}  data-value="" data-bootstrap-switch
                     data-off-color="danger" >
@@ -37,13 +37,13 @@
 
         <!-- textarea -->
         <div class="form-group">
-            <label>Description de Contenu</label>
+            <label>Description</label>
             <textarea class="form-control" name="description" rows="3" placeholder="Enter ...">{{ old('description', $Cour->description) }}</textarea>
         </div>
 
 
         <div class="form-group">
-            <label for="tags">Mots Clé</label>
+            <label for="tags">Tags</label>
 
             <input type="text" class="form-control" value="{{ implode(',', $Cour->tags) }}" name="tags[]"
                 id="tags-input" />
@@ -53,7 +53,7 @@
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <label>Catégorie <span>({{$Cour->category->category_name}})</span></label>
+                    <label>Category <span>({{$Cour->category->category_name}})</span></label>
                     <select class="form-control select2" id="souscategory_goals" name="cotegoryId" style="width: 100%;">
                         <option selected value="{{$Cour->category->id}}">Choise Votre Catégorie</option>
                         @foreach ($category as $category)
@@ -75,7 +75,7 @@
             <div class="col-6">
 
                 <div class="form-group">
-                    <label for="goals_option">Objectifs</label>
+                    <label for="goals_option">Objectives</label>
                     <select class="select3" name="goal[]" multiple="multiple" id="goals_option"
                         data-placeholder="Select a State" style="width: 100%;">
                         @foreach ($CoursGols as $CoursGol)
@@ -101,18 +101,18 @@
 
 
             <div class="form-group">
-                <label for="ImageFomation">Image de Fomation</label>
+                <label for="ImageFomation">Image</label>
                 <div class="custom-file">
                     <input type="file" name="image" class="custom-file-input" id="ImageFomation">
-                    <label class="custom-file-label" for="ImageFomation">Choisez image</label>
+                    <label class="custom-file-label" for="ImageFomation">Choose image</label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="ImageFomationflex">Image de Fomation flex</label>
+                <label for="ImageFomationflex">Image flex</label>
                 <div class="custom-file">
                     <input type="file" name="ImageFomationflex" class="custom-file-input" id="ImageFomationflex">
-                    <label class="custom-file-label" for="ImageFomationflex">Choisez image</label>
+                    <label class="custom-file-label" for="ImageFomationflex">Choose image</label>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@
             @else
                 <!-- textarea -->
                 <div class="form-group">
-                    <label>Conditions d’éligibilité</label>
+                    <label>Eligibility criteria</label>
                     <textarea class="form-control" name="conditionformation" rows="3" placeholder="Enter ...">{{ $coursFormation->condition }}</textarea>
                 </div>
             @endif
@@ -143,7 +143,7 @@
 
             @if (!$programs)
                 <div class="form-group">
-                    <label>Programme</label>
+                    <label>Program</label>
                     <select class="form-control select2" name="programId" style="width: 100%;">
                         @foreach ($programs as $program)
                             <option value="{{ $program->id }}"
@@ -161,10 +161,10 @@
 
 
             <div class="form-group">
-                <label for="DocumentFomation">Documents de Fomation</label>
+                <label for="DocumentFomation">Document</label>
                 <div class="custom-file">
                     <input type="file" name="document" class="custom-file-input" id="DocumentFomation" multiple>
-                    <label class="custom-file-label" for="DocumentFomation">Choisez Documents</label>
+                    <label class="custom-file-label" for="DocumentFomation">Choose Documents</label>
                 </div>
             </div>
 

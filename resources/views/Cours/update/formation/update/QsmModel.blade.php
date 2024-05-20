@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edite QSM</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,21 +24,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="RightAwnser">la bonne réponse</label>
+                        <label for="RightAwnser">The correct answer</label>
                         <input type="text" value="{{ old('RightAwnser', $Qsm->Answer->Answer) }}"
                             class="form-control" required name="RightAwnser" id="RightAwnser"
-                            placeholder="Entrez la bonne réponse ...">
+                            placeholder="Enter The correct answer ...">
                     </div>
 
                     <div class="d-flex justify-content-around  align-items-center" style="gap: 35px" id="addsection">
 
                         <div class="form-group row">
-                            <label for="Rate">Sccess Rate ?</label>
+                            <label for="Rate">Sccess Rate</label>
                             <input type="text" value="{{ old('Rate', $Qsm->rateSeccess) }}" class="form-control"
                                 required name="Rate" id="Rate" placeholder="Entrez Rate ...">
                         </div>
                         <div class="form-group row">
-                            <label for="count">Combien tu Veux Envoyer ?</label>
+                            <label for="count">How many to send?</label>
                             <input type="text" value="{{ old('count', $Qsm->Answercount) }}" class="form-control"
                                 required name="count" id="count" placeholder="Entrez la bonne réponse ...">
                         </div>
@@ -48,7 +48,7 @@
 
                         @foreach ($Qsm->Question->Answers as $index => $Answer)
                             <div class="form-group reponse">
-                                <label for="awnser_${index}" class="answer_label">la réponse {{ $index + 2 }}</label>
+                                <label for="awnser_${index}" class="answer_label">Response {{ $index + 2 }}</label>
                                 <div class="position-relative">
                                     <input name="awnser[]" type="text" value="{{ old('Answer', $Answer) }}"
                                         class="form-control response" required id="Awnser_${index}"
@@ -62,7 +62,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <button type="submit" class="btn btn-block btn-warning w-25 mt-2"
-                                    style="float: right">Modifier
+                                    style="float: right">Update
                                 </button>
                             </div>
 

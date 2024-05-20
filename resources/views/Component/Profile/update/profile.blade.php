@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Mettre à jour votre profile</h1>
+                    <h1>Update your profile</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -50,7 +50,7 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="profile_image"
                                             id="profile_image">
-                                        <label class="custom-file-label" for="profile_image">Choisez image</label>
+                                        <label class="custom-file-label" for="profile_image">Upload</label>
                                     </div>
                                 </div>
 
@@ -60,7 +60,7 @@
                                             <input type="checkbox" name="isPopulaire" id="isPopulaire"
                                                 {{ $user->is_popular == 1 ? 'checked' : '' }}>
                                             <label for="isPopulaire">
-                                                Populaire
+                                                Popular
                                             </label>
                                         </div>
 
@@ -68,13 +68,13 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="firstName"> Nom</label>
+                                    <label for="firstName"> Last name</label>
                                     <input type="text" class="form-control" id="firstName" name="firstName"
                                         value="{{ old('firstName', $user->firstName) }}">
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="lastName">Prénom</label>
+                                    <label for="lastName">First name</label>
                                     <input type="text" class="form-control" id="lastName" name="lastName"
                                         value="{{ old('lastName', $user->lastName) }}">
                                 </div>
@@ -87,7 +87,7 @@
                                 @if ($user->userRole->role_id == 3)
                                     <!-- textarea -->
                                     <div class="form-group">
-                                        <label for="biographie">Biographie</label>
+                                        <label for="biographie">Biography</label>
                                         <textarea class="form-control" id="biographie" rows="3" name="biographie" placeholder="Enter ...">{{ $user->userspeaker->biographie }}</textarea>
                                     </div>
 
@@ -123,7 +123,7 @@
                                     jour</button>
                                 @if (auth()->user()->id == $user->id)
                                     <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                        class="btn btn-primary">Change Mots de Passe</button>
+                                        class="btn btn-primary">Change Password</button>
                                 @endif
                             </div>
 

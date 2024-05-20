@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Mange Contenu Video Conférencier</h1>
+                    <h1>Manage Speaker Video Content</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -45,7 +45,7 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée Video</h3>
+                            <h3 class="card-title">Create Video</h3>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -56,15 +56,15 @@
                             <input hidden type="text" name="confrenceId" value="{{ $confrenceInfo['conferenceId'] }}">
 
                             <div class="form-group">
-                                <label for="titleVideo">Titre video</label>
+                                <label for="titleVideo">Title</label>
                                 <input type="text" value="{{ old('titleVideo') }}" class="form-control" name="titleVideo"
-                                    id="titleVideo" placeholder="Entrez Titre ...">
+                                    id="titleVideo" placeholder="Entre title Video ...">
                             </div>
 
                             <!-- textarea -->
                             <div class="form-group">
-                                <label>Description de video</label>
-                                <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Enter ..."></textarea>
+                                <label>Description</label>
+                                <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Entre Description Video ..."></textarea>
                             </div>
 
                             <div class="form-group">
@@ -92,14 +92,14 @@
                             
 
                             <div class="form-group">
-                                <label for="tags_video">Mots Clé</label>
+                                <label for="tags_video">Tags</label>
                                 <input type="text" class="form-control" name="videoTags[]" id="tags-input" />
                             </div>
 
                             <div class="form-group">
                                 <label for="videoConference">Video</label>
                                 <input type="url" value="{{ old('videoConference') }}" class="form-control"
-                                    name="videoConference" id="videoConference" placeholder="Entrez url video ...">
+                                    name="videoConference" id="videoConference" placeholder="Enter url video Conférence ...">
                             </div>
 
                             <!-- time Picker -->
@@ -111,7 +111,7 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-dark w-50 mb-3 ml-3">Crée Videos</button>
+                        <button type="submit" class="btn btn-block btn-dark w-50 mb-3 ml-3">Create</button>
                     </form>
 
                     <div class="row row-cols-1 row-cols-md-3 vidoeContent">

@@ -17,24 +17,24 @@
 
 
                     <div class="form-group">
-                        <label for="exampleInputPassword1"> Mot de passe actuel</label>
+                        <label for="exampleInputPassword1"> Current password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter Mots de Passe" name="current_password">
+                            placeholder="Entre Current password" name="current_password">
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nouveaux Mots de Passe</label>
+                        <label for="exampleInputPassword1">New Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter Mots de Passe" name="password">
+                            placeholder="Entre New Password" name="password">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">confirmé Mots de Passe</label>
+                        <label for="exampleInputPassword1">Confirm Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter confirmé Mots de Passe" name="password_confirmation">
+                            placeholder="Entre Confirm Password" name="password_confirmation">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
 
                 </div>
             </form>

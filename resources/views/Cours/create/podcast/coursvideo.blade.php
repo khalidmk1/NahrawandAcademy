@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Mange Contenu Video Podcast</h1>
+                    <h1>Manage Video Podcast Content.</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -46,7 +46,7 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée Video</h3>
+                            <h3 class="card-title">Create Video</h3>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -57,9 +57,9 @@
                             <input hidden type="text" name="podcastId" value="{{ $podacastInfo['podcastId'] }}">
 
                             <div class="form-group">
-                                <label for="titleVideo">Titre video</label>
+                                <label for="titleVideo">Title</label>
                                 <input type="text" value="{{ old('titleVideo') }}" class="form-control" name="titleVideo"
-                                    id="titleVideo" placeholder="Entrez Titre ...">
+                                    id="titleVideo" placeholder="Entrez Title ...">
                             </div>
 
                             <div class="form-group clearfix text-center col-4">
@@ -74,15 +74,15 @@
 
                             <!-- textarea -->
                             <div class="form-group">
-                                <label>Description de video</label>
+                                <label>Description</label>
                                 <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Enter ..."></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="image2">Image </label>
+                                <label for="image2">Image</label>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="image" id="image2">
-                                    <label class="custom-file-label" for="image2">Choisez image</label>
+                                    <label class="custom-file-label" for="image2">Upload</label>
                                 </div>
                             </div>
 
@@ -99,14 +99,14 @@
                             <!-- /.form-group -->
 
                             <div class="form-group">
-                                <label for="tags_video">Mots Clé</label>
+                                <label for="tags_video">Tags</label>
                                 <input type="text" class="form-control" name="videoTags[]" id="tags-input" />
                             </div>
 
                             <div class="form-group">
                                 <label for="videoPodcast">Video</label>
                                 <input type="url" value="{{ old('videoPodcast') }}" class="form-control"
-                                    name="videoPodcast" id="videoPodcast" placeholder="Entrez url video ...">
+                                    name="videoPodcast" id="videoPodcast" placeholder="Enter url video ...">
                             </div>
 
                             <!-- time Picker -->
@@ -118,7 +118,7 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-dark w-50 mb-3 ml-3">Crée Videos</button>
+                        <button type="submit" class="btn btn-block btn-dark w-50 mb-3 ml-3">Create</button>
                     </form>
 
                     <div class="row row-cols-1 row-cols-md-3 vidoeContent">

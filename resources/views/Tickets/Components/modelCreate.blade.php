@@ -15,7 +15,7 @@
 
                     <!-- select -->
                     <div class="form-group">
-                        <label>Type de Ticket</label>
+                        <label>Ticket Type</label>
                         <select class="form-control" name="type_ticket">
                             <option value="Commercial"> Commercial</option>
                             <option value="Technique">Technique</option>
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Utilisateur</label>
+                        <label>Client</label>
                         <select class="form-control select2" name="user" style="width: 100%;">
                             @foreach ($users as $user)
                                 <option value="{{ $user->user->id }}">{{ $user->user->email }}</option>
@@ -36,7 +36,7 @@
 
                     <!-- textarea -->
                     <div class="form-group">
-                        <label>Deatil</label>
+                        <label>Detail</label>
                         <textarea class="form-control" name="detail" rows="3" placeholder="Enter ..."></textarea>
                     </div>
 
@@ -47,7 +47,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Crée</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>

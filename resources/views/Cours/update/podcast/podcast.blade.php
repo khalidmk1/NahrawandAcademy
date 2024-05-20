@@ -11,9 +11,9 @@
           <div class="card-body">
 
               <div class="form-group">
-                  <label for="title">Titre</label>
+                  <label for="title">Title</label>
                   <input type="text" value="{{ old('title', $Cour->title) }}" class="form-control" name="title"
-                      id="title" placeholder="Entrez Titre ...">
+                      id="title" placeholder="Enter Title ...">
               </div>
 
               <div class="row">
@@ -30,7 +30,7 @@
                   <div class="col-6">
                       <!-- Bootstrap Switch -->
                       <label for="boostrap-switch" class="mr-5">
-                          Affichage
+                          Dispaly
                       </label>
                       <input type="checkbox" name="isActive" id="boostrap-switch" {{$Cour->isActive == 1 ? 'checked' : '' }} data-value=""
                           data-bootstrap-switch data-off-color="danger" data-on-color="success">
@@ -42,13 +42,13 @@
 
               <!-- textarea -->
               <div class="form-group">
-                  <label>Description de Contenu</label>
+                  <label>Description</label>
                   <textarea class="form-control" name="description" rows="3" placeholder="Enter ...">{{ old('description', $Cour->description) }}</textarea>
               </div>
 
 
               <div class="form-group">
-                  <label for="tags">Mots Clé</label>
+                  <label for="tags">Tags</label>
 
                   <input type="text" class="form-control" value="{{ implode(',', $Cour->tags) }}" name="tags[]"
                       id="tags-input" />
@@ -58,10 +58,10 @@
               <div class="row">
                   <div class="col-6">
                       <div class="form-group">
-                          <label>Catégorie <span>({{$Cour->category->category_name}})</span></label>
+                          <label>Category <span>({{$Cour->category->category_name}})</span></label>
                           <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                               style="width: 100%;">
-                              <option selected value="{{$Cour->category->id}}">Choise Votre Catégorie</option>
+                              <option selected value="{{$Cour->category->id}}">Choose Category</option>
                               @foreach ($category as $category)
                                   <option value="{{ $category->id }}">
                                       {{ $category->category_name }}
@@ -81,7 +81,7 @@
                   <div class="col-6">
 
                     <div class="form-group">
-                        <label for="goals_option">Objectifs</label>
+                        <label for="goals_option">Objectives</label>
                         <select class="select3" name="goal[]" multiple="multiple" id="goals_option" data-placeholder="Select a State" style="width: 100%;">
                             @foreach ($CoursGols as $CoursGol)
                                 <option selected value="{{ $CoursGol->goalcours->id }}">{{ $CoursGol->goalcours->goals }}</option>
@@ -129,7 +129,7 @@
 
                   <!-- textarea -->
                   <div class="form-group">
-                      <label>Description de Conférence</label>
+                      <label>Description</label>
                       <textarea class="form-control" name="descriptionPodcast" rows="6" placeholder="Enter ...">{{ $coursPodcast->description }}</textarea>
                   </div>
 
@@ -137,14 +137,14 @@
                       <label for="coursImage">Image</label>
                       <div class="custom-file">
                           <input type="file" class="custom-file-input" name="image" id="coursImage">
-                          <label class="custom-file-label" for="customFile">Choisez image</label>
+                          <label class="custom-file-label" for="customFile">Choose image</label>
                       </div>
                   </div>
                   <div class="form-group">
                       <label for="coursImageflex">Image flex</label>
                       <div class="custom-file">
                           <input type="file" class="custom-file-input" name="coursImageflex" id="coursImageflex">
-                          <label class="custom-file-label" for="coursImageflex">Choisez image</label>
+                          <label class="custom-file-label" for="coursImageflex">Choose image</label>
                       </div>
                   </div>
 
@@ -186,7 +186,7 @@
 
           </div>
 
-          <button type="submit" class="btn btn-block btn-warning w-25 " style="float: right">Modifier
+          <button type="submit" class="btn btn-block btn-warning w-25 " style="float: right">Update
               Contnu</button>
 
       </form>

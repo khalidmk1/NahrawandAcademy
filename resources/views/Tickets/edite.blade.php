@@ -44,16 +44,16 @@
 
                             <div class="col-md-8 col-sm-12">
                                 <div class="form-group row">
-                                    <label for="ticket" class="col-sm-2 col-form-label">Statut du Ticket</label>
+                                    <label for="ticket" class="col-sm-2 col-form-label">Ticket Status</label>
                                     <div class="col-sm-10">
                                         <!-- select -->
                                         <select class="form-control" id="ticket" name="status" style="height: 40px;">
                                             @if ($ticket->status == 1)
-                                                <option selected value="1">Traité</option>
-                                                <option value="0">En Cours</option>
+                                                <option selected value="1">Handled</option>
+                                                <option value="0">In Progress</option>
                                             @else
-                                                <option value="1">Traité</option>
-                                                <option selected value="0">En Cours</option>
+                                                <option value="1">Handled</option>
+                                                <option selected value="0">In Progress</option>
                                             @endif
 
 
@@ -68,7 +68,7 @@
                             <div class="col-sm-12">
                                 <!-- textarea -->
                                 <div class="form-group">
-                                    <label>Détail de Ticket</label>
+                                    <label>Detail</label>
                                     <textarea class="form-control" name="detail" rows="3" placeholder="Enter ...">{{ $ticket->detail }}</textarea>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                                     href="#">{{ $outherticket->user->firstName . ' ' . $outherticket->user->lastName }}</a>
 
                                             </span>
-                                            <span class="description">Partagé publiquement -
+                                            <span class="description">Shared publicly -
                                                 {{ Carbon\Carbon::parse($outherticket->update_at)->isoFormat('D MMMM YYYY à HH[h]mm') }}</span>
                                         </div>
                                         <!-- /.user-block -->
@@ -124,7 +124,7 @@
                 <form action="{{ route('dashboard.comment.ticket.store', Crypt::encrypt($ticket->id)) }}" method="post">
                     @csrf
                     <input class="form-control form-control-sm m-2" name="comment" style="width: 98%;" type="text"
-                        placeholder="Entre a comment">
+                        placeholder="Enter Comment">
                 </form>
 
 

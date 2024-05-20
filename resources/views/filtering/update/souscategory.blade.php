@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modifier Catégorie</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edite Subcategory</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,7 +19,7 @@
                     <div class="form-group">
 
                         <div class="form-group">
-                            <label>Categories </label>
+                            <label>Category</label>
                             <select name="category" class="form-control select2 select2-danger"
                                 data-dropdown-css-class="select2-danger" style="width: 100%;">
                                 <option
@@ -33,15 +33,15 @@
                         </div>
                         <!-- /.form-group -->
 
-                        <label for="categorie"> Nom de Categorie</label>
+                        <label for="categorie">Subcategory Name</label>
                         <input value="{{ old('souscategory_name', $souscategory->souscategory_name) }}" type="text"
-                            class="form-control" placeholder="Enter Nom de Categorie ..." name="souscategory_name">
+                            class="form-control" placeholder="Entre Subcategory Name ..." name="souscategory_name">
                     </div>
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning">Modifier</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
                 </div>
 
             </form>

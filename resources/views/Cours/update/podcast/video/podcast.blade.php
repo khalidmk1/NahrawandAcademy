@@ -4,7 +4,7 @@
        <div class="modal-dialog" role="document">
            <div class="modal-content">
                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Modal title
+                   <h5 class="modal-title" id="exampleModalLabel">Delete Video
                    </h5>
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
@@ -15,17 +15,17 @@
                    @method('delete')
                    @csrf
                    <div class="modal-body">
-
+                    Are you sure you want to delete?
                        <div class="form-group">
-                           <label for="password">Mots de passe</label>
+                           <label for="password">Password</label>
                            <input type="password" class="form-control" name="password" id="password"
-                               placeholder="Entrez password ...">
+                               placeholder="Enter password ...">
                        </div>
 
                    </div>
                    <div class="modal-footer">
 
-                       <button type="submit" class="btn btn-danger">Suprimer</button>
+                       <button type="submit" class="btn btn-danger">Delete</button>
                    </div>
                </form>
            </div>
@@ -40,7 +40,7 @@
        <div class="modal-dialog" role="document">
            <div class="modal-content">
                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Modifier video
+                   <h5 class="modal-title" id="exampleModalLabel">Edite video
                    </h5>
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
@@ -57,9 +57,9 @@
                        <!-- /.card-header -->
 
                        <div class="form-group">
-                           <label for="titleVideo">Titre video</label>
+                           <label for="titleVideo">Title</label>
                            <input type="text" value="{{ old('titleVideo', $video->title) }}" class="form-control"
-                               name="titleVideo" id="titleVideo" placeholder="Entrez Titre ...">
+                               name="titleVideo" id="titleVideo" placeholder="Enter Title ...">
                        </div>
 
                        <div class="form-group clearfix text-center col-4">
@@ -75,7 +75,7 @@
 
                        <!-- textarea -->
                        <div class="form-group">
-                           <label>Description de video</label>
+                           <label>Description</label>
                            <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Enter ...">{{ $video->description }}</textarea>
                        </div>
 
@@ -102,13 +102,13 @@
                         <label for="coursImage">Image</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="image" id="coursImage">
-                            <label class="custom-file-label" for="customFile">Choisez image</label>
+                            <label class="custom-file-label" for="customFile">Choose image</label>
                         </div>
                     </div>
 
 
                        <div class="form-group">
-                           <label for="videoTags">Mots Clé</label>
+                           <label for="videoTags">Tags</label>
                            <input type="text" class="form-control videoTags" value="{{ implode(',', $video->tags) }} "
                                name="videoTags[]" id="videoTags" />
                        </div>
@@ -125,14 +125,14 @@
                        <div class="form-group">
                            <label for="videocpodcast">Video</label>
                            <input type="url" value="{{ old('video', $video->video) }}" class="form-control"
-                               name="video" id="videocpodcast" placeholder="Entrez url video ...">
+                               name="video" id="videocpodcast" placeholder="Enter url video ...">
                        </div>
 
 
                    </div>
                    <div class="modal-footer">
 
-                       <button type="submit" class="btn btn-block btn-warning w-50">Modifier Videos</button>
+                       <button type="submit" class="btn btn-block btn-warning w-50">Modifier</button>
                    </div>
                </form>
            </div>

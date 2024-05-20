@@ -11,7 +11,7 @@
 
         </div>
         <div class="card-body">
-            <p class="login-box-msg">Connectez-vous pour démarrer votre session</p>
+            <p class="login-box-msg">Log in to start your session</p>
 
             <form action="{{ Route('login') }}" method="post">
                 @csrf
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Mot de passe">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -36,13 +36,13 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember">
                             <label for="remember">
-                                Souviens-toi de moi
+                                Remember me
                             </label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-5">
-                        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                        <button type="submit" class="btn btn-primary btn-block">Log in</button>
                     </div>
                     <!-- /.col -->
                 </div>

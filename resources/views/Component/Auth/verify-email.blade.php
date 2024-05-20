@@ -39,24 +39,22 @@
             <div class="card-header text-center">
                 <a href="../../index2.html" class="h1"><b>N</b>AHRAWAND</a>
             </div>
-            <p class="login-box-msg">Merci pour l'enregistrement! Avant de commencer, pourriez-vous vérifier votre adresse
-                e-mail en cliquant sur le lien que nous venons de vous envoyer par e-mail ?</p>
+            <p class="login-box-msg">Thank you for registering! Before you begin, could you please verify your email address
+                by clicking on the link we just sent you via email?</p>
             <div class="card-body row">
 
                 <form method="POST" class="col-8" action="{{ route('verification.send') }}">
                     @csrf
                     <button type="submit" class="btn btn-outline-primary">
-                        Envoyer l'e-mail de vérification
+                        Send verification email
                     </button>
-
                 </form>
-
                 <div class="col-4">
                     <form method="POST" action="{{ route('logout.auth') }}">
                         @csrf
 
                         <button type="submit" class="btn btn-outline-danger">
-                            Se déconnecter
+                            Log out
                         </button>
                     </form>
                 </div>

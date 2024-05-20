@@ -622,8 +622,7 @@ public function Cour_Conference(){
         $favoris = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
         $favoris->load('cours.category');
         $favoris->load(['cours.CoursFormation' ,'cours.CoursFormation.user.userspeaker' ,
-        'cours.CoursFormation.CoursFormationVideo' , 'cours.CoursPodcast' , 
-        'cours.CoursPodcast.user']);
+        'cours.CoursPodcast' , 'cours.CoursPodcast.user']);
 
         return response()->json($favoris);
     }

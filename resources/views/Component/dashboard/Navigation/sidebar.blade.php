@@ -146,7 +146,7 @@
                     <a href="{{ Route('dashboard.client.show') }}" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
-                            Utitlisateurs
+                            Client
 
                         </p>
                     </a>
@@ -174,13 +174,13 @@
                     </a>
                 </li> --}}
 
-                <li class="nav-header">Gestion filtre</li>
+                <li class="nav-header">Filter management</li>
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.category.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-book"></i>
                         <p>
-                            Catégorie
+                            Category
                         </p>
                     </a>
                 </li>
@@ -189,7 +189,7 @@
                     <a href="{{ Route('dashboard.souscategorie.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-list"></i>
                         <p>
-                            Sous Catégorie
+                            Subcategory
 
                         </p>
                     </a>
@@ -198,7 +198,7 @@
                     <a href="{{ Route('dashboard.program.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-tasks"></i>
                         <p>
-                            Programme
+                            Program
                         </p>
                     </a>
                 </li>
@@ -207,13 +207,13 @@
                     <a href="{{ Route('dashboard.goals.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-bullseye" aria-hidden="true"></i>
                         <p>
-                            Objetifs
+                            Objectives
 
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-header">Gestion Contenu</li>
+                <li class="nav-header">Content Management</li>
 
                 @if ($rolePermissionContent || auth()->user()->userRole->role_id === 1)
                     <li class="nav-item">
@@ -222,7 +222,7 @@
                             <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}"
                                 alt="">
                             <p>
-                                Contenu
+                                Content
                             </p>
                         </a>
                     </li>
@@ -232,7 +232,7 @@
                     <a href="{{ Route('dashboard.cours.index') }}" class="nav-link">
                         <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}" alt="">
                         <p>
-                            Voir Contenu
+                            View Content
                         </p>
                     </a>
                 </li>
@@ -243,7 +243,7 @@
 
                             <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
                             <p>
-                                Quiqly
+                                Quickly
                             </p>
                         </a>
                     </li>
@@ -254,7 +254,7 @@
 
                         <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
                         <p>
-                            Voir Quiqly
+                            View quickly
                         </p>
                     </a>
                 </li>
@@ -262,14 +262,14 @@
 
 
                 @if ($rolePermissionTicket || auth()->user()->userRole->role_id === 1)
-                    <li class="nav-header">Gestion Tickets</li>
+                    <li class="nav-header">Ticket Management</li>
 
                     <li class="nav-item">
                         <a href="{{ Route('dashboard.tickets.create') }}" class="nav-link">
                             <i class="nav-icon fas fa-ticket-alt" aria-hidden="true"></i>
 
                             <p>
-                                Tickets
+                                Ticket
                             </p>
                         </a>
                     </li>
@@ -278,7 +278,7 @@
 
 
 
-                <li class="nav-header">Paramétres</li>
+                <li class="nav-header">Settings</li>
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.FAQ.edite') }}" class="nav-link">
@@ -307,7 +307,7 @@
                         <i class="nav-icon fa fa-history" aria-hidden="true"></i>
 
                         <p>
-                            Historique
+                            History
                         </p>
                     </a>
                 </li>

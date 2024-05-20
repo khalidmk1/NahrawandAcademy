@@ -29,7 +29,7 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée Cotenu</h3>
+                            <h3 class="card-title">Create Content.</h3>
                         </div>
 
                     </div>
@@ -39,9 +39,9 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="title">Titre</label>
+                                <label for="title">Ttile</label>
                                 <input type="text" value="{{ old('title') }}" class="form-control" name="title"
-                                    id="title" placeholder="Entrez Titre ...">
+                                    id="title" placeholder="Enter Ttile ...">
                             </div>
 
                             <div class="row justify-content-around ">
@@ -60,7 +60,7 @@
                                 <div class="form-group col-4 text-center">
                                     <!-- Bootstrap Switch -->
                                     <label for="boostrap-switch" class="mr-5">
-                                        Affichage
+                                        Display
                                     </label>
                                     <input type="checkbox" name="isActive" checked data-bootstrap-switch
                                         data-off-color="danger" data-on-color="success">
@@ -71,23 +71,23 @@
 
                             <!-- textarea -->
                             <div class="form-group">
-                                <label>Description de Contenu</label>
+                                <label>Description</label>
                                 <textarea class="form-control" name="description" rows="3" placeholder="Enter ...">{{ old('description') }}</textarea>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="tags">Mots Clé</label>
+                                <label for="tags">Tags</label>
                                 <input type="text" class="form-control" name="tags[]" id="tags-input" />
                             </div>
 
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Catégorie</label>
+                                        <label>Category</label>
                                         <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                                             style="width: 100%;">
-                                            <option value="">Choisissez Votre Catégorie</option>
+                                            <option value="">Choose Category</option>
                                             @foreach ($CoursInfo['category'] as $category)
                                                 <option value="{{ $category->id }}">
                                                     {{ $category->category_name }}
@@ -101,7 +101,7 @@
                                 <div class="col-6">
 
                                     <div class="form-group">
-                                        <label for="goals_option">Objectifs</label>
+                                        <label for="goals_option">Objectives</label>
                                         <select class="select3" name="gaols_id[]" multiple="multiple" id="goals_option"
                                             data-placeholder="Select a State" style="width: 100%;">
 
@@ -116,12 +116,12 @@
 
                             <!-- select -->
                             <div class="form-group">
-                                <label>Type De Cour</label>
+                                <label>Type Content</label>
                                 <select class="form-control" name="coursType" id="cours_type">
-                                    <option selected>Choisissez Votre Type de Cour</option>
-                                    <option value="conference">Conférance Contenu</option>
-                                    <option value="podcast">Podcast Contenu</option>
-                                    <option value="formation">Formation Contenu</option>
+                                    <option selected>Choose Content Type</option>
+                                    <option value="conference">Conférance Content</option>
+                                    <option value="podcast">Podcast Content</option>
+                                    <option value="formation">Formation Content</option>
                                 </select>
                             </div>
 
@@ -150,25 +150,25 @@
 
                                 <!-- textarea -->
                                 <div class="form-group">
-                                    <label>Description de Conférence</label>
+                                    <label>Description Conférence</label>
                                     <textarea class="form-control" name="descriptionConference" rows="3" placeholder="Enter ..."></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="coursImage">Image</label>
+                                    <label for="coursImage">Image Conférence</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="introImageConfrence"
                                             id="coursImage">
-                                        <label class="custom-file-label" for="customFile">Choisez image</label>
+                                        <label class="custom-file-label" for="customFile">Choose image</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="flexImageConference">Flex Image</label>
+                                    <label for="flexImageConference">Flex Image Conférence</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="flexImageConference"
                                             id="flexImageConference">
-                                        <label class="custom-file-label" for="flexImageConference">Choisez image</label>
+                                        <label class="custom-file-label" for="flexImageConference">Choose image</label>
                                     </div>
                                 </div>
 
@@ -180,7 +180,7 @@
                                             {{-- <input type="file" class="filepond" name="introVideoConfrence"
                                                 id="coursVideo"> --}}
 
-                                            <label for="videoconference">Video</label>
+                                            <label for="videoconference">Video Conférence</label>
                                             <input type="url" value="{{ old('videoconference') }}"
                                                 class="form-control" name="videoconference" id="videoconference"
                                                 placeholder="Entrez url video ...">
@@ -193,7 +193,7 @@
 
                                         <!-- time Picker -->
                                         <div class="form-group">
-                                            <label for="coursDuration">Duration</label>
+                                            <label for="coursDuration">Duration Conférence</label>
                                             <input type="time" class="form-control" id="coursDuration"
                                                 name="coursDuration" value="00:00:00" step="1">
                                         </div>
@@ -231,25 +231,25 @@
 
                                 <!-- textarea -->
                                 <div class="form-group">
-                                    <label>Description de Podcast</label>
+                                    <label>Description Podcast</label>
                                     <textarea class="form-control" name="descriptionPodcast" rows="3" placeholder="Enter ..."></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="ImagePodcast">Image de Podcast</label>
+                                    <label for="ImagePodcast">Image Podcast</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="introImagePodcast"
                                             id="ImagePodcast">
-                                        <label class="custom-file-label" for="ImagePodcast">Choisez image</label>
+                                        <label class="custom-file-label" for="ImagePodcast">Choose image</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="flexImagePodcast">Flex Image</label>
+                                    <label for="flexImagePodcast">Flex Image Podcast</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="flexImagePodcast"
                                             id="flexImagePodcast">
-                                        <label class="custom-file-label" for="flexImagePodcast">Choisez image</label>
+                                        <label class="custom-file-label" for="flexImagePodcast">Choose image</label>
                                     </div>
                                 </div>
 
@@ -258,7 +258,7 @@
                                     <div class="col-md-8">
 
                                         <div class="form-group">
-                                            <label for="videocpodcast">Video</label>
+                                            <label for="videocpodcast">Video Podcast</label>
                                             <input type="url" value="{{ old('videocpodcast') }}"
                                                 class="form-control" name="videocpodcast" id="videocpodcast"
                                                 placeholder="Entrez url video ...">
@@ -271,7 +271,7 @@
 
                                         <!-- time Picker -->
                                         <div class="form-group">
-                                            <label for="DurationPdcast">Duration de Podcast</label>
+                                            <label for="DurationPdcast">Duration Podcast</label>
                                             <input type="time" class="form-control" id="DurationPdcast"
                                                 name="DurationPdcast" value="00:00:00" step="1">
                                         </div>
@@ -293,20 +293,20 @@
 
 
                                 <div class="form-group">
-                                    <label for="ImageFomation">Image de Fomation</label>
+                                    <label for="ImageFomation">Image Fomation</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="introImageFormation"
                                             id="ImageFomation">
-                                        <label class="custom-file-label" for="ImageFomation">Choisez image</label>
+                                        <label class="custom-file-label" for="ImageFomation">Choose image</label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="flexImageFormation">Flex Image</label>
+                                    <label for="flexImageFormation">Flex Image Fomation</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="flexImageFormation"
                                             id="flexImageFormation">
-                                        <label class="custom-file-label" for="flexImageFormation">Choisez image</label>
+                                        <label class="custom-file-label" for="flexImageFormation">Choose image</label>
                                     </div>
                                 </div>
 
@@ -316,7 +316,7 @@
                                     <div class="icheck-primary d-inline">
                                         <input type="checkbox" name="iscertify" id="certifier_formation">
                                         <label for="certifier_formation">
-                                            Certifier
+                                            Certify
                                         </label>
                                     </div>
 
@@ -324,7 +324,7 @@
 
                                 <!-- textarea -->
                                 <div class="form-group" id="condition">
-                                    <label>Conditions d’éligibilité</label>
+                                    <label>Eligibility criteria</label>
                                     <textarea class="form-control" name="conditionformation" rows="3" placeholder="Enter ..."></textarea>
                                 </div>
 
@@ -343,9 +343,9 @@
 
 
                                 <div class="form-group">
-                                    <label>Programme</label>
+                                    <label>Program</label>
                                     <select class="form-control select2 " name="programId" style="width: 100%;">
-                                        <option value="0">Choisez Program</option>
+                                        <option value="0">Choose Program</option>
                                         @foreach ($CoursInfo['Programs'] as $program)
                                             <option value="{{ $program->id }}">
                                                 {{ $program->title }}</option>
@@ -359,11 +359,11 @@
 
 
                                 <div class="form-group">
-                                    <label for="DocumentFomation">Documents de Fomation</label>
+                                    <label for="DocumentFomation">Documents Fomation</label>
                                     <div class="custom-file">
                                         <input type="file" name="document" class="custom-file-input"
                                             id="DocumentFomation" multiple>
-                                        <label class="custom-file-label" for="DocumentFomation">Choisez Documents</label>
+                                        <label class="custom-file-label" for="DocumentFomation">Choose Documents</label>
                                     </div>
                                 </div>
 
@@ -375,8 +375,8 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Crée
-                            Contnu</button>
+                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3"
+                            style="float: right">Create</button>
 
                     </form>
 

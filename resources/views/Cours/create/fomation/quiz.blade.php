@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Crée Quiz</h1>
+                    <h1>Create Quiz</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -24,11 +24,11 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée </h3>
+                            <h3 class="card-title">Create Quiz </h3>
                         </div>
                         <div class="col-6">
                             <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursFormationId->id)) }}"
-                                style="float: inline-end" class="btn btn-block btn-info w-25">Crée Video</a>
+                                style="float: inline-end" class="btn btn-block btn-info w-25">Create Video</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -64,44 +64,44 @@
                                     <div class="form-group question">
                                         <label for="Question">Question</label>
                                         <input type="text" class="form-control question_text " name="Question"
-                                            id="Question" placeholder="Entrez Question ...">
+                                            id="Question" placeholder="Enter Question ...">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="RightAwnser">la bonne réponse</label>
+                                        <label for="RightAwnser">The correct answer</label>
                                         <input type="text" value="{{ old('RightAwnser') }}" class="form-control"
-                                            name="RightAwnser" id="RightAwnser" placeholder="Entrez la bonne réponse ...">
+                                            name="RightAwnser" id="RightAwnser" placeholder="Enter The correct answer ...">
                                     </div>
 
                                     @if ($checkCountRate)
                                         <div class="d-flex justify-content-around  align-items-center" id="addsection">
 
                                             <div class="form-group row">
-                                                <label for="Rate">Sccess Rate ?</label>
+                                                <label for="Rate">Sccess Rate</label>
                                                 <input type="text" value="{{ $checkCountRate->rateSeccess }}"
                                                     class="form-control" name="Rate" id="Rate"
-                                                    placeholder="Entrez Rate ...">
+                                                    placeholder="Enter Rate Sccess ...">
                                             </div>
                                             <div class="form-group row">
-                                                <label for="count">Combien tu Veux Envoyer ?</label>
+                                                <label for="count">How many to send?</label>
                                                 <input type="text" value="{{ $checkCountRate->Answercount }}"
                                                     class="form-control" name="count" id="count"
-                                                    placeholder="Entrez la bonne réponse ...">
+                                                    placeholder="Enter ...">
                                             </div>
                                         </div>
                                     @else
                                         <div class="d-flex justify-content-around  align-items-center" id="addsection">
 
                                             <div class="form-group row">
-                                                <label for="Rate">Sccess Rate ?</label>
+                                                <label for="Rate">Sccess Rate </label>
                                                 <input type="text" value="{{ old('Rate') }}" class="form-control"
                                                     name="Rate" id="Rate" placeholder="Entrez Rate ...">
                                             </div>
                                             <div class="form-group row">
-                                                <label for="count">Combien tu Veux Envoyer ?</label>
+                                                <label for="count">How many to send?</label>
                                                 <input type="text" value="{{ old('count') }}" class="form-control"
                                                     name="count" id="count"
-                                                    placeholder="Entrez la bonne réponse ...">
+                                                    placeholder="Enter ...">
                                             </div>
                                         </div>
                                     @endif
@@ -111,15 +111,15 @@
                                     <div id="container">
 
 
-                                        <button id="addBtn" type="button" class="btn btn-primary">Ajouter
-                                            Réponse</button>
+                                        <button id="addBtn" type="button" class="btn btn-primary">Add
+                                            Response</button>
                                     </div>
 
 
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-block btn-info w-25 mt-2"
-                                                style="float: right">Ajouter QSM</button>
+                                                style="float: right">Create QSM</button>
                                         </div>
 
 
@@ -153,13 +153,13 @@
                                     <div id="containerQuestion">
 
 
-                                        <button id="addQuestion" type="button" class="btn btn-primary">Ajouter
+                                        <button id="addQuestion" type="button" class="btn btn-primary">Add
                                             Question</button>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-block btn-info w-25 mt-2"
-                                                style="float: right">Ajouter des Question</button>
+                                                style="float: right">Create Questions</button>
                                         </div>
 
                                         <div class="col-12">
@@ -203,7 +203,7 @@
                 let newAnswer = `
 
             <div class="form-group reponse">
-                            <label for="awnser_${index}" class="answer_label">la réponse ${index}</label>
+                            <label for="awnser_${index}" class="answer_label">The response ${index}</label>
                            <div class="position-relative">
                             <input name="awnser[]" type="text" class="form-control response" required id="Awnser_${index}"
                                 aria-label="Text input with checkbox">
@@ -224,7 +224,7 @@
             $(document).on('click', '#addBtn', function() {
                 addAnswer();
                 let addButton =
-                    `  <button id="addBtn" type="button" class="btn btn-primary">Ajouter Réponse</button>
+                    `  <button id="addBtn" type="button" class="btn btn-primary">Add Response</button>
                           `;
                 $('#container').append(addButton);
             });
@@ -263,7 +263,7 @@
             $(document).on('click', '#addQuestion', function() {
                 addQuestion();
                 let addButton =
-                    `<button id="addQuestion" type="button" class="btn btn-primary">Ajouter Question</button>`;
+                    `<button id="addQuestion" type="button" class="btn btn-primary">Add Question</button>`;
                 $('#containerQuestion').append(addButton);
             });
 

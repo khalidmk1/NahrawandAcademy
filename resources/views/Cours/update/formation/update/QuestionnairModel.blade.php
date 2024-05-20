@@ -4,7 +4,7 @@
      <div class="modal-dialog" role="document">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel_{{ $Question->id }}">Modifier Question</h5>
+                 <h5 class="modal-title" id="exampleModalLabel_{{ $Question->id }}">Edite Questionnaire</h5>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
@@ -14,16 +14,17 @@
                      id="update_question_form_{{ $Question->id }}" method="post">
                      @csrf
                      @method('patch')
+                     
                      <div class="form-group question">
                          <label for="Question">Question</label>
                          <input type="text" value="{{ old('Question', $Question->Question) }}"
                              class="form-control question_text" name="Question" id="Question_{{ $Question->id }}"
-                             placeholder="Entrez la question...">
+                             placeholder="Enter Question...">
                      </div>
                      <div class="row">
                          <div class="col-12">
                              <button type="submit" class="btn btn-block btn-warning w-25 mt-2"
-                                 style="float: right">Modifier</button>
+                                 style="float: right">Update</button>
                          </div>
                      </div>
                  </form>

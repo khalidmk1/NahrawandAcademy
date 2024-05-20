@@ -4,7 +4,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modifier Catégorie</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edite Category</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -17,16 +17,16 @@ aria-hidden="true">
 
                 <div class="form-group">
 
-                    <label for="categorie"> Nom de Categorie</label>
+                    <label for="categorie"> Category Name</label>
                     <input value="{{ old('category_name' , $categorie->category_name) }}" type="text"
-                        class="form-control"  placeholder="Enter Nom de Categorie ..."
+                        class="form-control"  placeholder="Entre Category Name..."
                         name="category_name">
                 </div>
 
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-warning">Modifier</button>
+                <button type="submit" class="btn btn-warning">Update</button>
             </div>
 
         </form>

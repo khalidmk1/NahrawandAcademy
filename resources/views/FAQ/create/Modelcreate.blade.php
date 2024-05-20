@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Crée FAQ</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Create FAQ</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,19 +17,19 @@
                   <div class="form-group">
                     <label>Question</label>
                     <input type="text" value="{{ old('Question') }}" class="form-control"
-                    name="Question" id="Question" placeholder="Entrez Nom ...">
+                    name="Question" id="Question" placeholder="Enter ...">
                 </div>
 
                     <!-- textarea -->
                     <div class="form-group">
-                        <label>Réponse</label>
+                        <label>Response</label>
                         <textarea class="form-control" name="answer" rows="3" placeholder="Enter ..."></textarea>
                     </div>
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Crée</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>

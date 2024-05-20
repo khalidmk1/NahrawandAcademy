@@ -47,7 +47,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Voir Tout Les Contenus</h1>
+                    <h1>View Detail</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -110,7 +110,7 @@
                                 @if ($rolePermissionmodifiction)
                                     <li class="nav-item">
                                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                            role="tab" aria-controls="pills-profile" aria-selected="false">Modifier</a>
+                                            role="tab" aria-controls="pills-profile" aria-selected="false">Edite</a>
                                     </li>
                                 @endif
 
@@ -125,13 +125,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="pills-Qestion-tab" data-toggle="pill" href="#pills-Qestion"
                                             role="tab" aria-controls="pills-Qestion"
-                                            aria-selected="false">Questionnair</a>
+                                            aria-selected="false">Questionnaire</a>
                                     </li>
                                 @else
                                 @endif
                                 @if ($rolePermissiondelete)
                                     <li class="nav-item"><a class="nav-link" href="#settings"
-                                            data-toggle="tab">Parameter</a>
+                                            data-toggle="tab">Setting</a>
                                     </li>
                                 @endif
 
@@ -229,7 +229,7 @@
                                         <div class="d-flex">
 
                                             <i class="fa fa-bullseye" style="font-size: x-large" aria-hidden="true"></i>
-                                            <div class="ml-2"><strong>Objectifs.</strong></div>
+                                            <div class="ml-2"><strong>Objectives.</strong></div>
 
                                         </div>
                                         <!-- /.user-block -->
@@ -248,7 +248,7 @@
                                         <div class="d-flex">
                                             <i class="fa fa-tags" style="font-size: x-large" aria-hidden="true"></i>
 
-                                            <div class="ml-2"><strong>Mots Clé.</strong></div>
+                                            <div class="ml-2"><strong>Tags.</strong></div>
 
                                         </div>
                                         <!-- /.user-block -->
@@ -266,7 +266,7 @@
                                             <div class="d-flex">
                                                 <i class="fa fa-exclamation-circle" style="font-size: x-large"
                                                     aria-hidden="true"></i>
-                                                <div class="ml-2"><strong>Programe.</strong></div>
+                                                <div class="ml-2"><strong>Program.</strong></div>
 
                                             </div>
                                             <!-- /.user-block -->
@@ -295,7 +295,7 @@
                                             @if ($rolePermissionmodifiction)
                                                 <div class="col-6">
                                                     <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id)) }}"
-                                                        class="btn btn-block btn-info w-50" style="float: right;">Ajouter
+                                                        class="btn btn-block btn-info w-50" style="float: right;">Add
                                                         video</a>
                                                 </div>
                                             @endif
@@ -407,7 +407,7 @@
                                 <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_formation"
-                                            class="btn btn-danger w-50">suprimer</button>
+                                            class="btn btn-danger w-50">Delete</button>
                                     </div>
                                     @include('Cours.delete.formation')
                                 </div>

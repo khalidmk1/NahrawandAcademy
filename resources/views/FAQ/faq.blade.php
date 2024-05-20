@@ -27,11 +27,11 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-6">
-                            <h3 class="card-title">Crée FAQ</h3>
+                            <h3 class="card-title">View FAQ</h3>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
                             <a data-toggle="modal" data-target="#staticBackdrop" class="btn btn-block btn-default w-25">
-                                Crée
+                                Create
                             </a>
                         </div>
                     </div>
@@ -49,13 +49,13 @@
                                             <!-- select -->
                                             <input type="text" value="{{ old('question', $FAQ->question) }}"
                                                 class="form-control" name="Question" id="Question"
-                                                placeholder="Entrez Nom ...">
+                                                placeholder="Enter ...">
                                         </div>
 
                                         <div class="col-md-5">
                                             <button type="submit" class="btn btn-block btn-warning w-25 mb-3 ml-3"
                                                 style="float: right">
-                                                Modifier</button>
+                                                Update</button>
                                         </div>
 
                                     </div>
@@ -65,7 +65,7 @@
                                 <div class="col-sm-12">
                                     <!-- textarea -->
                                     <div class="form-group">
-                                        <label>Réponse </label>
+                                        <label>Response </label>
                                         <textarea class="form-control" name="answer" rows="3" placeholder="Enter ...">{{ $FAQ->answer }}</textarea>
                                     </div>
                                 </div>

@@ -16,7 +16,7 @@
 
 
                         <div class="form-group">
-                            <label>Categories</label>
+                            <label>Category</label>
                             <select name="category" class="form-control select2" style="width: 100%;">
                                 @foreach ($souscategories['categories'] as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}
@@ -29,15 +29,15 @@
 
 
                         <div class="form-group">
-                            <label for="categorie"> Nom de SousCategorie</label>
+                            <label for="categorie">Subcategory name</label>
                             <input value="{{ old('souscategorie') }}" type="text" class="form-control" id="categorie"
-                                placeholder="Enter Nom de SousCategorie ..." name="souscategory_name">
+                                placeholder="Entre Subcategory name ..." name="souscategory_name">
                         </div>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Crée</button>
+                        <button type="submit" class="btn btn-default">Create</button>
                     </div>
 
                 </form>

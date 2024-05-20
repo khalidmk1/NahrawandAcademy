@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Mange Contenu Video Formation</h1>
+                    <h1>Manage Formation Video Content</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -47,7 +47,7 @@
                 <div class="card card-default col-12">
                     <div class="card-header ">
 
-                        <h3 class="card-title">Crée Video</h3>
+                        <h3 class="card-title">Create Video</h3>
 
                     </div>
                     <!-- /.card-header -->
@@ -59,15 +59,15 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="titleVideo">Titre video</label>
+                                <label for="titleVideo">Title</label>
                                 <input type="text" value="{{ old('titleVideo') }}" class="form-control" name="titleVideo"
-                                    id="titleVideo" placeholder="Entrez Titre ...">
+                                    id="titleVideo" placeholder="Enter Title ...">
                             </div>
 
                             <!-- textarea -->
                             <div class="form-group">
-                                <label>Description de video</label>
-                                <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Enter ..."></textarea>
+                                <label>Description</label>
+                                <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Entre  Description ..."></textarea>
                             </div>
 
 
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="tags_video">Mots Clé</label>
+                                <label for="tags_video">Tags</label>
                                 <input type="text" class="form-control" name="videoTags[]" id="tags-input" />
                             </div>
 
@@ -91,8 +91,7 @@
                                 <input type="url" value="{{ old('videoFormation') }}" class="form-control"
                                     name="videoFormation" id="videoFormation" placeholder="Entrez url video ...">
                             </div>
-                            <button type="submit" class="btn btn-block btn-dark w-25 mb-3 ml-3" style="float: right">Crée
-                                Videos</button>
+                            <button type="submit" class="btn btn-block btn-dark w-25 mb-3 ml-3" style="float: right">Create</button>
                         </form>
 
                     </div>

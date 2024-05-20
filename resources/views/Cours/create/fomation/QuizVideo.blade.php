@@ -4,7 +4,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create QSM</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -22,24 +22,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="RightAwnser">la bonne réponse</label>
+                        <label for="RightAwnser">The correct answer</label>
                         <input type="text" value="{{ old('RightAwnser') }}" class="form-control" name="RightAwnser"
-                            id="RightAwnser" placeholder="Entrez la bonne réponse ..." required>
+                            id="RightAwnser" placeholder="Enter The correct answer ..." required>
                     </div>
-                    {{-- 
-                    <div class="d-flex justify-content-around  align-items-center" id="addsection">
-
-                        <div class="form-group row">
-                            <label for="Rate">Sccess Rate ?</label>
-                            <input type="text" value="{{ old('Rate') }}" class="form-control" name="Rate"
-                                id="Rate" placeholder="Entrez Rate ...">
-                        </div>
-                        <div class="form-group row">
-                            <label for="count">Combien tu Veux Envoyer ?</label>
-                            <input type="text" value="{{ old('count') }}" class="form-control" name="count"
-                                id="count" placeholder="Entrez la bonne réponse ...">
-                        </div>
-                    </div> --}}
 
                     @if ($checkCountRate)
                         <div class="d-flex justify-content-around  align-items-center" id="addsection">
@@ -47,26 +33,26 @@
                             <div class="form-group row">
                                 <label for="Rate">Sccess Rate ?</label>
                                 <input type="text" value="{{ $checkCountRate->rateSeccess }}" class="form-control"
-                                    name="Rate" id="Rate" placeholder="Entrez Rate ...">
+                                    name="Rate" id="Rate" placeholder="Entrez Rate Sccess ...">
                             </div>
                             <div class="form-group row">
-                                <label for="count">Combien tu Veux Envoyer ?</label>
+                                <label for="count">How many to send ?</label>
                                 <input type="text" value="{{ $checkCountRate->Answercount }}" class="form-control"
-                                    name="count" id="count" placeholder="Entrez la bonne réponse ...">
+                                    name="count" id="count" placeholder="Enter ...">
                             </div>
                         </div>
                     @else
                         <div class="d-flex justify-content-around  align-items-center" style="gap: 29px" id="addsection">
 
                             <div class="form-group row">
-                                <label for="Rate">Sccess Rate ?</label>
+                                <label for="Rate">Sccess Rate</label>
                                 <input type="text" value="{{ old('Rate') }}" class="form-control" name="Rate"
-                                    id="Rate" placeholder="Entrez Rate ...">
+                                    id="Rate" placeholder="Enter ...">
                             </div>
                             <div class="form-group row">
-                                <label for="count">Combien tu Veux Envoyer ?</label>
+                                <label for="count">How many to send?</label>
                                 <input type="text" value="{{ old('count') }}" class="form-control" name="count"
-                                    id="count" placeholder="Entrez la bonne réponse ...">
+                                    id="count" placeholder="Enter ...">
                             </div>
                         </div>
                     @endif
@@ -76,8 +62,8 @@
                     <div id="container_{{ $video->id }}">
 
 
-                        <button type="button" id="addBtn_{{ $video->id }}" class="btn btn-primary ">Ajouter
-                            Réponse</button>
+                        <button type="button" id="addBtn_{{ $video->id }}" class="btn btn-primary ">Add
+                            Response</button>
                     </div>
 
 
@@ -92,7 +78,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-block btn-info w-25 mt-2" style="float: right">Ajouter
+                    <button type="submit" class="btn btn-block btn-info w-25 mt-2" style="float: right">Create
                         QSM</button>
                 </div>
 
@@ -112,7 +98,7 @@
             index++;
             let newAnswer = `
             <div class="form-group reponse">
-                <label for="awnser_${index}" class="answer_label">la réponse ${index}</label>
+                <label for="awnser_${index}" class="answer_label">Response ${index}</label>
                 <div class="position-relative">
                     <input name="awnser[]" required type="text" class="form-control response" required id="Awnser_${index}" aria-label="Text input with checkbox">
                     <i class="fa fa-trash position-absolute removeBtn" style="right: 12px; color: red; bottom: 12px; z-index: 1000;" aria-hidden="true"></i>
@@ -125,7 +111,7 @@
         $(document).on('click', '#addBtn_{{ $video->id }}', function() {
             addAnswer();
             let addButton =
-                `<button type="button" id="addBtn_{{ $video->id }}" class="btn btn-primary addBtn">Ajouter Réponse</button>`;
+                `<button type="button" id="addBtn_{{ $video->id }}" class="btn btn-primary addBtn">Add Reponse</button>`;
             $('#container_{{ $video->id }}').append(addButton);
         });
 

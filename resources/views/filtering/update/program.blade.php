@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modifier Catégorie</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edite Program</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,9 +16,9 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="title"> Titre</label>
+                        <label for="title"> Title</label>
                         <input value="{{ old('title', $program->title) }}" type="text" class="form-control"
-                            id="title" placeholder="Enter Nom de Categorie ..." name="title">
+                            id="title" placeholder="Entre Title ..." name="title">
                     </div>
 
                     <div class="form-group">
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="tags">Mots Clé</label>
+                        <label for="tags">Tags</label>
                         <input type="text" class="form-control" name="tags[]" id="tag-input_{{ $program->id }}"
                             data-id="{{ $program->id }}"
                             value="@foreach ($program->tags as $tag){{ $tag }}@if (!$loop->last),@endif @endforeach" />
@@ -37,25 +37,27 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Categories</label>
-                        <select class="select2" multiple="multiple" name="categories[]" data-placeholder="Select Categories" style="width: 100%;">
-                            @foreach ($program->categories as $categorie) 
+                        <label>Category</label>
+                        <select class="select2" multiple="multiple" name="categories[]"
+                            data-placeholder="Select Categories" style="width: 100%;">
+                            @foreach ($program->categories as $categorie)
                                 <option selected value="{{ $categorie }}">{{ $categorie }}</option>
                             @endforeach
                             @foreach ($categories_programs['categories'] as $category)
                                 @if (!collect($program->categories)->contains($category->category_name))
-                                    <option value="{{ $category->category_name }}">{{ $category->category_name }}</option>
+                                    <option value="{{ $category->category_name }}">{{ $category->category_name }}
+                                    </option>
                                 @endif
                             @endforeach
                         </select>
                     </div>
-                    
-                    
+
+
 
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-warning">Modifier</button>
+                    <button type="submit" class="btn btn-warning">Update</button>
                 </div>
 
             </form>

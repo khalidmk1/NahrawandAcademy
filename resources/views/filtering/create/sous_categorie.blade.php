@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manager SousCategories</h1>
+                    <h1>Manage Subcategories</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crée SousCatégorie</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Subcategory</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -40,7 +40,7 @@
 
 
                         <div class="form-group">
-                            <label>Categories</label>
+                            <label>Category</label>
                             <select name="category" class="form-control select2" id="categorieselect" style="width: 100%;">
                                 @foreach ($souscategories['categories'] as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}
@@ -53,15 +53,15 @@
 
 
                         <div class="form-group">
-                            <label for="categorie"> Nom de SousCategorie</label>
+                            <label for="categorie"> Subcategory Name</label>
                             <input value="{{ old('souscategorie') }}" type="text" class="form-control" id="categorie"
-                                placeholder="Enter Nom de SousCategorie ..." name="souscategory_name">
+                                placeholder="Entre Subcategory Name ..." name="souscategory_name">
                         </div>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Crée</button>
+                        <button type="submit" class="btn btn-default">Create</button>
                     </div>
 
                 </form>

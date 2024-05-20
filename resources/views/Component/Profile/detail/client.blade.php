@@ -58,7 +58,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Number of Favorites</b> <a class="float-right">{{$client->Favoris->count()}}</a>
+                                    <b>Nombre de Favoris</b> <a class="float-right">{{$client->Favoris->count()}}</a>
                                 </li>
                                {{--  <li class="list-group-item">
                                     <b>Number of Content </b> <a class="float-right">543</a>

@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manger Objectifs</h1>
+                    <h1>Manage Objectifs</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crée Catégorie</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Objectives</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -50,7 +50,7 @@
 
 
                         <div class="form-group">
-                            <label>SousCategorie</label>
+                            <label>Subcategory</label>
                             <select class="select2" multiple="multiple" name="souscatgory[]"
                                 data-placeholder="Select a State" style="width: 100%;">
                                 @foreach ($goals['souscategory'] as $goal)
@@ -63,9 +63,9 @@
                         <!-- /.form-group -->
 
                         <div class="form-group">
-                            <label for="categorie"> Nom de Objectif</label>
+                            <label for="categorie">Objective Name</label>
                             <input value="{{ old('goals') }}" type="text" class="form-control" id="categorie"
-                                placeholder="Enter Nom de Categorie ..." name="goals">
+                                placeholder="Entre Objective Name ..." name="goals">
                         </div>
 
 
@@ -73,7 +73,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Crée</button>
+                        <button type="submit" class="btn btn-default">Create</button>
                     </div>
 
                 </form>
@@ -92,7 +92,7 @@
                 <div class="col-12 mb-3 d-flex justify-content-end">
                     <button type="button" data-toggle="modal" data-target="#exampleModal"
                         class="btn btn-block btn-primary w-25">
-                        Crée des Categories
+                        Create Objectives
                     </button>
                 </div>
 
@@ -100,7 +100,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Catégories</h3>
+                            <h3 class="card-title">Objectives</h3>
 
 
                             <div class="card-tools">
@@ -123,9 +123,9 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th style="width: 10px">#id</th>
-                                        <th>SouCatégorie</th>
-                                        <th>Objetifs</th>
-                                        <th>Modifier</th>
+                                        <th>Subcategory</th>
+                                        <th>Objective</th>
+                                        <th>Update</th>
 
                                     </tr>
                                 </thead>

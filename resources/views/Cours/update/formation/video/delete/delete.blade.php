@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title
+                <h5 class="modal-title" id="exampleModalLabel">Delete Video
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -14,17 +14,17 @@
                 @method('delete')
                 @csrf
                 <div class="modal-body">
-
+                    Are you sure you want to delete?
                     <div class="form-group">
-                        <label for="password">Mots de passe</label>
+                        <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Entrez password ...">
+                            placeholder="Enter password ...">
                     </div>
 
                 </div>
                 <div class="modal-footer">
 
-                    <button type="submit" class="btn btn-danger">Suprimer</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
             </form>
         </div>

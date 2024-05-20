@@ -1,8 +1,7 @@
 @extends('Layouts.master_empty')
 
 @section('content')
-
-   @include('Layouts.errorshandler')
+    @include('Layouts.errorshandler')
 
     <div class="login-logo">
         <a href="/"><b>N</b>AHRAWAND</a>
@@ -10,8 +9,7 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Vous avez oublié votre mot de passe ? Ici, vous pouvez facilement récupérer un nouveau
-                mot de passe.</p>
+            <p class="login-box-msg">Have you forgotten your password? Here, you can easily recover a new password.</p>
 
             <form id="forget_password" action="{{ Route('password.email') }}" method="post">
                 @csrf
@@ -25,7 +23,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block">Demander un nouveau mot de passe</button>
+                        <button type="submit" class="btn btn-primary btn-block">Request a new password</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -39,6 +37,4 @@
     </div>
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-
-   
 @endsection

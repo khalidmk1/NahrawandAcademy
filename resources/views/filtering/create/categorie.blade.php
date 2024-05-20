@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manager Categories</h1>
+                    <h1>Manage Categories</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crée Catégorie</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -39,7 +39,7 @@
 
 
                         <div class="form-group">
-                            <label>Domain</label>
+                            <label>Domaine</label>
                             <select name="domains" class="form-control select2 select2-danger"
                                 data-dropdown-css-class="select2-danger" style="width: 100%;">
                                 @foreach ($categories['domains'] as $domain)
@@ -50,9 +50,9 @@
                         <!-- /.form-group -->
 
                         <div class="form-group">
-                            <label for="categorie"> Nom de Categorie</label>
+                            <label for="categorie"> Category Name</label>
                             <input value="{{ old('category_name') }}" type="text" class="form-control" id="categorie"
-                                placeholder="Enter Nom de Categorie ..." name="category_name">
+                                placeholder="Entre Category Name ..." name="category_name">
                         </div>
 
 
@@ -60,7 +60,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-block btn-info w-25">Crée</button>
+                        <button type="submit" class="btn btn-block btn-info w-25">Create</button>
                     </div>
 
                 </form>
@@ -85,7 +85,7 @@
                 <div class="col-12 mb-3 d-flex justify-content-end">
                     <button type="button" data-toggle="modal" data-target="#exampleModal"
                         class="btn btn-block btn-default w-25">
-                        Crée Categorie
+                        Create Category
                     </button>
                 </div>
 
@@ -93,7 +93,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Catégories</h3>
+                            <h3 class="card-title">Category</h3>
 
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -116,9 +116,9 @@
                                     <tr class="text-center">
                                         <th style="width: 10px">#id</th>
                                         <th>Domain</th>
-                                        <th>Catégorie</th>
-                                        <th>Modifier</th>
-                                        <th>Suprimer</th>
+                                        <th>Category</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
 
                                     </tr>
                                 </thead>
@@ -142,7 +142,7 @@
                                                 </a>
                                             </td>
 
-                                            @if (auth()->user()->role == 1)
+                                            @if (auth()->user()->userRole->role_id == 1)
                                                 <td>
                                                     <button type="button" data-toggle="modal"
                                                         data-target="#delete_category_{{ $categorie->id }}"

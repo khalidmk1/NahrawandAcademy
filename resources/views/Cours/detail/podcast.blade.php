@@ -46,7 +46,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Voir Tout Les Contenus</h1>
+                    <h1>View Detail</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -82,7 +82,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Nomber des invite</b> <a class="float-right">{{ $PodcastGuest->count() }}</a>
+                                    <b>Number of invite</b> <a class="float-right">{{ $PodcastGuest->count() }}</a>
                                 </li>
 
 
@@ -103,13 +103,13 @@
                                 <li class="nav-item"><a class="nav-link active" href="#activity"
                                         data-toggle="tab">Detail</a></li>
                                 @if ($rolePermissionmodifiction)
-                                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Modifier</a>
+                                    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Edite</a>
                                     </li>
                                 @endif
 
                                 @if ($rolePermissiondelete)
                                     <li class="nav-item"><a class="nav-link" href="#settings"
-                                            data-toggle="tab">Parameter</a>
+                                            data-toggle="tab">Setting</a>
                                     </li>
                                 @endif
 
@@ -186,7 +186,7 @@
                                         <div class="d-flex">
                                             <i class="fa fa-tags" style="font-size: x-large" aria-hidden="true"></i>
 
-                                            <div class="ml-2"><strong>Mots Clé.</strong></div>
+                                            <div class="ml-2"><strong>Tags.</strong></div>
 
                                         </div>
                                         <!-- /.user-block -->
@@ -213,7 +213,7 @@
                                             @if ($rolePermissionmodifiction)
                                                 <div class="col-6">
                                                     <a href="{{ Route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id)) }}"
-                                                        class="btn btn-block btn-info w-50" style="float: right;">Ajouter
+                                                        class="btn btn-block btn-info w-50" style="float: right;">Add
                                                         video</a>
                                                 </div>
                                             @endif
@@ -321,7 +321,7 @@
                                 <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_podcast"
-                                            class="btn btn-danger w-50">suprimer</button>
+                                            class="btn btn-danger w-50">Delete</button>
                                     </div>
                                     @include('Cours.delete.podcast')
                                 </div>

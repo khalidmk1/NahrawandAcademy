@@ -30,7 +30,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Voir Tout Les Contenus</h1>
+                    <h1>View Detail</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -65,7 +65,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Nomber de Conférencier</b> <a class="float-right"> {{ $ConfrenceGuest->count() }}</a>
+                                    <b>Number of Conférencier</b> <a class="float-right"> {{ $ConfrenceGuest->count() }}</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Views</b> <a class="float-right">543</a>
@@ -79,39 +79,6 @@
                     </div>
                     <!-- /.card -->
 
-                    {{-- <!-- About Me Box -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Conférencier</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-
-                            @foreach ($ConfrenceGuest as $guest)
-                                <div class="row align-items-center">
-                                    <div class="col-6">
-                                        <img class="profile-user-img img-fluid img-circle"
-                                            src="{{ asset('storage/avatars/' . $guest->user->avatar) }}" alt="User profile picture">
-                                    </div>
-                                    <div class="col-6">
-                                        <p class="text-muted">
-                                            {{ $guest->user->firstName . ' ' . $guest->user->lastName }}
-                                        </p>
-                                    </div>
-
-
-                                </div>
-
-                                <hr>
-                            @endforeach
-
-
-
-
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card --> --}}
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
@@ -120,9 +87,9 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#activity"
                                         data-toggle="tab">Detail</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Modifier</a>
+                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Edite</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Parameter</a>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">setting</a>
                                 </li>
                             </ul>
                         </div><!-- /.card-header -->
@@ -187,7 +154,7 @@
                                         <div class="d-flex">
                                             <i class="fa fa-exclamation-circle" style="font-size: x-large"
                                                 aria-hidden="true"></i>
-                                            <div class="ml-2"><strong>Mots Clé.</strong></div>
+                                            <div class="ml-2"><strong>Tags.</strong></div>
 
                                         </div>
                                         <!-- /.user-block -->
@@ -305,7 +272,7 @@
                                 <div class="tab-pane" id="settings">
                                     <div class="form-group">
                                         <button type="submit" data-toggle="modal" data-target="#delete_conference"
-                                            class="btn btn-danger w-50">suprimer</button>
+                                            class="btn btn-danger w-50">Delete</button>
                                     </div>
                                     @include('Cours.delete.conference')
                                 </div>

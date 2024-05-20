@@ -11,7 +11,7 @@
 
               <input type="text" value="{{ $Cour->id }}" name="CoursId" hidden>
               <div class="form-group">
-                  <label for="title">Titre</label>
+                  <label for="title">Ttile</label>
                   <input type="text" value="{{ old('title', $Cour->title) }}" class="form-control" name="title"
                       id="title" placeholder="Entrez Titre ...">
               </div>
@@ -30,7 +30,7 @@
                   <div class="col-6">
                       <!-- Bootstrap Switch -->
                       <label for="boostrap-switch" class="mr-5">
-                          Affichage
+                          Display
                       </label>
                       <input type="checkbox" name="isActive" id="boostrap-switch" checked data-value=""
                           data-bootstrap-switch data-off-color="danger" data-on-color="success">
@@ -42,13 +42,13 @@
 
               <!-- textarea -->
               <div class="form-group">
-                  <label>Description de Contenu</label>
+                  <label>Description</label>
                   <textarea class="form-control" name="description" rows="3" placeholder="Enter ...">{{ old('description', $Cour->description) }}</textarea>
               </div>
 
 
               <div class="form-group">
-                  <label for="tags">Mots Clé</label>
+                  <label for="tags">Tags</label>
 
                   <input type="text" class="form-control" value="{{ implode(',', $Cour->tags) }}" name="tags[]"
                       id="tags-input" />
@@ -58,10 +58,10 @@
               <div class="row">
                   <div class="col-6">
                       <div class="form-group">
-                          <label>SousCategorie</label>
+                          <label>SubCtegory</label>
                           <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                               style="width: 100%;">
-                              <option>Choise Votre SousCategorie</option>
+                              <option>Choose SubCategory</option>
                               @foreach ($souscategory as $souscategory)
                                   <option value="{{ $souscategory->category->id }}"
                                       {{ $Cour->category->id == $souscategory->category->id ? 'selected' : '' }}>
@@ -82,7 +82,7 @@
                   <div class="col-6">
 
                       <div class="form-group">
-                          <label for="goals_option">Objectifs</label>
+                          <label for="goals_option">Objectives</label>
                           <select class="select3" name="goal[]" multiple="multiple" id="goals_option"
                               data-placeholder="Select a State" style="width: 100%;">
                               @php
@@ -130,7 +130,7 @@
 
                   <!-- textarea -->
                   <div class="form-group">
-                      <label>Description de Conférence</label>
+                      <label>Description</label>
                       <textarea class="form-control" name="descriptionConference" rows="6" placeholder="Enter ...">{{ $coursCoference->description }}</textarea>
                   </div>
 
@@ -178,8 +178,7 @@
 
           </div>
 
-          <button type="submit" class="btn btn-block btn-warning w-25 " style="float: right">Modifier
-              Contnu</button>
+          <button type="submit" class="btn btn-block btn-warning w-25 " style="float: right">Update</button>
 
       </form>
 

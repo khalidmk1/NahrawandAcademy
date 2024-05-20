@@ -4,7 +4,7 @@
        <div class="modal-dialog" role="document">
            <div class="modal-content">
                <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Modifier video
+                   <h5 class="modal-title" id="exampleModalLabel">Edite video
                    </h5>
                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
@@ -15,19 +15,14 @@
                    @method('patch')
                    @csrf
                    <div class="modal-body">
-
-
-
                        <!-- /.card-header -->
-
-
 
                        {{--   <input hidden type="text" name="confrenceId" value="{{ $Cour->CoursConference->id }}"> --}}
 
                        <div class="form-group">
-                           <label for="titleVideo">Titre video</label>
+                           <label for="titleVideo">Ttile </label>
                            <input type="text" value="{{ old('titleVideo', $video->title) }}" class="form-control"
-                               name="titleVideo" id="titleVideo" placeholder="Entrez Titre ...">
+                               name="titleVideo" id="titleVideo" placeholder="Enter Title ...">
                        </div>
 
                        <div class="form-group clearfix text-center col-4">
@@ -43,7 +38,7 @@
 
                        <!-- textarea -->
                        <div class="form-group">
-                           <label>Description de video</label>
+                           <label>Description</label>
                            <textarea class="form-control" name="descriptionVideo" rows="3" placeholder="Enter ...">{{ $video->description }}</textarea>
                        </div>
 
@@ -52,14 +47,14 @@
                            <div class="custom-file">
                                <input type="file" class="custom-file-input" name="imagevideo"
                                    id="imagevideo_{{ $video->id }}">
-                               <label class="custom-file-label" for="imagevideo_{{ $video->id }}">Choisez
+                               <label class="custom-file-label" for="imagevideo_{{ $video->id }}">Choose
                                    image</label>
                            </div>
                        </div>
 
 
                        <div class="form-group">
-                           <label for="tags_video">Mots Clé</label>
+                           <label for="tags_video">Tags</label>
                            <input type="text" class="form-control tags" value="{{ implode(',', $video->tags) }} "
                                name="videoTags[]" data-id="{{ $video->id }}" id="tags-input-{{ $video->id }}" />
                        </div>
@@ -68,7 +63,7 @@
                            <label for="videocpodcast_{{ $video->id }}">Video</label>
                            <input type="url" value="{{ old('video', $video->video) }}" class="form-control"
                                name="video" id="videocpodcast_{{ $video->id }}"
-                               placeholder="Entrez url video ...">
+                               placeholder="Enter url video ...">
                        </div>
 
 
@@ -80,7 +75,7 @@
                    </div>
                    <div class="modal-footer">
 
-                       <button type="submit" class="btn btn-block btn-warning w-50">Modifier Videos</button>
+                       <button type="submit" class="btn btn-block btn-warning w-50">Update</button>
                    </div>
                </form>
            </div>

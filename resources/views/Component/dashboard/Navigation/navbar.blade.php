@@ -38,7 +38,7 @@
                   <a href="{{ Route('dashboard.profile.edit', Crypt::encrypt(auth()->user()->id)) }}"
                       class="dropdown-item">
                       <i class="fa fa-cog mr-2" aria-hidden="true"></i>
-                      Paramètre
+                      Settings
                   </a>
 
                   <form action="{{ route('logout.auth') }}" method="POST">
@@ -46,7 +46,7 @@
                       <button type="submit" class="dropdown-item">
                           <img src="{{ asset('asset/9070510.png') }}" class="mr-2" alt="logout"
                               style="height: 19px">
-                          Se déconnecter
+                          Log out
                       </button>
                   </form>
 

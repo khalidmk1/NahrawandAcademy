@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manger Programme</h1>
+                    <h1>Manage Program</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
-   
+
 
 
     <!-- Modal Create -->
@@ -49,7 +49,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Crée Programme</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create Program</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -60,23 +60,23 @@
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label for="title"> Titre</label>
+                            <label for="title"> Title</label>
                             <input value="{{ old('title') }}" type="text" class="form-control" id="title"
-                                placeholder="Enter Nom de Categorie ..." name="title">
+                                placeholder="Entre Title ..." name="title">
                         </div>
 
                         <div class="form-group">
                             <label for="Description"> Description</label>
-                            <textarea class="form-control" id="Description" name="Description" rows="3" placeholder="Entrez Description ..."></textarea>
+                            <textarea class="form-control" id="Description" name="Description" rows="3" placeholder="Entre Description ..."></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="tags">Mots Clé</label>
+                            <label for="tags">Tags</label>
                             <input type="text" class="form-control" name="tags[]" id="tags-input" />
                         </div>
 
                         <div class="form-group">
-                            <label>Categories</label>
+                            <label>Category</label>
                             <select class="select2" multiple="multiple" name="categories[]"
                                 data-placeholder="Select a State" style="width: 100%;">
                                 @foreach ($categories_programs['categories'] as $category)
@@ -90,7 +90,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-default">Crée</button>
+                        <button type="submit" class="btn btn-default">Create</button>
                     </div>
 
                 </form>
@@ -118,31 +118,31 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <button type="button" data-toggle="modal" data-target="#exampleModal"
                                     class="btn btn-block btn-primary w-25 position-absolute" style="z-index: 1000">
-                                    Crée des Programme
+                                    Create Program
                                 </button>
                                 <thead>
                                     <tr>
-                                        <th>Titre</th>
+                                        <th>Title</th>
                                         <th>Description</th>
-                                        <th>Mots Clé</th>
-                                        <th>Categories</th>
-                                        <th>Modifier</th>
-                                      
+                                        <th>Tags</th>
+                                        <th>Category</th>
+                                        <th>Update</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($categories_programs['programs'] as $program)
                                         @include('filtering.update.program')
-    
+
                                         @include('filtering.create.model.descriptionprograme')
 
                                         <tr class="text-center">
                                             <td>{{ $program->title }}</td>
-                                            <td> <button class="btn btn-app" style="border: none" data-toggle="modal" data-target="#description">
-                                                <i class="fa fa-plus mt-1" aria-hidden="true"
-                                                ></i>
-                                            </button>
-                                                </td>
+                                            <td> <button class="btn btn-app" style="border: none" data-toggle="modal"
+                                                    data-target="#description">
+                                                    <i class="fa fa-plus mt-1" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
                                             <td>
 
                                                 @php
@@ -176,7 +176,7 @@
                                                     <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
                                                         alt="update_icon">
                                                 </a></td>
-                                          
+
                                         </tr>
                                     @endforeach
 
@@ -231,7 +231,7 @@
             var tagInputEle = $('#tags-input');
             tagInputEle.tagsinput();
 
-            
+
         });
     </script>
 @endsection

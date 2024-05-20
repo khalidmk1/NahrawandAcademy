@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Voir Toute Les Contenu Quiqly</h1>
+                    <h1>View All Content</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -25,7 +25,7 @@
                 <div class="card card-default col-12">
                     <div class="card-header row">
                         <div class="col-4">
-                            <h3 class="card-title">Voir les Contenu</h3>
+                            <h3 class="card-title">View Content</h3>
                         </div>
                         <div class="col-8">
                             <button type="button" style="float: right" class="btn btn-primary" data-toggle="modal"
