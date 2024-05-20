@@ -559,7 +559,7 @@ public function Cour_Conference(){
         })->values();
 
         // Load relationships for unique cours goals
-        $uniqueCoursGoals->load('cours.CoursPodcast');
+        $uniqueCoursGoals->load(['cours.CoursPodcast.user.userspeaker']);
 
         return response()->json($uniqueCoursGoals);
     }
