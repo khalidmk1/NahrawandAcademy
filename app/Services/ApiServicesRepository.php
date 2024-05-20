@@ -529,7 +529,7 @@ public function Cour_Conference(){
     
         $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
             return $item->first();
-        });
+        })->value();
     
         $uniqueCoursGoals->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
     
@@ -556,7 +556,7 @@ public function Cour_Conference(){
         $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
             // If there are multiple items for the same cours_id, return the first one
             return $item->first();
-        });
+        })->value();
 
         // Load relationships for unique cours goals
         $uniqueCoursGoals->load('cours.CoursPodcast');
