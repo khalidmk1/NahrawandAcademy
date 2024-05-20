@@ -32,7 +32,7 @@
                       <label for="boostrap-switch" class="mr-5">
                           Affichage
                       </label>
-                      <input type="checkbox" name="isActive" id="boostrap-switch" checked data-value=""
+                      <input type="checkbox" name="isActive" id="boostrap-switch" {{$Cour->isActive == 1 ? 'checked' : '' }} data-value=""
                           data-bootstrap-switch data-off-color="danger" data-on-color="success">
                   </div>
                   <!-- /.card -->

@@ -1,6 +1,6 @@
 <?php
 
-/* return [
+return [
     'accepted'             => 'Le champ :attribute doit être accepté.',
     'active_url'           => 'Le champ :attribute n\'est pas une URL valide.',
     'after'                => 'Le champ :attribute doit être une date postérieure à :date.',
@@ -62,4 +62,4 @@
     'required_with_all'    => 'Le champ :attribute est obligatoire lorsque :values sont présents.',
     'required_without'     => 'Le champ :attribute est obligatoire lorsque :values n\'est pas présent.',
     'required_without_all' => 'Le champ :attribute est obligatoire lorsqu\'aucune des :values ne sont présentes.',
-]; */
+];

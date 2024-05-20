@@ -63,7 +63,8 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 class UsersServicesRepository  implements UsersRepositoryInterface
 {
 
-    
+   
+
 
     //report of dashboard
 
@@ -1395,220 +1396,200 @@ public function index_cours()
 
 
     //store cours
-        public function store_cours(Request $request)
-    {
-        // Validate common fields
-        $commonRules = [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:300'],
-            'cotegoryId' => ['required', 'string', 'max:255'],
-            'tags' => ['required', 'array'],
-            'gaols_id' => ['required', 'array'],
-            'coursType' => ['required', 'string', 'max:255'],
-        ];
+public function store_cours(Request $request)
+{
 
-        $request->validate($commonRules);
+    $commonRules = [
+        'title' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string', 'max:300'],
+        'cotegoryId' => ['required', 'string', 'max:255'],
+        'tags' => ['required', 'array'],
+        'gaols_id' => ['required', 'array'],
+        'coursType' => ['required', 'string', 'max:255'],
+    ];
 
-        $additionalRules = [];
-        $iscoming = $request->iscoming == 'on';
-        $isActive = $request->isActive == 'on';
+    $request->validate($commonRules);
 
-        
-        
-        
+    $additionalRules = [];
+    $iscoming = $request->iscoming == 'on';
 
-        switch ($request->coursType) {
-            case 'conference':
-                $additionalRules = [
-                    'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
-                    'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
-                    'videoconference' => ['required', 'url'],
-                    'hostConference' => ['required'],
-                    'descriptionConference' => ['required', 'string', 'max:600'],
-                ];
-                break;
-            case 'podcast':
-                $additionalRules = [
-                    'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
-                    'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
-                    'hostPodcast' => ['required'],
-                    'videocpodcast' => ['required', 'url'],
-                    'slugAcroche' => ['required', 'string', 'max:255'],
-                    'descriptionPodcast' => ['required', 'string', 'max:600'],
-                ];
-                break;
-            case 'formation':
-                $additionalRules = [
-                    'hostFormation' => ['required'],
-                    'programId' => ['sometimes'],
-                    'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
-                    'iscertify' => ['sometimes'],
-                    'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400' ],
-                    'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
-                    'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
-                ];
-                break;
-        }
+    if($request->isActive == 'on'){
+        $isActive = 1;
+    }else{
+        $isActive = 0;
+    }
+    
 
-        $request->validate($additionalRules);
+    
+    
+    
 
-
-        $goals = $request->gaols_id;
-        $StringTag = $request->tags[0];
-        $tags = explode(',', $StringTag);
-        $tags = array_map('trim', $tags);
-
-        $url = $request->videocpodcast;
-        $queryString = parse_url($url, PHP_URL_QUERY);
-        parse_str($queryString, $params);
-        $videoId = isset($params['v']) ? $params['v'] : null;
-
-
-       
-            // Create cours
-            $cours = Cour::create([
-                'title' => $request->title,
-                'isComing' => $iscoming,
-                'isActive' => $isActive,
-                'description' => $request->description,
-                'category_id' => $request->cotegoryId,
-                'tags' => $tags,
-                'cours_type' => $request->coursType,
-            ]);
-            
-            foreach ($goals as $key => $goal) {
-                $goalCours = CoursGoals::create([
-                    'cours_id' => $cours->id,
-                    'goal_id' => $goal
-                ]);
-            }
-
-    // Create related model based on coursType
     switch ($request->coursType) {
         case 'conference':
-            if ($request->hasFile('introImageConfrence')) {
-                $file = $request->file('introImageConfrence');
-                $directory = '/upload/cour/image';
-                $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImage, 'public'); 
-            }
-            if ($request->hasFile('flexImageConference')) {
-                $file = $request->file('flexImageConference');
-                $directory = '/upload/cour/image/flex';
-                $fileNameImageFlex = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImageFlex, 'public'); 
-            }
-
-            if ($videoId) {
-                $coursCoference = CoursConference::create([
-                    'cours_id' => $cours->id,
-                    'host_id' => $request->hostConference,
-                    'image' => $fileNameImage,
-                    'image_flex' => $fileNameImageFlex,
-                    'video' => 'https://www.youtube.com/embed/'.$videoId,
-                    'duration' => $request->coursDuration,
-                    'description' => $request->descriptionConference
-                ]);
-                return redirect()->route('dashboard.create.video', $coursCoference->id);
-            }else{
-                return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
-            }
-
-          
+            $additionalRules = [
+                'introImageConfrence'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                'flexImageConference'=> ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                'videoconference' => ['required', 'url'],
+                'hostConference' => ['required'],
+                'descriptionConference' => ['required', 'string', 'max:600'],
+            ];
             break;
         case 'podcast':
-
-            if ($request->hasFile('introImagePodcast')) {
-                $file = $request->file('introImagePodcast');
-                $directory = '/upload/cour/image';
-                $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImage, 'public'); 
-            }
-
-            if ($request->hasFile('flexImagePodcast')) {
-                $file = $request->file('flexImagePodcast');
-                $directory = '/upload/cour/image/flex';
-                $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImageflex, 'public'); 
-            }
-            
-            if ($videoId) {
-                $coursPodcast = CoursPodcast::create([
-                    'cours_id' => $cours->id,
-                    'host_id' => $request->hostPodcast,
-                    'image' => $fileNameImage,
-                    'image_flex' => $fileNameImageflex,
-                    'video' => 'https://www.youtube.com/embed/'.$videoId,
-                    'duration' => $request->DurationPdcast,
-                    'description' => $request->descriptionPodcast,
-                    'slug' => $request->slugAcroche
-                ]);
-                return redirect()->route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id));
-            }else{
-                return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
-            }
-
-          
+            $additionalRules = [
+                'introImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                'flexImagePodcast' => ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                'hostPodcast' => ['required'],
+                'videocpodcast' => ['required', 'url'],
+                'slugAcroche' => ['required', 'string', 'max:255'],
+                'descriptionPodcast' => ['required', 'string', 'max:600'],
+            ];
             break;
         case 'formation':
+            $additionalRules = [
+                'hostFormation' => ['required'],
+                'programId' => ['sometimes'],
+                'conditionformation' => ['sometimes', 'nullable' ,'string', 'max:600'],
+                'iscertify' => ['sometimes'],
+                'introImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400' ],
+                'flexImageFormation' =>  ['required', 'file' , 'mimes:jpeg,png,jpg,gif' , 'max:400'],
+                'document' => ['file' , 'mimes:pdf,jpeg,png,jpg,gif']
+            ];
+            break;
+    }
 
-            if ($request->hasFile('introImageFormation')) {
-                $file = $request->file('introImageFormation');
-                $directory = '/upload/cour/image';
-                $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImage, 'public'); 
-            }
+    $request->validate($additionalRules);
 
-            if ($request->hasFile('flexImageFormation')) {
-                $file = $request->file('flexImageFormation');
-                $directory = '/upload/cour/image/flex';
-                $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNameImageflex, 'public'); 
-            }
 
+    $goals = $request->gaols_id;
+    $StringTag = $request->tags[0];
+    $tags = explode(',', $StringTag);
+    $tags = array_map('trim', $tags);
+
+    $url = $request->videocpodcast;
+    $queryString = parse_url($url, PHP_URL_QUERY);
+    parse_str($queryString, $params);
+    $videoId = isset($params['v']) ? $params['v'] : null;
+
+
+   
+        // Create cours
+        $cours = Cour::create([
+            'title' => $request->title,
+            'isComing' => $iscoming,
+            'isActive' => $isActive,
+            'description' => $request->description,
+            'category_id' => $request->cotegoryId,
+            'tags' => $tags,
+            'cours_type' => $request->coursType,
+        ]);
         
-
-            $programId = ($request->programId == 0) ? null : $request->programId;
-            $iscertify = $request->iscertify == 'on';
-            $coursFormation = CoursFormation::create([
+        foreach ($goals as $key => $goal) {
+            $goalCours = CoursGoals::create([
                 'cours_id' => $cours->id,
-                'host_id' => $request->hostFormation,
+                'goal_id' => $goal
+            ]);
+        }
+
+// Create related model based on coursType
+switch ($request->coursType) {
+    case 'conference':
+        $fileNameImage = $this->storeFile($request->file('introImageConfrence'), '/upload/cour/image');
+        $fileNameImageFlex = $this->storeFile($request->file('flexImageConference'), '/upload/cour/image/flex');
+
+        if ($videoId) {
+            $coursCoference = CoursConference::create([
+                'cours_id' => $cours->id,
+                'host_id' => $request->hostConference,
+                'image' => $fileNameImage,
+                'image_flex' => $fileNameImageFlex,
+                'video' => 'https://www.youtube.com/embed/'.$videoId,
+                'duration' => $request->coursDuration,
+                'description' => $request->descriptionConference
+            ]);
+            return redirect()->route('dashboard.create.video', $coursCoference->id);
+        }else{
+            return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
+        }
+
+      
+        break;
+    case 'podcast':
+
+        $fileNameImage = $this->storeFile($request->file('introImagePodcast'), '/upload/cour/image');
+        $fileNameImageFlex = $this->storeFile($request->file('flexImagePodcast'), '/upload/cour/image/flex');
+        
+        if ($videoId) {
+            $coursPodcast = CoursPodcast::create([
+                'cours_id' => $cours->id,
+                'host_id' => $request->hostPodcast,
                 'image' => $fileNameImage,
                 'image_flex' => $fileNameImageflex,
-                'program_id' => $programId,
-                'condition' => $request->conditionformation?? 'text',
-                'isCertify' => $iscertify
+                'video' => 'https://www.youtube.com/embed/'.$videoId,
+                'duration' => $request->DurationPdcast,
+                'description' => $request->descriptionPodcast,
+                'slug' => $request->slugAcroche
             ]);
+            return redirect()->route('dashboard.podacast.video', Crypt::encrypt($coursPodcast->id));
+        }else{
+            return redirect()->back()->with('faild' , 'Voter Video URL est Incorrect');
+        }
 
-            if ($request->hasFile('document')) {
-            
-                $file = $request->file('document');
-                
-                $directory = 'upload/cour/document/';
-                $fileNamedocument = uniqid() . '_' . $file->getClientOriginalName();
-                $file->storeAs($directory, $fileNamedocument, 'public');
+      
+        break;
+    case 'formation':
 
-                $coursFormation->update([
-                    'documents' => $fileNamedocument,
-                ]);
-            }
+        $fileNameImage = $this->storeFile($request->file('introImageFormation'), '/upload/cour/image');
+        $fileNameImageFlex = $this->storeFile($request->file('flexImageFormation'), '/upload/cour/image/flex');
 
-
-
-            if ($iscertify == false) {
-                return redirect()->route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id));
-            } else {
-                return redirect()->route('dashboard.create.formation.quiz', Crypt::encrypt($cours->id));
-            }
-            break;
-        default:
-            return redirect()->back()->with('status', 'vous avez crée un contenu avec seccess');
-            break;
-    }
-
-       
     
-    }
+
+        $programId = ($request->programId == 0) ? null : $request->programId;
+        $iscertify = $request->iscertify == 'on';
+        $coursFormation = CoursFormation::create([
+            'cours_id' => $cours->id,
+            'host_id' => $request->hostFormation,
+            'image' => $fileNameImage,
+            'image_flex' => $fileNameImageFlex,
+            'program_id' => $programId,
+            'condition' => $request->conditionformation?? 'text',
+            'isCertify' => $iscertify
+        ]);
+
+        if ($request->hasFile('document')) {
+        
+            $file = $request->file('document');
+            
+            $directory = 'upload/cour/document/';
+            $fileNamedocument = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNamedocument, 'public');
+
+            $coursFormation->update([
+                'documents' => $fileNamedocument,
+            ]);
+        }
+
+
+
+        if ($iscertify == false) {
+            return redirect()->route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id));
+        } else {
+            return redirect()->route('dashboard.create.formation.quiz', Crypt::encrypt($cours->id));
+        }
+        break;
+    default:
+        return redirect()->back()->with('status', 'vous avez crée un contenu avec seccess');
+        break;
+}
+    
+    
+}
+
+private function storeFile($file, $directory)
+{
+    $fileName = uniqid() . '_' . $file->getClientOriginalName();
+    $file->storeAs($directory, $fileName, 'public');
+    return $fileName;
+}
 
 //store short
 public function store_short(Request $request)

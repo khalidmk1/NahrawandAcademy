@@ -289,16 +289,13 @@ class ApiServicesRepository  implements apiRepositoryInterface
     $viewCours = [];
 
     if ($FineshedCours->isEmpty()) {
-        // If FineshedCours is empty, retrieve all viewCours
         $viewCours = ViewCour::where('user_id', $users->id)->get();
     } else {
-        // Retrieve viewCours for the user excluding finished courses
         $viewCours = ViewCour::whereNotIn('cours_id', $FineshedCours->pluck('cours_id'))
                              ->where('user_id', $users->id)
                              ->get(); 
     }
 
-    // Retrieve all courFormation based on viewCours
     $courFormation = Cour::whereIn('id', $viewCours->pluck('cours_id'))
                          ->where('isComing', 0)
                          ->get();
@@ -622,14 +619,12 @@ public function Cour_Conference(){
         $user = User::findOrFail($id);
         
         $favoris = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
+        $favoris->load('cours.category');
+        $favoris->load(['cours.CoursFormation' ,'cours.CoursFormation.user.userspeaker' ,
+        'cours.CoursFormation.CoursFormationVideo' , 'cours.CoursPodcast' , 
+        'cours.CoursPodcast.user']);
 
-        $FavoriteCours = Cour::whereIn('id' , $favoris->pluck('cours_id'))->get();
-
-        $FavoriteCours->load(['category' , 'CoursFormation' ,'CoursFormation.user.userspeaker' ,
-        'CoursFormation.CoursFormationVideo' , 'CoursPodcast' , 'CoursPodcast.user' , 'CoursConference' ,
-        'CoursConference.user' ]);
-
-        return response()->json($FavoriteCours);
+        return response()->json($favoris);
     }
 
     //Cours Comment

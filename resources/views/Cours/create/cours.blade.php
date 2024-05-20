@@ -62,8 +62,8 @@
                                     <label for="boostrap-switch" class="mr-5">
                                         Affichage
                                     </label>
-                                    <input type="checkbox" name="isActive" id="boostrap-switch" checked data-value=""
-                                        data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                                    <input type="checkbox" name="isActive" checked data-bootstrap-switch
+                                        data-off-color="danger" data-on-color="success">
                                 </div>
                                 <!-- /.card -->
                             </div>
