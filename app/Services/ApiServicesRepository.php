@@ -533,7 +533,7 @@ public function Cour_Conference(){
     
         $uniqueCoursGoals->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
     
-        return response()->json($uniqueCoursGoals->value());
+        return response()->json($uniqueCoursGoals);
     }
 
 
