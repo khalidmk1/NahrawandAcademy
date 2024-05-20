@@ -170,7 +170,7 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     public function coming_cours(){
 
-        $comingCours = Cour::where('isComing' , 1)->get();
+        $comingCours = Cour::where(['isComing' => 1 , 'isActive' => 1])->get();
         
         foreach ($comingCours as $coming) {
             $coming->load('category');
@@ -210,9 +210,7 @@ class ApiServicesRepository  implements apiRepositoryInterface
     //all cours
 
     public function allCours(){
-    $cours = Cour::all();
-
-    /* $courConference->load('category'); */
+    $cours = Cour::where('isActive' , 1)->get();
 
     $cours->load(['category' , 'CoursConference' ,  
     'CoursPodcast' , 'CoursFormation']);
@@ -388,7 +386,8 @@ public function fineshedCours(String $id , String $cours) {
 
 
 public function Cour_Conference(){
-    $courConference = Cour::where('cours_type' , 'conference')->get();
+    $courConference = Cour::where(['cours_type' => 'conference' , 
+    'isActive' => 1])->get();
 
     //cour conference
     $courConference->load('category');
@@ -424,7 +423,8 @@ public function Cour_Conference(){
     public function Cour_Podcast(){
 
 
-        $courPodcast = Cour::where(['cours_type' => 'podcast' , 'isComing' => 0])->get();
+        $courPodcast = Cour::where(['cours_type' => 'podcast' , 
+        'isComing' => 0 , 'isActive' => 1])->get();
 
         //cour Podcast
         
@@ -438,7 +438,8 @@ public function Cour_Conference(){
     }
 
     public function Cour_Formation(){
-        $courFormation = Cour::where(['cours_type' => 'formation' , 'isComing' => 0])->get();
+        $courFormation = Cour::where(['cours_type' => 'formation' , 
+        'isComing' => 0 , 'isActive' => 1])->get();
 
          //cour formation
         $courFormation->load('category');
