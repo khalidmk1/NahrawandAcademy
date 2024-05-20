@@ -53,6 +53,7 @@ Route::prefix('mobile')->group(function () {
     //favoris Api
     Route::post('/cour/favoris/{id}/{cour}', [CoursController::class, 'Cour_Favoris'])->name('cour.favoris');
     Route::get('/cour/favoris/all/{id}', [CoursController::class, 'AllFavoris'])->name('cour.favoris.all');
+    Route::get('favoris/check/{id}/{cour}', [CoursController::class, 'checkFavoris'])->name('Check.favoris');
 
     //all cours
     Route::get('/allCours', [CoursController::class, 'allCours'])->name('all.cours');
@@ -103,8 +104,8 @@ Route::prefix('mobile')->group(function () {
 
     //get goals
     Route::get('/goals', [GoalController::class, 'getGoals'])->name('goals');
-   // user goal
-   Route::post('user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
+    // user goal
+    Route::post('user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
 
    //cours goal
    Route::get('cours/goal/{id}', [GoalController::class, 'CoursGoal'])->name('cours.goal');

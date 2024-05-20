@@ -513,48 +513,57 @@ public function Cour_Conference(){
 
     // get tree Cours 
 
-
     public function treeCoursFormation(String $user)
     {
-       $user =  User::findOrFail($user);
+        $user =  User::findOrFail($user);
     
-       $userObjectif = UserObjectif::where('user_id', $user->id)->get();
-   
-       $goalIds = $userObjectif->pluck('objetif_id');
-           
-       $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
-       ->whereHas('cours', function ($query) {
-       $query->where(['cours_type'=> 'formation' , 'isComing' => 0] );
-       })
-       ->get();
-   
-   
-       $goalsCours->load(['cours.CoursFormation.user.userspeaker' , 'cours.category']);
-           
-       return response()->json($goalsCours);
+        $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+    
+        $goalIds = $userObjectif->pluck('objetif_id');
+            
+        $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
+            ->whereHas('cours', function ($query) {
+                $query->where(['cours_type'=> 'formation' , 'isComing' => 0]);
+            })
+            ->get();
+    
+        $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
+            return $item->first();
+        });
+    
+        $uniqueCoursGoals->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
+    
+        return response()->json($uniqueCoursGoals);
     }
-
 
 
     // podcast by goals
-    public function podcastgoals(String $user){
+    public function podcastgoals(String $user)
+    {
         $user =  User::findOrFail($user);
-    
-       $userObjectif = UserObjectif::where('user_id', $user->id)->get();
-   
-       $goalIds = $userObjectif->pluck('objetif_id');
-           
-       $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
-       ->whereHas('cours', function ($query) {
-       $query->where(['cours_type'=> 'podcast' , 'isComing' => 0] );
-       })
-       ->get();
-   
-   
-       $goalsCours->load('cours.CoursPodcast');
-           
-       return response()->json($goalsCours);
+
+        $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+
+        $goalIds = $userObjectif->pluck('objetif_id');
+            
+        $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
+            ->whereHas('cours', function ($query) {
+                $query->where(['cours_type'=> 'podcast' , 'isComing' => 0]);
+            })
+            ->get();
+
+        // Group the results by cours_id
+        $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
+            // If there are multiple items for the same cours_id, return the first one
+            return $item->first();
+        });
+
+        // Load relationships for unique cours goals
+        $uniqueCoursGoals->load('cours.CoursPodcast');
+
+        return response()->json($uniqueCoursGoals);
     }
+
 
 
 
@@ -625,6 +634,25 @@ public function Cour_Conference(){
         'cours.CoursPodcast' , 'cours.CoursPodcast.user']);
 
         return response()->json($favoris);
+    }
+
+    //check favoris exists
+    public function checkFavoris(String $id , String $cour)
+    {
+        $Cour = Cour::findOrFail($cour);
+        $user = User::findOrFail($id);
+
+        $Checkfolow = CoursFavoris::where('user_id', $user->id)
+        ->where('cours_id', $Cour->id)
+        ->where('state', 1)
+        ->exists();
+
+        if($Checkfolow){
+            return response()->json(true);
+        }
+
+        return response()->json(false);
+
     }
 
     //Cours Comment

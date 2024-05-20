@@ -78,6 +78,8 @@ interface apiRepositoryInterface {
     public function Cour_Favoris(String $id , String $cour);
     //all favoris
     public function AllFavoris(String $id);
+    //check favoris exists
+    public function checkFavoris(String $id , String $cour);
 
     //Cours Comment
     public function CoursComment(String $id , String $cours , Request $request);

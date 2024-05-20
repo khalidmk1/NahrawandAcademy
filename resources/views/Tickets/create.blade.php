@@ -28,7 +28,7 @@
                         style="float: right">Crée</button>
                 </div>
                 <div class="col-12">
-                    <div class="card">                    
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Ticket Table</h3>
 
@@ -49,7 +49,7 @@
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover text-nowrap">
                                 <thead>
-                                    <tr  class="text-center">
+                                    <tr class="text-center">
                                         <th>Type</th>
                                         <th>Created at</th>
                                         <th>Client</th>
@@ -62,17 +62,18 @@
                                     @foreach ($tickets as $ticket)
                                         <tr>
                                             <td>{{ $ticket->Type_Ticket }}</td>
-                                            <td>{{ \Carbon\Carbon::parse( $ticket->created_at)->format('d/m/Y')  }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($ticket->created_at)->format('d/m/Y') }}</td>
                                             <td>{{ $ticket->user->firstName . ' ' . $ticket->user->lastName }}</td>
                                             <td><span
                                                     class="tag tag-success">{{ $ticket->status == 1 ? 'Handled' : 'In Progress' }}
-                                                    <a href="{{Route('dashboard.tickets.edite' , Crypt::encrypt($ticket->id))}}">
+                                                    <a
+                                                        href="{{ Route('dashboard.tickets.edite', Crypt::encrypt($ticket->id)) }}">
                                                         <i class="fa fa-plus mt-1" aria-hidden="true"
-                                                        style="cursor: pointer ; float: right;"></i>
+                                                            style="cursor: pointer ; float: right;"></i>
                                                     </a>
                                                 </span></td>
                                             <td>{{ $ticket->manageruser->email }}</td>
-                                            <td>{{ \Carbon\Carbon::parse( $ticket->updated_at)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($ticket->updated_at)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

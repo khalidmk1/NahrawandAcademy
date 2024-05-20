@@ -121,6 +121,10 @@ class CoursController extends Controller
         return  $this->apiRepository->AllFavoris($id);
     }
 
+    public function checkFavoris(String $id , String $cour){
+        return  $this->apiRepository->checkFavoris($id , $cour);
+    }
+
      //Cours Comment
      public function CoursComment(String $id , String $cours , Request $request){
         return  $this->apiRepository->CoursComment($id , $cours , $request);
