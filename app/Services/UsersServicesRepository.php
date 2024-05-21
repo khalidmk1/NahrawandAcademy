@@ -1655,7 +1655,7 @@ switch ($request->coursType) {
                 'cours_id' => $cours->id,
                 'host_id' => $request->hostPodcast,
                 'image' => $fileNameImage,
-                'image_flex' => $fileNameImageflex,
+                'image_flex' => $fileNameImageFlex,
                 'video' => 'https://www.youtube.com/embed/'.$videoId,
                 'duration' => $request->DurationPdcast,
                 'description' => $request->descriptionPodcast,
@@ -1786,7 +1786,7 @@ public function store_short(Request $request)
 //upload video cours
 public function upload_video_cours(Request $request)
 {
-    if ($request->hasFile('introVideoConfrence')) { // Adjusted to match the input field name
+    if ($request->hasFile('introVideoConfrence')) {
         $file = $request->file('introVideoConfrence');
 
         $directory = '/cour';
@@ -3046,7 +3046,7 @@ public function getCoursVideo(String $id){
         $SubCategory = SousCategory::onlyTrashed()->get();
         $Programs = Program::onlyTrashed()->get();
         $Objectives = Goal::onlyTrashed()->get();
-        
+
 
         return view('Hisotry.show')->with(['cours' => $cours , 'shorts' => $shorts ,
         'Category' => $Category , 'SubCategory' => $SubCategory , 'Programs' => $Programs , 
