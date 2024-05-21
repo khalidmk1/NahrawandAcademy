@@ -27,8 +27,8 @@
                 <label for="boostrap-switch" class="mr-5">
                     Display
                 </label>
-                <input type="checkbox" name="isActive" id="boostrap-switch" {{$Cour->isActive == 1 ? 'checked' : '' }}  data-value="" data-bootstrap-switch
-                    data-off-color="danger" >
+                <input type="checkbox" name="isActive" id="boostrap-switch" {{ $Cour->isActive == 1 ? 'checked' : '' }}
+                    data-value="" data-bootstrap-switch data-off-color="danger">
             </div>
             <!-- /.card -->
 
@@ -53,9 +53,9 @@
         <div class="row">
             <div class="col-6">
                 <div class="form-group">
-                    <label>Category <span>({{$Cour->category->category_name}})</span></label>
+                    <label>Category <span>({{ $Cour->category->category_name }})</span></label>
                     <select class="form-control select2" id="souscategory_goals" name="cotegoryId" style="width: 100%;">
-                        <option selected value="{{$Cour->category->id}}">Choise Votre Catégorie</option>
+                        <option selected value="{{ $Cour->category->id }}">Choise Votre Catégorie</option>
                         @foreach ($category as $category)
                             <option value="{{ $category->id }}">
                                 {{ $category->category_name }}
@@ -126,16 +126,16 @@
             @endif
 
 
-
             <div class="form-group">
                 <label>Formateur</label>
                 <select class="form-control select2" name="hostPodcast" style="width: 100%;">
-                    @foreach ($HostFromateur as $Host)
-                        @if (isset($coursFormation->user->email) || $Host->user->email == $coursFormation->user->email)
-                            <option selected value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
+                    @foreach ($HostFromateur as $Host)                       
+                        @if (isset($coursFormation->user->email) && $Host->user->email == $coursFormation->user->email)
+                            <option selected value="{{ $coursFormation->user->id }}">{{ $coursFormation->user->email }}</option>
                         @else
-                            <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
+                             <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
                         @endif
+                       
                     @endforeach
                 </select>
             </div>

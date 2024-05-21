@@ -2309,7 +2309,9 @@ public function getCoursVideo(String $id){
     public function update_formation(String $id, Request $request)
     {
         $Cour = Cour::findOrFail(Crypt::decrypt($id));
-        $coursFormation = CoursFormation::where('cours_id', $Cour->id)->first();
+        $coursFormation = CoursFormation::where('cours_id', $Cour->id)
+        ->with('user')
+        ->first();
         $goalCours = CoursGoals::where('cours_id', $Cour->id)->get();
 
         $request->validate([
@@ -2387,7 +2389,7 @@ public function getCoursVideo(String $id){
         $Cour->save();
         $coursFormation->save();
 
-        return redirect()->back()->with('status', 'Vous avez mis à jour la formation avec succès.');
+        return redirect()->back()->with('status' , 'Vous avez mis à jour la formation avec succès.' );
     }
 
 
