@@ -41,27 +41,14 @@ class ProgramController extends Controller
         return redirect()->back()->with('status' , 'Vous Modifier le Programme');
     }
 
-    /* public function delete_program(Request $request , String $id)
-    {
-        if(Hash::check( $request->password, Auth::user()->password ) ){
-            $program = Program::findOrFail(Crypt::decrypt($id));
+    public function delete_program(Request $request , String $id){
+        return $this->userRepository->delete_program($request , $id);
+    }
 
-        
-        $request->validate([
-            'password' => ['required']
-        ]);
-       
+    public function restore_history_program(String $id){
+        return $this->userRepository->restore_history_program($id);
+    }
 
-        if(Hash::check( $request->password, Auth::user()->password ))
-        {
-            $program->delete();
-        }
-            return redirect()->back()->with('status' , 'Vous Avez Suprimer le Program');
-        }else{
-            return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect');
-        }
-
-    } */
 
 
 }

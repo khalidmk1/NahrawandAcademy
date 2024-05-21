@@ -966,6 +966,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         if(Hash::check( $request->password, Auth::user()->password) && !$CheckExiseciteInCours){
             foreach ($category->souscategories as $souscategory) {
                 $souscategory->delete();
+                $souscategory->goals()->delete();
             }
     
             $category->delete();
@@ -975,6 +976,18 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect ou La categorie déja exists dans un contenu');
         }
     
+    }
+
+
+    //restore category
+    public function restore_history_category(String $id)
+    {
+        $Category = Category::withTrashed()->findOrFail(Crypt::decrypt($id));
+       
+        $Category->restore();
+
+        return redirect()->back()->with('status' , 'Vous Avez Restore votre Category');
+
     }
 
 
@@ -1019,6 +1032,44 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $souscategorie->souscategory_name = $request->souscategory_name;
        
         $souscategorie->save();
+    }
+
+    //delete SubCategory
+    public function delete_souscategory(Request $request ,String $id)
+    {
+        $souscategory =  SousCategory::findOrFail(Crypt::decrypt($id));
+        $Category = Category::where('id' , $souscategory->category_id)->get();
+      
+        $CheckExiseciteInCours = Cour::whereIn('category_id' , $Category->pluck('id'))->
+        whereNull('deleted_at')
+        ->exists();
+
+        $request->validate([
+            'password' => ['required']
+        ]);
+       
+
+        if(Hash::check( $request->password, Auth::user()->password ) && !$CheckExiseciteInCours )
+        {
+            $souscategory->delete();
+            $souscategory->goals()->delete();
+
+            return redirect()->back()->with('status' , 'Vous Avez Suprimer le SousCategorie');
+        }
+
+        return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect ou il est déja associer avec un contenu');
+       
+    }
+
+    //restore SubCategory
+    public function restore_history_subcategory(String $id)
+    {
+        $SubCategory = SousCategory::withTrashed()->findOrFail(Crypt::decrypt($id));
+        
+        $SubCategory->restore();
+ 
+        return redirect()->back()->with('status' , 'Vous Restore votre SubCategory');
+ 
     }
 
 
@@ -1095,6 +1146,43 @@ class UsersServicesRepository  implements UsersRepositoryInterface
 
     }
 
+    //delete program
+    public function delete_program(Request $request , String $id)
+    {
+
+        $program = Program::findOrFail(Crypt::decrypt($id));
+
+        $CourProgram = CoursFormation::where('program_id' , $program->id)
+        ->whereNull('deleted_at')
+        ->exists();
+      
+        $request->validate([
+            'password' => ['required']
+        ]);
+       
+
+        if(Hash::check( $request->password, Auth::user()->password ) && !$CourProgram)
+        {
+            $program->delete();
+            return redirect()->back()->with('status' , 'Vous Avez Suprimer le Program');
+        }
+           
+        return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect Ou Il est déja associer avec un contenu');
+
+    } 
+
+
+    //restore Program
+    public function restore_history_program(String $id)
+    {
+        $program = Program::withTrashed()->findOrFail(Crypt::decrypt($id));
+
+        $program->restore();
+
+        return redirect()->back()->with('status' , 'Vous Restore votre Cours');
+
+    }
+
     
 
     //crud goals
@@ -1140,6 +1228,49 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $goal->goals = $request->goals;
 
         $goal->save();
+
+    }
+
+    public function delete_goals(Request $request , String $id)
+    {
+        $goal = Goal::findOrFail(Crypt::decrypt($id));
+
+        $SubCategory = SousCategory::whereIn('id' , $goal->pluck('souscategory_id'))
+        ->whereNull('deleted_at')
+        ->get();
+
+        $CourExists = Cour::whereIn('category_id' , $SubCategory->pluck('category_id'))
+        ->whereNull('deleted_at')
+        ->exists();
+
+        $request->validate([
+            'password' => ['required']
+        ]);
+       
+
+        if(Hash::check( $request->password, Auth::user()->password ) && !$CourExists)
+        {
+
+            foreach ($goalsDelete as $key => $goals) {
+                $goals->delete();
+            } 
+
+            return redirect()->back()->with('status' , 'Vous Avez Suprimer un Objectif');
+           
+        }
+
+        return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect Ou il est déja Associer Avec contenu');
+       
+    } 
+
+    //restore Objectives
+    public function restore_history_Objectives(String $id)
+    {
+        $goal = Goal::withTrashed()->findOrFail(Crypt::decrypt($id));
+       
+        $goal->restore();
+
+        return redirect()->back()->with('status' , 'Vous Restore votre Objective');
 
     }
 
@@ -2909,10 +3040,17 @@ public function getCoursVideo(String $id){
     // cours history
     public function cours_history()
     {
-        $cours = Cour::onlyTrashed()->paginate(10);
-        $shorts = ShortCours::onlyTrashed()->paginate(10);
+        $cours = Cour::onlyTrashed()->get();
+        $shorts = ShortCours::onlyTrashed()->get();
+        $Category = Category::onlyTrashed()->get();
+        $SubCategory = SousCategory::onlyTrashed()->get();
+        $Programs = Program::onlyTrashed()->get();
+        $Objectives = Goal::onlyTrashed()->get();
+        
 
-        return view('Hisotry.show')->with(['cours' => $cours , 'shorts' => $shorts]);
+        return view('Hisotry.show')->with(['cours' => $cours , 'shorts' => $shorts ,
+        'Category' => $Category , 'SubCategory' => $SubCategory , 'Programs' => $Programs , 
+        'Objectives' => $Objectives]);
     }
 
     //restore history cours
@@ -2936,6 +3074,54 @@ public function getCoursVideo(String $id){
 
     }
 
+    
+
+   
+    
+    
+    //restore Speaker
+    public function restore_history_speaker(String $id)
+    {
+        $cours = Cour::withTrashed()->findOrFail(Crypt::decrypt($id));
+       
+        
+        if($cours->cours_type == 'conference'){
+            $cours->restore();
+            $coursConference = CoursConference::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }elseif($cours->cours_type == 'podcast'){
+            $cours->restore();
+            $coursPodcast = CoursPodcast::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }else{
+            $cours->restore();
+            $coursFormation = CoursFormation::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }
+
+        return redirect()->back()->with('status' , 'Vous Restore votre Cours');
+
+    }
+    //restore Manager
+    public function restore_history_manager(String $id)
+    {
+        $cours = Cour::withTrashed()->findOrFail(Crypt::decrypt($id));
+       
+        
+        if($cours->cours_type == 'conference'){
+            $cours->restore();
+            $coursConference = CoursConference::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }elseif($cours->cours_type == 'podcast'){
+            $cours->restore();
+            $coursPodcast = CoursPodcast::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }else{
+            $cours->restore();
+            $coursFormation = CoursFormation::withTrashed()->where('cours_id' , $cours->id)->restore();
+        }
+
+        return redirect()->back()->with('status' , 'Vous Restore votre Cours');
+
+    }
+
+
+
     //restore history short
     public function restore_history_short(String $id)
     {
@@ -2943,7 +3129,7 @@ public function getCoursVideo(String $id){
 
         $short->restore();
   
-        return redirect()->back()->with('status' , 'Vous Restore votre Cours');
+        return redirect()->back()->with('status' , 'Vous Restore votre Quickly');
   
     }
 

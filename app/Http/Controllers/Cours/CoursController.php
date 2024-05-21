@@ -309,9 +309,10 @@ class CoursController extends Controller
         return  $this->userRepository->cours_history();
     }
 
-     //restore history cours
-     public function restore_history_cours(String $id){
+    //restore history cours
+    public function restore_history_cours(String $id){
         return  $this->userRepository->restore_history_cours($id);
-     }
+    }
+
 
 }

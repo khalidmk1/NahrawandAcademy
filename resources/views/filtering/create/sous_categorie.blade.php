@@ -120,7 +120,9 @@
                                         <th style="width: 10px">#id</th>
                                         <th>Categorie</th>
                                         <th>SousCatégorie</th>
-                                        <th>Modifier</th>
+                                        <th>Edite</th>
+                                        <th>Delete</th>
+
 
                                     </tr>
                                 </thead>
@@ -128,6 +130,7 @@
                                 <tbody class="text-center" id="resultsouscategory">
                                     @foreach ($souscategories['souscategories'] as $souscategory)
                                         @include('filtering.update.souscategory')
+                                        @include('filtering.delete.SubCategory')
 
 
                                         <tr>
@@ -143,6 +146,15 @@
                                                         alt="update_icon">
                                                 </a>
                                             </td>
+                                            @if (auth()->user()->userRole->role_id == 1)
+                                            <td>
+                                                <button type="button" data-toggle="modal"
+                                                    data-target="#delete_Succategory_{{ $souscategory->id }}"
+                                                    class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        @endif
 
                                         </tr>
                                     @endforeach

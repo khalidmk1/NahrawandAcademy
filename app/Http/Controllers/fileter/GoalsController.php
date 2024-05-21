@@ -43,38 +43,14 @@ class GoalsController extends Controller
         return redirect()->back()->with('status' , 'Vous Avez Modifier Votre Objectif');
     }
 
-  /*   public function delete_goals(Request $request , String $id)
-    {
-        $goal = Goal::findOrFail(Crypt::decrypt($id));
+    public function delete_goals(Request $request , String $id){
+        return  $this->userRepository->delete_goals($request , $id);
+    }
 
-        $goalsDelete = Goal::where('goals' , $goal->goals)->get();
-
-        
-        $request->validate([
-            'password' => ['required']
-        ]);
-       
-
-        if(Hash::check( $request->password, Auth::user()->password ))
-        {
-
-            foreach ($goalsDelete as $key => $goals) {
-                $goals->delete();
-            } 
-           
-        }
-
-        if(Hash::check( $request->password, Auth::user()->password ) ){
-
-            return redirect()->back()->with('status' , 'Vous Avez Suprimer un Objectif');
-
-        }else{
-
-            return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect');
-        }
-
-       
-    } */
+    //restore Objectives
+    public function restore_history_Objectives(String $id){
+        return  $this->userRepository->restore_history_Objectives($id);
+    }
 
     public function search_goals(Request $request)
     {

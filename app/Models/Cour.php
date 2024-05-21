@@ -64,7 +64,7 @@ class Cour extends Model
      */
     public function CoursConference(): HasOne
     {
-        return $this->hasOne(CoursConference::class, 'cours_id');
+        return $this->hasOne(CoursConference::class, 'cours_id')->withTrashed();;
     }
 
     /**
@@ -74,7 +74,7 @@ class Cour extends Model
      */
     public function CoursPodcast(): HasOne
     {
-        return $this->hasOne(CoursPodcast::class, 'cours_id');
+        return $this->hasOne(CoursPodcast::class, 'cours_id')->withTrashed();;
     }
 
     /**
@@ -84,7 +84,7 @@ class Cour extends Model
      */
     public function CoursFormation(): HasOne
     {
-        return $this->hasOne(CoursFormation::class, 'cours_id');
+        return $this->hasOne(CoursFormation::class, 'cours_id')->withTrashed();;
     }
 
 

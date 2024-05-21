@@ -122,23 +122,28 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::post('category/store', [CategoriesController::class, 'store_category'])->name('category.store');
    Route::patch('category/update/{id}', [CategoriesController::class, 'update_category'])->name('category.update');
    Route::delete('categorie/delete/{id}', [CategoriesController::class, 'delete_category'])->name('category.delete');
-
+   Route::post('restore/category/{id}', [CategoriesController::class, 'restore_history_category'])->name('restore.category');
    //crud souscategorie
    Route::get('souscategory', [SousCategoryController::class, 'create_souscategory'])->name('souscategorie.create');
    Route::post('souscategory/store', [SousCategoryController::class, 'store_souscategorie'])->name('souscategorie.store');
    Route::patch('souscategory/update/{id}', [SousCategoryController::class, 'update_souscategory'])->name('souscategory.update');
-   
+   Route::delete('SubCategory/delete/{id}', [SousCategoryController::class, 'delete_souscategory'])->name('SubCategory.delete');
+   Route::post('SubCategory/restore/{id}', [SousCategoryController::class, 'restore_history_subcategory'])->name('SubCategory.restore');
 
 
    //crud Program
    Route::get('program', [ProgramController::class, 'create_program'])->name('program.create');
    Route::post('program/store', [ProgramController::class, 'store_program'])->name('program.store');
    Route::patch('program/update/{id}', [ProgramController::class, 'update_program'])->name('program.update');
+   Route::delete('program/delete/{id}', [ProgramController::class, 'delete_program'])->name('program.delete');
+   Route::post('program/restore/{id}', [ProgramController::class, 'restore_history_program'])->name('program.restore');
 
    //crud goals
    Route::get('goals', [GoalsController::class, 'create_goals'])->name('goals.create');
    Route::post('goals/create', [GoalsController::class, 'store_goals'])->name('goals.store');
    Route::patch('goals/update/{id}', [GoalsController::class, 'update_goals'])->name('goals.update');
+   Route::delete('goals/delete/{id}', [GoalsController::class, 'delete_goals'])->name('goals.delete');
+   Route::post('goal/restore/{id}', [GoalsController::class, 'restore_history_Objectives'])->name('goal.restore');
    
 
    //crud cours

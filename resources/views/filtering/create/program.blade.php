@@ -126,14 +126,15 @@
                                         <th>Description</th>
                                         <th>Tags</th>
                                         <th>Category</th>
-                                        <th>Update</th>
+                                        <th>Edite</th>
+                                        <th>Delete</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($categories_programs['programs'] as $program)
                                         @include('filtering.update.program')
-
+                                        @include('filtering.delete.Program')
                                         @include('filtering.create.model.descriptionprograme')
 
                                         <tr class="text-center">
@@ -176,6 +177,14 @@
                                                     <img src="{{ asset('asset/update_icon.png') }}" style="height: 18px;"
                                                         alt="update_icon">
                                                 </a></td>
+                                            @if (auth()->user()->userRole->role_id == 1)
+                                                <td><a type="button" data-toggle="modal"
+                                                        data-target="#delete_program_{{ $program->id }}"
+                                                        class="btn btn-sm bg-danger">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a></td>
+                                            @endif
+
 
                                         </tr>
                                     @endforeach

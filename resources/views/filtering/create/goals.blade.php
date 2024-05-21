@@ -125,7 +125,9 @@
                                         <th style="width: 10px">#id</th>
                                         <th>Subcategory</th>
                                         <th>Objective</th>
-                                        <th>Update</th>
+                                        <th>Edite</th>
+                                        <th>Delete</th>
+
 
                                     </tr>
                                 </thead>
@@ -133,7 +135,7 @@
                                 <tbody class="text-center" id="resultgoals">
                                     @foreach ($goals['goals'] as $goal)
                                         @include('filtering.update.goal')
-
+                                        @include('filtering.delete.Objectives')
 
                                         <tr>
                                             <td>{{ $goal->id }}</td>
@@ -148,6 +150,14 @@
                                                         alt="update_icon">
                                                 </a>
                                             </td>
+                                            @if (auth()->user()->userRole->role_id == 1)
+                                                <td><a type="button" data-toggle="modal"
+                                                        data-target="#delete_objectives_{{ $goal->id }}"
+                                                        class="btn btn-sm bg-danger">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a></td>
+                                            @endif
+
 
                                         </tr>
                                     @endforeach

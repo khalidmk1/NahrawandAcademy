@@ -71,12 +71,20 @@ interface UsersRepositoryInterface{
     public function create_souscategory();
     public function store_souscategory(Request $request);
     public function update_souscategory(Request $request , String $id);
+    //delete SubCategory
+    public function delete_souscategory(Request $request ,String $id);
+    //restore SubCategory
+    public function restore_history_subcategory(String $id);
    
 
     //crud Program
     public function create_program();
     public function store_program(Request $request);
     public function update_program(Request $request , String $id);
+    //delete program
+    public function delete_program(Request $request , String $id);
+    //restore Program
+    public function restore_history_program(String $id);
     
 
 
@@ -84,6 +92,9 @@ interface UsersRepositoryInterface{
     public function create_goals();
     public function store_goals(Request $request);
     public function update_goals(Request $request , String $id);
+    public function delete_goals(Request $request , String $id);
+    //restore Objectives
+    public function restore_history_Objectives(String $id);
 
 
     //crud cours
@@ -117,6 +128,8 @@ interface UsersRepositoryInterface{
     public function cours_history();
     //restore history cours
     public function restore_history_cours(String $id);
+    //restore category
+    public function restore_history_category(String $id);
 
     //conference cours
     public function getCoursVideo(String $id);

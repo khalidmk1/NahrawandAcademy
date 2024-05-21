@@ -38,28 +38,15 @@ class SousCategoryController extends Controller
         return redirect()->back()->with('status' , 'Vous Avez Modifier le Categorie');
     }
 
-    /* public function delete_souscategoty(Request $request ,String $id)
-    {
-        $souscategory =  SousCategory::findOrFail(Crypt::decrypt($id));
+    //delete SubCategory
+    public function delete_souscategory(Request $request ,String $id){
+        return $this->userRepository->delete_souscategory($request , $id);
+    }
 
-        $request->validate([
-            'password' => ['required']
-        ]);
-       
-
-        if(Hash::check( $request->password, Auth::user()->password ))
-        {
-            $souscategory->delete();
-        }
-
-        if(Hash::check( $request->password, Auth::user()->password ) ){
-            return redirect()->back()->with('status' , 'Vous Avez Suprimer le SousCategorie');
-        }else{
-            return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect');
-        }
-
-       
-    } */
+    //restore SubCategory
+    public function restore_history_subcategory(String $id){
+        return $this->userRepository->restore_history_subcategory($id);
+    }
 
     public function search_souscategory(Request $request)
     {

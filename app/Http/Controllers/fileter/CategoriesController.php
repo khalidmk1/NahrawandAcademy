@@ -56,5 +56,10 @@ class CategoriesController extends Controller
         return  $this->userRepository->search_filtter($request);
     }
 
+    //restore category
+    public function restore_history_category(String $id){
+        return  $this->userRepository->restore_history_category($id);
+    }
+
 
 }
