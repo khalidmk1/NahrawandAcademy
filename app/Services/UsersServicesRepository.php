@@ -1193,7 +1193,8 @@ public function index_cours()
             
             //Cours Podcast
             
-            $coursPodcast = CoursPodcast::where('cours_id' , $Cour->id)->first();
+            $coursPodcast = CoursPodcast::where('cours_id' , $Cour->id)
+            ->first();
 
             $podcastVideoId = $coursPodcast->videopodcast->pluck('id');
 
@@ -2000,7 +2001,8 @@ public function getCoursVideo(String $id){
     public function update_podcast(String $id , Request $request)
     {
         $Cour = Cour::findOrFail(Crypt::decrypt($id));
-        $CourPodcast = CoursPodcast::where('cours_id' , $Cour->id)->first();
+        $CourPodcast = CoursPodcast::where('cours_id' , $Cour->id)
+        ->first();
         $goalCours = CoursGoals::where('cours_id' , $Cour->id)->get();
         
 

@@ -110,6 +110,7 @@
 
                   <div class="form-group">
                       <label>Modirateur</label>
+                     
                       <select class="form-control select2" name="hostConference" style="width: 100%;">
                           @foreach ($HostConfrence as $Host)
                               @if (isset($coursCoference->user->email) && $Host->user->email == $coursCoference->user->email)
