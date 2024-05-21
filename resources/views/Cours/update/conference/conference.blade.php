@@ -113,7 +113,7 @@
                       <select class="form-control select2" name="hostConference" style="width: 100%;">
                           @foreach ($HostConfrence as $Host)
                               @if (isset($coursCoference->user->email) && $Host->user->email == $coursCoference->user->email)
-                                  <option value="{{ $coursCoference->user->id }}">{{ $coursCoference->user->email }}
+                                  <option selected value="{{ $coursCoference->user->id }}">{{ $coursCoference->user->email }}
                                   </option>
                               @else
                                   <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
