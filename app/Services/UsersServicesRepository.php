@@ -2306,121 +2306,90 @@ public function getCoursVideo(String $id){
 
     // crud fomation
 
-    public function update_formation(String $id , Request $request)
+    public function update_formation(String $id, Request $request)
     {
         $Cour = Cour::findOrFail(Crypt::decrypt($id));
-
-        $coursFormation = CoursFormation::where('cours_id' , $Cour->id)->first();
-
-        $goalCours = CoursGoals::where('cours_id' , $Cour->id)->get();
-        
+        $coursFormation = CoursFormation::where('cours_id', $Cour->id)->first();
+        $goalCours = CoursGoals::where('cours_id', $Cour->id)->get();
 
         $request->validate([
-            'title' => ['required' , 'string' , 'max:100'],
-            'description' => ['required' , 'string' , 'max:300'],
-            'tags' => ['required' , 'array'],
-            'cotegoryId' => ['required' , 'string'],
-            'goal' => ['required' , 'array'],
-            'conditionformation' => ['somtimes' , 'string' , 'max:600'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:400'],
-            'document' => ['file' , 'mimes:pdf' , 'max:400']
+            'title' => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string', 'max:300'],
+            'tags' => ['required', 'array'],
+            'cotegoryId' => ['required', 'string'],
+            'goal' => ['required', 'array'],
+            'conditionformation' => ['sometimes', 'string', 'max:600'],
+            'image' => ['file', 'mimes:jpeg,png,jpg,gif', 'max:400'],
+            'document' => ['file', 'mimes:pdf', 'max:400']
         ]);
-
 
         if ($request->hasFile('image')) {
             $imagePath = 'upload/cour/image/'.$coursFormation->image;
-            Storage::disk('public')->delete($imagePath);
-           
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
             $file = $request->file('image');
             $directory = 'upload/cour/image/';
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
-            
             $coursFormation->image = $fileNameImage;
         }
 
         if ($request->hasFile('ImageFomationflex')) {
             $imagePath = 'upload/cour/image/flex/'.$coursFormation->image_flex;
-            Storage::disk('public')->delete($imagePath);
-           
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
             $file = $request->file('ImageFomationflex');
             $directory = 'upload/cour/image/flex/';
             $fileNameImageflex = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImageflex, 'public');
-            
             $coursFormation->image_flex = $fileNameImageflex;
         }
 
         if ($request->hasFile('document')) {
             $imagePath = 'upload/cour/document/'.$coursFormation->documents;
-            Storage::disk('public')->delete($imagePath);
-           
+            if (Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
             $file = $request->file('document');
             $directory = 'upload/cour/document/';
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
-            
             $coursFormation->documents = $fileNameImage;
         }
 
-       
-
-
-
         $Cour->title = $request->title;
-
-        if ($request->iscoming == 'on') {
-            $iscoming = true;
-         }else{
-             $iscoming = false;
-         }
-
-
-         if ($request->isActive == 'on') {
-            $isActive = true;
-        }else{
-            $isActive = false;
-        }
-
-        $Cour->isComing = $iscoming;
-        $Cour->isActive = $isActive;
-
+        $Cour->isComing = $request->iscoming == 'on';
+        $Cour->isActive = $request->isActive == 'on';
         $Cour->description = $request->description;
 
         $StringTag = $request->tags[0];
-
-        $tags = explode(',', $StringTag);
- 
-        $tags = array_map('trim', $tags);
-
+        $tags = array_map('trim', explode(',', $StringTag));
         $Cour->tags = $tags;
         $Cour->category_id = $request->cotegoryId;
 
         $goalCours->each->forceDelete();
-
-        foreach ($request->goal as $key => $goal) {
-            $goalCours = new CoursGoals();
-            $goalCours->cours_id = $Cour->id; 
-            $goalCours->goal_id = $goal;
-            $goalCours->save();
+        foreach ($request->goal as $goal) {
+            $newGoal = new CoursGoals();
+            $newGoal->cours_id = $Cour->id;
+            $newGoal->goal_id = $goal;
+            $newGoal->save();
         }
 
-        if($request->has('conditionformation')){
+        if ($request->has('conditionformation')) {
             $coursFormation->condition = $request->conditionformation;
         }
-        
-        $coursFormation->host_id = $request->hostPodcast ;
+
+        $coursFormation->host_id = $request->hostPodcast;
         $coursFormation->program_id = $request->programId;
-        
 
         $Cour->save();
         $coursFormation->save();
-        
 
-        return redirect()->back()->with('status' , 'Vous avez mis à jour la formation avec succès.');
-
-
+        return redirect()->back()->with('status', 'Vous avez mis à jour la formation avec succès.');
     }
+
 
     //download document formation
     public function download_document($filename)

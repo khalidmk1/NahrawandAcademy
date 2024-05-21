@@ -627,15 +627,19 @@ public function Cour_Conference(){
     {
 
         $user = User::findOrFail($id);
-        
-        $favorisFormation = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
-        $favorisPodcast = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
-        
-        $favorisPodcast->load(['cours.category' , 'cours.CoursPodcast' , 'cours.CoursPodcast.user.userspeaker']);
-        $favorisFormation->load(['cours.category','cours.CoursFormation' ,'cours.CoursFormation.user.userspeaker']);
+        $favorisCours = CoursFavoris::where(['user_id' => $user->id , 'state' => 1])->get();
 
-        return response()->json(['FormationContent' => $favorisFormation , 
-        'PodcastContent' => $favorisPodcast]);
+        $CourFormation = Cour::whereIn('id' , $favorisCours->pluck('cours_id') )
+        ->where('cours_type' , 'formation')
+        ->get();
+        $CourFormation->load(['category' , 'CoursFormation.user.userspeaker']);
+        $CourPodcast = Cour::whereIn('id' , $favorisCours->pluck('cours_id') )
+        ->where('cours_type' , 'podcast')
+        ->get();
+        $CourPodcast->load(['category' , 'CoursPodcast.user.userspeaker']);
+
+        return response()->json(['FormationContent' => $CourFormation , 
+        'PodcastContent' => $CourPodcast]);
     }
 
     //check favoris exists

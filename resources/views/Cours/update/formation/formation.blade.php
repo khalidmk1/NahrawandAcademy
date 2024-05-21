@@ -131,7 +131,7 @@
                 <label>Formateur</label>
                 <select class="form-control select2" name="hostPodcast" style="width: 100%;">
                     @foreach ($HostFromateur as $Host)
-                        @if (isset($coursFormation->user->email) && $Host->user->email == $coursFormation->user->email)
+                        @if (isset($coursFormation->user->email) || $Host->user->email == $coursFormation->user->email)
                             <option selected value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
                         @else
                             <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
