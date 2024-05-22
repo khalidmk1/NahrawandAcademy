@@ -16,11 +16,11 @@ class passwordChange
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->password_change == 0) {
+        if (Auth::check() && Auth::user()->password_change == 0) {
             return redirect()->route('password.change');
-        } else {
-            return $next($request);
         }
+
+        return $next($request);
 
        
     }

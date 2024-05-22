@@ -16,15 +16,12 @@ class isSpeaker
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->userRole->role_id == 4 ||  Auth::user()->userRole->role_id == 3){
+        if (Auth::check() && (Auth::user()->userRole->role_id == 4 || Auth::user()->userRole->role_id == 3)) {
             Auth::logout();
-            return redirect()->back()->with('faild' , 'Désolé vous n\'avez la permission pour entre a le backofice');
-
-        }else
-        {
-            return $next($request);
-          
+            return redirect()->route('login.create')->with('faild', 'Désolé vous n\'avez pas la permission pour entrer au backoffice');
         }
+
+        return $next($request);
         
        
     }

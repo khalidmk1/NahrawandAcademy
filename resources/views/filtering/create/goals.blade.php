@@ -91,7 +91,7 @@
 
                 <div class="col-12 mb-3 d-flex justify-content-end">
                     <button type="button" data-toggle="modal" data-target="#exampleModal"
-                        class="btn btn-block btn-primary w-25">
+                        class="btn btn-block btn-default w-25">
                         Create Objectives
                     </button>
                 </div>

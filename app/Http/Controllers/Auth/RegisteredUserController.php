@@ -54,10 +54,6 @@ class RegisteredUserController extends Controller
         ]);
 
 
-       /*  event(new Registered($user)); */
-
-        /* Auth::login($user); */
-
         return response([$user , 'api_token' => $request->bearerToken()]);
     }
 
@@ -91,6 +87,8 @@ class RegisteredUserController extends Controller
             'user_id' =>$user->id,
             'role_id' => $role_client->id
         ]);
+
+        \Log::info('User created successfully', ['user' => $user]);
 
          return response()->json(['user' => $user]);
     }

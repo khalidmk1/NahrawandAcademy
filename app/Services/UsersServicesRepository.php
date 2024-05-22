@@ -2146,7 +2146,7 @@ public function getCoursVideo(String $id){
             'coursDuration' => ['required'],
             'slugAcroche' => ['required' , 'string' , 'max:100'],
             'descriptionPodcast' => ['required' , 'string' , 'max:600'],
-            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:400']
+            'image' => ['file' ,  'mimes:jpeg,png,jpg,gif', 'max:2000']
         ]);
 
         $url = $request->video;

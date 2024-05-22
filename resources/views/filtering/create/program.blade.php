@@ -117,7 +117,7 @@
 
                             <table id="example1" class="table table-bordered table-striped">
                                 <button type="button" data-toggle="modal" data-target="#exampleModal"
-                                    class="btn btn-block btn-primary w-25 position-absolute" style="z-index: 1000">
+                                    class="btn btn-block btn-default w-25 position-absolute" style="z-index: 1000">
                                     Create Program
                                 </button>
                                 <thead>

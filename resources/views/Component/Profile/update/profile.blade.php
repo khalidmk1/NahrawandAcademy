@@ -118,9 +118,7 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-block btn-warning w-25" style="float: right">Mettre
-                                    à
-                                    jour</button>
+                                <button type="submit" class="btn btn-block btn-warning w-25" style="float: right">Update</button>
                                 @if (auth()->user()->id == $user->id)
                                     <button type="button" data-toggle="modal" data-target="#exampleModal"
                                         class="btn btn-primary">Change Password</button>
