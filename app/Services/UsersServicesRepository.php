@@ -1028,31 +1028,29 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         $souscategorie->save();
     }
 
-    //delete SubCategory
-    public function delete_souscategory(Request $request ,String $id)
+    
+    // Define the delete_souscategory method here
+    public function delete_souscategory(Request $request, String $id)
     {
-        $souscategory =  SousCategory::findOrFail(Crypt::decrypt($id));
-        $Category = Category::where('id' , $souscategory->category_id)->get();
+        $souscategory = SousCategory::findOrFail(Crypt::decrypt($id));
+        $Category = Category::where('id', $souscategory->category_id)->get();
       
-        $CheckExiseciteInCours = Cour::whereIn('category_id' , $Category->pluck('id'))->
-        whereNull('deleted_at')
-        ->exists();
+        $CheckExiseciteInCours = Cour::whereIn('category_id', $Category->pluck('id'))
+            ->whereNull('deleted_at')
+            ->exists();
 
         $request->validate([
             'password' => ['required']
         ]);
-       
 
-        if(Hash::check( $request->password, Auth::user()->password ) && !$CheckExiseciteInCours )
-        {
+        if (Hash::check($request->password, Auth::user()->password) && !$CheckExiseciteInCours) {
             $souscategory->delete();
             $souscategory->goals()->delete();
 
-            return redirect()->back()->with('status' , 'Vous Avez Suprimer le SousCategorie');
+            return redirect()->back()->with('status', 'Vous avez supprimé le SousCategorie');
         }
 
-        return redirect()->back()->with('faild' , 'Vous Mots de passe est incorrect ou il est déja associer avec un contenu');
-       
+        return redirect()->back()->with('faild', 'Votre mot de passe est incorrect ou il est déjà associé à un contenu');
     }
 
     //restore SubCategory
