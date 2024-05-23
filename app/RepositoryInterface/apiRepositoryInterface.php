@@ -93,7 +93,7 @@ interface apiRepositoryInterface {
     public function UserObjectif(Request $request , $id , $goal);
 
     //get cours objectif
-    public function CoursGoal(String $id);
+    public function UserGoal(String $id);
 
     //get user manager
     public function getmanager();

@@ -60,7 +60,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-block btn-info w-25">Create</button>
+                        <button type="submit" class="btn btn-block btn-primary w-25">Create</button>
                     </div>
 
                 </form>

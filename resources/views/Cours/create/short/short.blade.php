@@ -55,14 +55,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Subcategory</label>
+                                        <label>Category</label>
                                         <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                                             style="width: 100%;">
-                                            <option value="">Choose Your Subcategory</option>
-                                            @foreach ($souscategory as $souscategory)
-                                                <option value="{{ $souscategory->category->id }}"
-                                                    {{ old('cotegoryId') == $souscategory->category->id ? 'selected' : '' }}>
-                                                    {{ $souscategory->category->category_name }}
+                                            <option value="">Choose Your Category</option>
+                                            @foreach ($category as $category)
+                                                <option value="{{ $category->id }}">
+                                                    {{ $category->category_name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -156,7 +155,6 @@
 
 
             //search live for goals
-
             $('#souscategory_goals').on('change', function() {
                 var sousCategorieId = $(this).val();
 

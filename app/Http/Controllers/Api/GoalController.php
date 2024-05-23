@@ -24,8 +24,8 @@ class GoalController extends Controller
         return $this->apiRepository->UserObjectif($request , $id , $goal);
     }
 
-    public function CoursGoal(String $id){
-        return $this->apiRepository->CoursGoal($id);
+    public function UserGoal(String $id){
+        return $this->apiRepository->UserGoal($id);
     }
 
     //get goals par domain

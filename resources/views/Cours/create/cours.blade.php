@@ -118,7 +118,7 @@
                             <div class="form-group">
                                 <label>Type Content</label>
                                 <select class="form-control" name="coursType" id="cours_type">
-                                    <option selected>Choose Content Type</option>
+                                    <option value="select" selected>Choose Content Type</option>
                                     <option value="conference">Conférance Content</option>
                                     <option value="podcast">Podcast Content</option>
                                     <option value="formation">Formation Content</option>
@@ -375,8 +375,8 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3"
-                            style="float: right">Create</button>
+                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right"
+                            id="create_btn">Create</button>
 
                     </form>
 
@@ -515,22 +515,27 @@
             // If a value is found, show the corresponding section
             if (selectedCoursType) {
                 $('#' + selectedCoursType).slideDown();
+                $('#create_btn').show();
             }
 
-            // Hide all sections initially
             $('#conference, #podcast, #formation').hide();
+            $('#create_btn').hide();
 
             // Handle change event for the select element
             $('#cours_type').on('change', function() {
                 var typeCours = $(this).val();
 
-                // Store the selected value in local storage
                 localStorage.setItem('selectedCoursType', typeCours);
 
-                // Hide all sections
-                $('#conference, #podcast, #formation').slideUp();
+                if (typeCours == 'select') {
+                    $('#create_btn').hide(); 
+                } else {
+                    $('#create_btn').show(); 
+                }
 
-                // Show the corresponding section based on the selected value
+                console.log(typeCours);
+
+                $('#conference, #podcast, #formation').slideUp();
                 $('#' + typeCours).slideDown();
             });
         });

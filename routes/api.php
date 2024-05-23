@@ -106,6 +106,8 @@ Route::prefix('mobile')->group(function () {
     Route::get('/goals', [GoalController::class, 'getGoals'])->name('goals');
     // user goal
     Route::post('user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
+    //get user goals by ID
+    Route::get('users/goals/{id}', [GoalController::class, 'UserGoal'])->name('index.user.goals');
 
    //cours goal
    Route::get('cours/goal/{id}', [GoalController::class, 'CoursGoal'])->name('cours.goal');

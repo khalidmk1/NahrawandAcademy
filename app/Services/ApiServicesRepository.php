@@ -171,6 +171,8 @@ class ApiServicesRepository  implements apiRepositoryInterface
     public function coming_cours(){
 
         $comingCours = Cour::where(['isComing' => 1 , 'isActive' => 1])->get();
+        $videoPodcast = CoursPadcastVideo::where('iscoming' , 1)->get();
+        $videoFormation = CoursFormationVideo::where('iscoming' , 1)->get();
         
         foreach ($comingCours as $coming) {
             $coming->load('category');
@@ -179,7 +181,7 @@ class ApiServicesRepository  implements apiRepositoryInterface
           
         }
         
-        return response()->json($comingCours);
+        return response()->json(['ComingCours' => $comingCours , 'VideoPodcast' => $videoPodcast , 'VideoFormation' => $videoFormation]);
 
        
 
@@ -715,6 +717,8 @@ public function Cour_Conference(){
 
         $userObjectif = UserObjectif::where(['user_id' => $user->id , 'objetif_id' => $goal->id])->exists();
 
+        $UserGoals = UserObjectif::where(['user_id' => $user->id , 'objetif_id' => $goal->id])->get();
+
         if(!$userObjectif)
         {
             $usergoal = UserObjectif::create([
@@ -724,16 +728,24 @@ public function Cour_Conference(){
     
             return response()->json($usergoal);
         }else{
-            return response()->json('already exist');
+            foreach ($UserGoals as $userGoal) {
+                $userGoal->delete();
+            }
+            return response()->json('its been delete');
         }
-
+        
+        
       
 
     }
 
-    public function CoursGoal(String $id)
+    public function UserGoal(String $id)
     {
-                
+        $user = User::findOrFail($id);
+
+        $UserGoal = UserObjectif::where('user_id' , $user->id)->get();
+
+        return response()->json($UserGoal);
     }
 
     //get manager

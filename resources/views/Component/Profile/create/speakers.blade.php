@@ -31,7 +31,7 @@
                             <h3 class="card-title">Create of speakers</h3>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <a href="{{ Route('dashboard.speaker.view') }}" class="btn btn-block btn-info w-25">
+                            <a href="{{ Route('dashboard.speaker.view') }}" class="btn btn-block btn-default w-25">
                                 View the speakers
                             </a>
                         </div>
@@ -134,7 +134,7 @@
 
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-default w-25  mb-3 ml-3" style="float: right">Create</button>
+                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Create</button>
 
                     </form>
 

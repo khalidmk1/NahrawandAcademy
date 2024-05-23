@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Create Admin</button>
+                        <button type="submit" class="btn btn-block btn-info w-25 mb-3 ml-3" style="float: right">Create</button>
 
                     </form>
 

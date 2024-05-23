@@ -32,7 +32,7 @@
                   <select class="form-control select2" name="host" style="width: 100%;">
                       @foreach ($HostFromateur as $Host)
                           @if (isset($short->user->email) && $Host->user->email == $short->user->email)
-                              <option value="{{ $Host->user->id }}">{{ $Host->user->email }}
+                              <option selected value="{{ $short->user->id }}">{{ $short->user->email }}
                               </option>
                           @else
                               <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
@@ -47,14 +47,13 @@
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
-                      <label>SubCategory</label>
+                      <label>Category</label>
                       <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                           style="width: 100%;">
-                          <option value="">Choose SubCategory</option>
-                          @foreach ($souscategory as $souscategory)
-                              <option value="{{ $souscategory->category->id }}"
-                                  {{ old('cotegoryId') == $souscategory->category->id ? 'selected' : '' }}>
-                                  {{ $souscategory->category->category_name }}
+                          <option value="">Choose Category</option>
+                          @foreach ($category as $category)
+                              <option value="{{ $category->id }}">
+                                  {{ $category->category_name }}
                               </option>
                           @endforeach
                       </select>
