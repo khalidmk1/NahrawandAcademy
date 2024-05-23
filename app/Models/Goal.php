@@ -24,7 +24,7 @@ class Goal extends Model
      */
     public function souscategory(): BelongsTo
     {
-        return $this->belongsTo(SousCategory::class , 'souscategory_id');
+        return $this->belongsTo(SousCategory::class , 'souscategory_id')->withTrashed();
     }
 
 
