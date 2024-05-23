@@ -127,8 +127,8 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    Route::get('souscategory', [SousCategoryController::class, 'create_souscategory'])->name('souscategorie.create');
    Route::post('souscategory/store', [SousCategoryController::class, 'store_souscategorie'])->name('souscategorie.store');
    Route::patch('souscategory/update/{id}', [SousCategoryController::class, 'update_souscategory'])->name('souscategory.update');
-   Route::delete('SubCategory/delete/{id}', [SousCategoryController::class, 'delete_souscategory'])->name('SubCategory.delete');
-   Route::post('SubCategory/restore/{id}', [SousCategoryController::class, 'restore_history_subcategory'])->name('SubCategory.restore');
+   Route::delete('souscategory/delete/{id}', [SousCategoryController::class, 'delete_souscategory'])->name('souscategory.delete');
+   Route::post('souscategory/restore/{id}', [SousCategoryController::class, 'restore_history_subcategory'])->name('souscategory.restore');
 
 
    //crud Program

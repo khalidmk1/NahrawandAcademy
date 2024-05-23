@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete SubCategory</h5>
             </div>
-            <form action="{{Route('dashboard.SubCategory.delete' , Crypt::encrypt($souscategory->id))}}" method="post">
+            <form action="{{Route('dashboard.souscategory.delete' , Crypt::encrypt($souscategory->id))}}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body">
