@@ -4,15 +4,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete SubCategory</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete Objectives</h5>
             </div>
-            <form action="{{Route('dashboard.goals.delete' , Crypt::encrypt($goal->id))}}" method="post">
+            <form action="{{ Route('dashboard.goals.delete', Crypt::encrypt($goal->id)) }}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body">
                     Are you sure you want to delete?
                     <div class="form-group mt-3">
-                        <input type="password" class="form-control" id="exampleInputPassword1_{{$goal->id}}"
+                        <input type="password" class="form-control" id="exampleInputPassword1_{{ $goal->id }}"
                             placeholder="Enter Password" name="password">
                     </div>
 
