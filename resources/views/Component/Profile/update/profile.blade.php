@@ -65,6 +65,8 @@
                                         </div>
 
                                     </div>
+
+                                   
                                 @endif
 
                                 <div class="form-group">
@@ -89,6 +91,18 @@
                                     <div class="form-group">
                                         <label for="biographie">Biography</label>
                                         <textarea class="form-control" id="biographie" rows="3" name="biographie" placeholder="Enter ...">{{ $user->userspeaker->biographie }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Type of Speaker</label>
+                                        <select name="type_speaker" class="custom-select">
+                                            <option selected disabled value="{{$user->userspeaker->type_speaker}}">{{$user->userspeaker->type_speaker}}</option>
+                                            <option value="Animateur">Animateur</option>
+                                            <option value="Formateur">Formateur</option>
+                                            <option value="Invité">Invité</option>
+                                            <option value="Modérateur">Modérateur</option>
+                                            <option value="Conférencier">Conférencier</option>
+                                        </select>
                                     </div>
 
 
@@ -118,7 +132,8 @@
 
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-block btn-warning w-25" style="float: right">Update</button>
+                                <button type="submit" class="btn btn-block btn-warning w-25"
+                                    style="float: right">Update</button>
                                 @if (auth()->user()->id == $user->id)
                                     <button type="button" data-toggle="modal" data-target="#exampleModal"
                                         class="btn btn-primary">Change Password</button>

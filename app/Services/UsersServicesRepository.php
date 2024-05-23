@@ -372,6 +372,16 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     {
         $profile = User::findOrFail(Crypt::decrypt($id));
         $userSpeaker = UserSpeakers::where('user_id', $profile->id)->first();
+        $Cour = Cour::all();
+        $coursConference = CoursConference::whereIn('cours_id' , $Cour->pluck('id'))
+        ->where('host_id' , $profile->id)
+        ->exists();
+        $coursPodcast = CoursPodcast::whereIn('cours_id' , $Cour->pluck('id')) 
+        ->where('host_id' , $profile->id)
+        ->exists();
+        $courFormation = CoursFormation::whereIn('cours_id' , $Cour->pluck('id'))
+        ->where('host_id' , $profile->id)
+        ->exists();
     
         $request->validate([
             'firstName' => ['required', 'string', 'max:255'],
@@ -380,7 +390,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             'profile_image' => ['file', 'mimes:jpeg,png,jpg,gif', 'max:2000'],
             'email' => 'required|email|unique:users,email,' . $profile->id,
         ]);
-    
+
         $isPopulaire = $request->isPopulaire == 'on';
     
         if ($request->hasFile('avatar')) {
@@ -425,14 +435,25 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             $request->validate($rules);
 
             $userSpeaker->biographie = $request->biographie;
+            if ($request->has('type_speaker')) {
+                if ( $coursConference || $coursPodcast || $courFormation) {
+                    return redirect()->back()->withErrors(['type' => 'Cannot change type because the user is already associated with content.']);
+                }
+            } 
+
+            $userSpeaker->type_speaker = $request->type_speaker;
             $userSpeaker->faceboock = $request->facebook;
             $userSpeaker->linkdin = $request->linkedin;
             $userSpeaker->instagram = $request->instagram;
             $userSpeaker->save();
+            
+            return redirect()->back()->with('status' , 'Vous avez modifier Avec sseccess');
 
         }
     
         $profile->save();
+
+        return redirect()->back()->with('status' , 'Vous avez modifier Avec sseccess');
     }
 
 

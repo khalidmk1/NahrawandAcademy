@@ -105,22 +105,22 @@ Route::prefix('mobile')->group(function () {
     //get goals
     Route::get('/goals', [GoalController::class, 'getGoals'])->name('goals');
     // user goal
-    Route::post('user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
+    Route::post('/user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
     //get user goals by ID
-    Route::get('users/goals/{id}', [GoalController::class, 'UserGoal'])->name('index.user.goals');
+    Route::get('/userId/goals/{id}', [GoalController::class, 'UserGoal'])->name('userId.goals.ById');
 
    //cours goal
    Route::get('cours/goal/{id}', [GoalController::class, 'CoursGoal'])->name('cours.goal');
 
    //get user manager
-   Route::get('manager', [TicketController::class, 'getmanager'])->name('manager');
+   Route::get('/manager', [TicketController::class, 'getmanager'])->name('manager');
 
    //store ticket
-   Route::post('ticket/{id}', [TicketController::class, 'store_ticket'])->name('create.ticket');
-   Route::get('ticket/user/{id}', [TicketController::class, 'get_ticket'])->name('ticket.user');
+   Route::post('/ticket/{id}', [TicketController::class, 'store_ticket'])->name('create.ticket');
+   Route::get('/ticket/user/{id}', [TicketController::class, 'get_ticket'])->name('ticket.user');
 
    //FAQ
-   Route::get('FAQ/', [TicketController::class, 'FAQ'])->name('FAQ');
+   Route::get('/FAQ', [TicketController::class, 'FAQ'])->name('FAQ');
 
     Route::post('/login', [AuthenticatedSessionController::class, 'login_api'])
     ->middleware('guest')

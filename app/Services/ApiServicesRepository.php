@@ -171,7 +171,7 @@ class ApiServicesRepository  implements apiRepositoryInterface
     public function coming_cours(){
 
         $comingCours = Cour::where(['isComing' => 1 , 'isActive' => 1])->get();
-        $videoPodcast = CoursPadcastVideo::where('iscoming' , 1)->get();
+       /*  $videoPodcast = CoursPadcastVideo::where('iscoming' , 1)->get();
         $videoFormation = CoursFormationVideo::where('iscoming' , 1)->get();
         
         foreach ($comingCours as $coming) {
@@ -179,9 +179,9 @@ class ApiServicesRepository  implements apiRepositoryInterface
            
             $coming->load([ 'CoursPodcast'  , 'CoursFormation']);
           
-        }
+        } */
         
-        return response()->json(['ComingCours' => $comingCours , 'VideoPodcast' => $videoPodcast , 'VideoFormation' => $videoFormation]);
+        return response()->json($comingCours);
 
        
 

@@ -25,10 +25,7 @@ class PorfileEditeController extends Controller
     }
 
     public function update_profile(Request $request , string $id ){
-       
-    $this->userRepository->update_profile($request , $id);
-
-    return redirect()->back()->with('status' , 'Vous avez modifier Avec sseccess');
+        return $this->userRepository->update_profile($request , $id);
 
     }
 

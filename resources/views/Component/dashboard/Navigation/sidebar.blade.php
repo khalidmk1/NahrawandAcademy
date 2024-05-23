@@ -93,7 +93,7 @@
                         <a href="{{ Route('dashboard.roles.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
                             <p>
-                                Rôles
+                                Roles
 
                             </p>
                         </a>
@@ -107,7 +107,7 @@
                         <a href="{{ Route('dashboard.admin.create') }}" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
                             <p>
-                                Admin
+                                Admins
 
                             </p>
                         </a>
@@ -146,7 +146,7 @@
                     <a href="{{ Route('dashboard.client.show') }}" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
                         <p>
-                            Client
+                            Clients
 
                         </p>
                     </a>
@@ -180,7 +180,7 @@
                     <a href="{{ Route('dashboard.category.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-book"></i>
                         <p>
-                            Category
+                            Categorys
                         </p>
                     </a>
                 </li>
@@ -189,7 +189,7 @@
                     <a href="{{ Route('dashboard.souscategorie.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-list"></i>
                         <p>
-                            Subcategory
+                            Subcategorys
 
                         </p>
                     </a>
@@ -198,7 +198,7 @@
                     <a href="{{ Route('dashboard.program.create') }}" class="nav-link">
                         <i class="nav-icon fa fa-tasks"></i>
                         <p>
-                            Program
+                            Programs
                         </p>
                     </a>
                 </li>
@@ -222,7 +222,7 @@
                             <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}"
                                 alt="">
                             <p>
-                                Content
+                                Contents
                             </p>
                         </a>
                     </li>
@@ -232,7 +232,7 @@
                     <a href="{{ Route('dashboard.cours.index') }}" class="nav-link">
                         <img class="nav-icon rounded-circle" src="{{ asset('asset/contentIcon.jpg') }}" alt="">
                         <p>
-                            View Content
+                            View Contents
                         </p>
                     </a>
                 </li>
@@ -243,18 +243,30 @@
 
                             <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
                             <p>
-                                Quickly
+                                Quicklys
                             </p>
                         </a>
                     </li>
                 @endif
+
+
 
                 <li class="nav-item">
                     <a href="{{ Route('dashboard.show.short') }}" class="nav-link">
 
                         <i class="nav-icon fa fa-desktop" aria-hidden="true"></i>
                         <p>
-                            View quickly
+                            View quicklys
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
+                        <i class="nav-icon  fa fa-calendar" aria-hidden="true"></i>
+                        <p>
+                            Events
                         </p>
                     </a>
                 </li>
@@ -269,7 +281,7 @@
                             <i class="nav-icon fas fa-ticket-alt" aria-hidden="true"></i>
 
                             <p>
-                                Ticket
+                                Tickets
                             </p>
                         </a>
                     </li>
@@ -285,7 +297,7 @@
                         <i class="nav-icon fa fa-question-circle" aria-hidden="true"></i>
 
                         <p>
-                            FAQ
+                            FAQS
                         </p>
                     </a>
                 </li>
@@ -307,7 +319,7 @@
                         <i class="nav-icon fa fa-history" aria-hidden="true"></i>
 
                         <p>
-                            History
+                            Historys
                         </p>
                     </a>
                 </li>
