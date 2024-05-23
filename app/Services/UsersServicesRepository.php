@@ -1227,12 +1227,10 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     {
         $goal = Goal::findOrFail(Crypt::decrypt($id));
 
-        $SubCategory = SousCategory::whereIn('id' , $goal->pluck('souscategory_id'))
-        ->whereNull('deleted_at')
-        ->get();
+        $Cours= Cour::all();
 
-        $CourExists = Cour::whereIn('category_id' , $SubCategory->pluck('category_id'))
-        ->whereNull('deleted_at')
+        $CourGoalsExists = CoursGoals::whereIn('cours_id' , $Cours->pluck('id'))
+        ->where('goal_id' , $goal->id)
         ->exists();
 
         $request->validate([
@@ -1240,12 +1238,10 @@ class UsersServicesRepository  implements UsersRepositoryInterface
         ]);
        
 
-        if(Hash::check( $request->password, Auth::user()->password ) && !$CourExists)
+        if(Hash::check( $request->password, Auth::user()->password ) && !$CourGoalsExists)
         {
 
-            foreach ($goalsDelete as $key => $goals) {
-                $goals->delete();
-            } 
+            $goal->delete();
 
             return redirect()->back()->with('status' , 'Vous Avez Suprimer un Objectif');
            
