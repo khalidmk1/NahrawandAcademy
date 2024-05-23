@@ -426,7 +426,7 @@ class UsersServicesRepository  implements UsersRepositoryInterface
     
         if ($profile->userRole->role_id == 3) {
             $rules = [
-                'biographie' => ['required', 'string', 'max:255'],
+                'biographie' => ['required', 'string', 'max:300'],
                 'facebook' => ['nullable', 'url', 'regex:/facebook.com/'],
                 'linkedin' => ['nullable', 'url', 'regex:/linkedin.com/'],
                 'instagram' => ['nullable', 'url', 'regex:/instagram.com/'],
