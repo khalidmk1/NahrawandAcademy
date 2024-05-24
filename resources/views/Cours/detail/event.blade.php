@@ -1,21 +1,3 @@
-@php
-    use App\Models\RolePermission;
-
-    $user_role = auth()->user()->userRole->role_id;
-    $rolePermissionmodifiction = RolePermission::where([
-        'role_id' => $user_role,
-        'permission_id' => 2,
-        'confirmed' => '1',
-    ])->exists();
-
-    $rolePermissiondelete = RolePermission::where([
-        'role_id' => $user_role,
-        'permission_id' => 3,
-        'confirmed' => '1',
-    ])->exists();
-
-@endphp
-
 @extends('Layouts.master')
 
 @section('content')
@@ -64,37 +46,29 @@
         <div class="container-fluid">
             @include('Layouts.errorshandler')
             <div class="row">
-
                 <div class="col-md-3">
+                    @foreach ($event->userevent as $eventuser)
+                        <div class="row">
+                            <div class="col">
+                                <!-- Profile Image -->
+                                <div class="card card-primary card-outline">
+                                    <div class="card-body box-profile">
+                                        <div class="text-center">
+                                            <img class="profile-user-img img-fluid img-circle"
+                                                src="{{ asset('storage/avatars/' . $eventuser->user->avatar) }}"
+                                                alt="User profile picture" style="height: 100px; width: 100px">
+                                        </div>
 
-                    <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="{{ asset('storage/avatars/' . $coursFormation->user->avatar) }}"
-                                    alt="User profile picture" style="height: 100px; width: 100px">
+                                        <h3 class="profile-username text-center">
+                                            {{ $eventuser->user->firstName . ' ' . $eventuser->user->lastName }}</h3>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
                             </div>
-
-                            <h3 class="profile-username text-center">
-                                {{ $coursFormation->user->firstName . ' ' . $coursFormation->user->lastName }}</h3>
-
-                            <p class="text-muted text-center">{{ $coursFormation->user->userspeaker->type_speaker }}</p>
-
-                            <ul class="list-group list-group-unbordered mb-3">
-
-                                <li class="list-group-item">
-                                    <b>Views</b> <a class="float-right">{{ $Cour->viewcour->count() }}</a>
-                                </li>
-
-                            </ul>
-
                         </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-
-
+                    @endforeach
                 </div>
 
 
@@ -107,33 +81,7 @@
                                         href="#pills-home" role="tab" aria-controls="pills-home"
                                         aria-selected="true">Detail</a></li>
 
-                                @if ($rolePermissionmodifiction)
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                            role="tab" aria-controls="pills-profile" aria-selected="false">Edite</a>
-                                    </li>
-                                @endif
-
-
-
-                                @if (!$Qsm->isEmpty())
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
-                                            role="tab" aria-controls="pills-contact" aria-selected="false">Qsm</a>
-                                    </li>
-                                @elseif(!$Questions->isEmpty())
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="pills-Qestion-tab" data-toggle="pill" href="#pills-Qestion"
-                                            role="tab" aria-controls="pills-Qestion"
-                                            aria-selected="false">Questionnaire</a>
-                                    </li>
-                                @else
-                                @endif
-                                @if ($rolePermissiondelete)
-                                    <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Setting</a>
-                                    </li>
-                                @endif
-
+                            
 
                             </ul>
                         </div><!-- /.card-header -->
@@ -145,64 +93,28 @@
                                     <div class="post">
                                         <div class="d-flex align-items-center">
                                             <h1 class="username">
-                                                <div>{{ $Cour->title }}</div>
+                                                <div>{{ $event->title }}</div>
 
                                             </h1>
-                                            <h5 class="ml-4 badge badge-success">{{ $Cour->isActive ? 'Active' : '' }}</h5>
-                                            <h5 class="ml-4 badge badge-warning">{{ $Cour->isComing ? 'A Venir' : '' }}</h5>
                                         </div>
                                         <!-- /.user-block -->
 
                                         <div class="row mb-3 justify-content-center align-items-center">
 
                                             <div class="row mb-3">
-                                                <div class="col-sm-6">
+
+                                                <div class="col-sm-12">
                                                     <img class="img-fluid"
-                                                        src="{{ asset('storage/upload/cour/image/' . $coursFormation->image) }}"
+                                                    src="{{ asset('storage/upload/event/664f71bf5cb81_cov final_.png') }}"
                                                         alt="Photo">
 
                                                 </div>
                                                 <!-- /.col -->
-                                                <div class="col-sm-6">
-                                                    <img class="img-fluid"
-                                                        src="{{ asset('storage/upload/cour/image/flex/' . $coursFormation->image_flex) }}"
-                                                        alt="Photo">
-                                                </div>
-                                                <!-- /.col -->
+
+
                                             </div>
                                             <!-- /.row -->
 
-
-                                            @if ($coursFormation->documents)
-                                                <div class="col-sm-12 pt-1">
-                                                    <div class="card">
-                                                        <div class="card-body">
-
-                                                            <div class="row">
-
-                                                                <div class="col-md-2">
-                                                                    <i class="fa fa-file-pdf" aria-hidden="true"
-                                                                        style="font-size: 25px"></i>
-                                                                </div>
-
-                                                                <div class="col-md-8">
-                                                                    <p class="card-text">{{ $coursFormation->documents }}
-                                                                    </p>
-                                                                </div>
-                                                                <div class="col-md-2 text-right">
-                                                                    <a
-                                                                        href="{{ Route('dashboard.download.document', $coursFormation->documents) }}"><i
-                                                                            class="fa fa-download " aria-hidden="true"
-                                                                            style="font-size: 25px ; color: white"></i></a>
-                                                                </div>
-                                                            </div>
-
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.col -->
-                                            @endif
 
                                         </div>
                                         <!-- /.row -->
@@ -219,92 +131,21 @@
                                         </div>
                                         <!-- /.user-block -->
                                         <p>
-                                            {{ $Cour->description }}
+                                            {{ $event->description }}
                                         </p>
                                     </div>
                                     <!-- /.post -->
-                                    <!-- Post -->
-                                    <div class="post">
-                                        <div class="d-flex">
 
-                                            <i class="fa fa-bullseye" style="font-size: x-large" aria-hidden="true"></i>
-                                            <div class="ml-2"><strong>Objectives.</strong></div>
-
-                                        </div>
-                                        <!-- /.user-block -->
-                                        @foreach ($CoursGols as $gol)
-                                            <h5 class="badge badge-info">
-                                                {{ $gol->goalcours->goals }}
-                                            </h5>
-                                        @endforeach
-
-                                    </div>
-                                    <!-- /.post -->
-
-
-                                    <!-- Post -->
-                                    <div class="post">
-                                        <div class="d-flex">
-                                            <i class="fa fa-tags" style="font-size: x-large" aria-hidden="true"></i>
-
-                                            <div class="ml-2"><strong>Tags.</strong></div>
-
-                                        </div>
-                                        <!-- /.user-block -->
-                                        @foreach ($Cour->tags as $tag)
-                                            <h2 class="badge badge-info">
-                                                {{ $tag }}
-                                            </h2>
-                                        @endforeach
-                                    </div>
-                                    <!-- /.post -->
-
-                                    @if ($coursFormation->program)
-                                        <!-- Post -->
-                                        <div class="post">
-                                            <div class="d-flex">
-                                                <i class="fa fa-exclamation-circle" style="font-size: x-large"
-                                                    aria-hidden="true"></i>
-                                                <div class="ml-2"><strong>Program.</strong></div>
-
-                                            </div>
-                                            <!-- /.user-block -->
-                                            <h3>
-                                                {{ $coursFormation->program->title }}
-                                            </h3>
-                                            <p>
-                                                {{ $coursFormation->program->Description }}
-                                            </p>
-                                        </div>
-                                        <!-- /.post -->
-                                    @endif
 
 
                                     <!-- Post -->
                                     <div class="post clearfix">
-                                        <div class="row mb-2 justify-content-between align-items-center">
-                                            <div class="col-6">
-                                                <div class="d-flex">
-                                                    <i class="fa fa-exclamation-circle" style="font-size: x-large"
-                                                        aria-hidden="true"></i>
-                                                    <div class="ml-2 mb-2"><strong>Video.</strong></div>
-
-                                                </div>
-                                            </div>
-                                            @if ($rolePermissionmodifiction)
-                                                <div class="col-6">
-                                                    <a href="{{ Route('dashboard.create.video.fomation', Crypt::encrypt($coursFormation->id)) }}"
-                                                        class="btn btn-block btn-info w-50" style="float: right;">Add
-                                                        video</a>
-                                                </div>
-                                            @endif
-
-                                        </div>
 
 
 
 
-                                        <div class="row">
+
+                                        {{-- <div class="row">
                                             @foreach ($coursFormation->CoursFormationVideo as $video)
                                                 @include('Cours.update.formation.video.update.video')
                                                 @include('Cours.update.formation.video.delete.delete')
@@ -356,7 +197,8 @@
                                                                         style="background: url('{{ asset('storage/upload/cour/video/image/' . $video->image) }}')">
 
 
-                                                                        <div class="p-3" style="background-image: #04040439">
+                                                                        <div class="p-3"
+                                                                            style="background-image: #04040439">
                                                                             <h3 class="pt-2">
                                                                                 {{ $video->title }}
                                                                             </h3>
@@ -387,37 +229,14 @@
                                                 </div>
                                             @endforeach
 
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <!-- /.post -->
 
 
                                 </div>
 
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                    aria-labelledby="pills-profile-tab">
-                                    @include('Cours.update.formation.formation')
-                                </div>
-
-
-                                @include('Cours.update.formation.Qsm')
-
-                                @include('Cours.update.formation.Questionnair')
-
-                                <!-- /.tab-pane -->
-
-
-                                {{--  --}}
-
-                                <div class="tab-pane" id="settings">
-                                    <div class="form-group">
-                                        <button type="submit" data-toggle="modal" data-target="#delete_formation"
-                                            class="btn btn-danger w-50">Delete</button>
-                                    </div>
-                                    @include('Cours.delete.formation')
-                                </div>
-                                <!-- /.tab-pane -->
-
+                
 
 
 

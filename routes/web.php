@@ -6,24 +6,25 @@ use Illuminate\Support\Facades\Route;
 /* use App\Http\Controllers\Auth\EmailVerificationPromptController; */
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\TicketController;
 
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Cours\CoursController;
-use App\Http\Controllers\Users\AdminController;
 
+use App\Http\Controllers\Users\AdminController;
 use App\Http\Controllers\PorfileEditeController;
 use App\Http\Controllers\Users\ClientController;
-use App\Http\Controllers\Fileter\GoalsController;
 
+use App\Http\Controllers\Fileter\GoalsController;
 use App\Http\Controllers\Users\ManagerController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\Users\SpeakersController;
 use App\Http\Controllers\Fileter\ProgramController;
-use App\Http\Controllers\Auth\NewPasswordController;
 
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Fileter\CategoriesController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Fileter\SousCategoryController;
@@ -262,6 +263,12 @@ Route::middleware('auth'  , 'verified' ,'passwordChange' , 'isSpeaker' )->name('
    //crud email
    Route::get('email', [EmailController::class, 'Create_email'])->name('create.email');
    Route::post('email/send', [EmailController::class, 'send_emails'])->name('email.send');
+
+   //crud event
+   Route::get('events', [EventController::class, 'event'])->name('event');
+   Route::get('event/show/{id}', [EventController::class, 'event_show'])->name('event.show');
+   Route::get('event/create', [EventController::class, 'create_event'])->name('event.create');
+   Route::post('event/store', [EventController::class, 'store_event'])->name('event.store');
 });
 
 

@@ -105,8 +105,6 @@
                                         </select>
                                     </div>
 
-
-
                                     <div class="form-group">
                                         <label for="facebook">facebook</label>
                                         <input type="url" value="{{ old('facebook', $user->userspeaker->faceboock) }}"

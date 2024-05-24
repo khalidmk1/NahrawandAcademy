@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\GoalController;
 use App\Http\Controllers\Api\CoursController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\TicketController;
 use App\Http\Controllers\Api\ProgramController;
 use App\Http\Controllers\Api\CategoryController;
@@ -121,6 +122,9 @@ Route::prefix('mobile')->group(function () {
 
    //FAQ
    Route::get('/FAQ', [TicketController::class, 'FAQ'])->name('FAQ');
+
+   //get event
+   Route::get('event', [EventController::class, 'event'])->name('event');
 
     Route::post('/login', [AuthenticatedSessionController::class, 'login_api'])
     ->middleware('guest')

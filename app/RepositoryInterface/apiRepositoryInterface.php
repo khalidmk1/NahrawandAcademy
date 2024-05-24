@@ -105,4 +105,7 @@ interface apiRepositoryInterface {
     // FAQ
     public function FAQ();
 
+    //GetEvent
+    public function event();
+
 }

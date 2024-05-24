@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
     use HasFactory , SoftDeletes;
 
     protected $fillable = [
-        'host_id',
         'image',
-        'video',
         'url',
         'title',
         'description',
@@ -20,5 +20,15 @@ class Event extends Model
         'date_end',
     ];
 
+
+    /**
+     * Get all of the userevent for the Event
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userevent(): HasMany
+    {
+        return $this->hasMany(UserEvent::class, 'event_id');
+    }
 
 }

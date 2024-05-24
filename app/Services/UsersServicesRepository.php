@@ -2,12 +2,14 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\FAQ;
 use App\Models\Cour;
 use App\Models\Goal;
 use App\Models\Role;
 use App\Models\User;
 use Aws\S3\S3Client;
+use App\Models\Event;
 use App\Models\Answer;
 use App\Models\Domain;
 use App\Models\Ticket;
@@ -19,6 +21,7 @@ use App\Models\Question;
 use App\Models\UserRole;
 use App\Models\ViewCour;
 use App\Models\ShortGoal;
+use App\Models\UserEvent;
 use App\Mail\SendInfoUser;
 use App\Models\CoursGoals;
 use App\Models\Permission;
@@ -1741,10 +1744,14 @@ public function store_short(Request $request)
         $file->storeAs($directory, $fileNameImageflex, 'public'); 
     }
 
-    $url = $request->video;
+    $url = $request->videocpodcast;
     $queryString = parse_url($url, PHP_URL_QUERY);
     parse_str($queryString, $params);
-    $videoId = $params['v'];
+    $videoId = isset($params['v']) ? $params['v'] : null;
+
+    if ($videoId == null) {
+        return redirect()->back()->withErrors(['faild' => 'Invalid YouTube URL']);
+    }
 
     $short = ShortCours::create([
         'title' => $request->title,
@@ -3300,6 +3307,76 @@ public function getCoursVideo(String $id){
         }
       
         return redirect()->back()->with('status', 'Vous avez Envoyer l\'Email');
+    }
+
+    //crud event
+
+    public function event(){
+        $events = Event::paginate(10);
+
+        return view('Cours.show.Event')->with('events' , $events); 
+
+    }
+
+    public function create_event()
+    {
+        $Speakers = UserSpeakers::all();
+
+        return view('Cours.create.event')->with('Speakers' , $Speakers);
+    }
+
+    public function event_show(Request $request , String $id){
+        $event = Event::findOrFail(Crypt::decrypt($id));
+
+        return view('Cours.detail.event')->with('event' , $event);
+    }
+
+    public function store_event(Request $request)
+    {
+
+
+        $request->validate([
+            'title' => ['required' , 'string' , 'max:255'],
+            'description' => ['required' , 'string' , 'max:300'],
+            'speakerID' => ['sometimes' , 'array'],
+            'datestart' => ['required' , 'string' , 'max:255'],
+            'Dateend' =>  ['required' , 'string' , 'max:255'],
+            'image' => ['required' , 'file'],
+            'url' => ['required' , 'url']
+        ]);
+
+     
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $directory = '/upload/event';
+            $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
+            $file->storeAs($directory, $fileNameImage, 'public'); 
+        }
+
+
+        $formattedDateStart = Carbon::parse($request->datestart)->formatLocalized('%a, %d %b %Y %I:%M %p');
+        $formattedDateEnd = Carbon::parse($request->datestart)->formatLocalized('%a, %d %b %Y %I:%M %p');
+
+        $event = Event::create([
+            'image' => $fileNameImage,
+            'title' => $request->title,
+            'description' => $request->description,
+            'url' => $request->url,
+            'date_start' => $formattedDateStart,
+            'date_end' => $formattedDateEnd
+        ]);
+
+        if ($request->has('speakerID')) {
+            foreach ($request->speakerID as $speakerId) {
+                UserEvent::create([
+                    'host_id' => (int)$speakerId,
+                    'event_id' => $event->id
+                ]);
+            }
+        }
+    
+        return redirect()->back()->with('status', 'Event created successfully');
+
     }
 
 

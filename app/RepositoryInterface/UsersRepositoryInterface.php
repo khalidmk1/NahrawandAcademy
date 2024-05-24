@@ -223,4 +223,10 @@ interface UsersRepositoryInterface{
     //crud email
     public function Create_email();
     public function send_emails(Request $request);
+
+    //crud event
+    public function event();
+    public function event_show(Request $request , String $id);
+    public function create_event();
+    public function store_event(Request $request);
 }

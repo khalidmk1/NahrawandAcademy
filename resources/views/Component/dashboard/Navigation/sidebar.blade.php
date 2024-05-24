@@ -263,7 +263,7 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ Route('dashboard.create.short') }}" class="nav-link">
+                    <a href="{{ Route('dashboard.event.create') }}" class="nav-link">
                         <i class="nav-icon  fa fa-calendar" aria-hidden="true"></i>
                         <p>
                             Events

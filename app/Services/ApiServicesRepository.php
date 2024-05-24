@@ -8,6 +8,7 @@ use App\Models\Cour;
 use App\Models\Goal;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Domain;
 use App\Models\Ticket;
 use App\Models\Program;
@@ -831,6 +832,36 @@ public function Cour_Conference(){
         $FAQ = FAQ::all();
 
         return response()->json($FAQ);
+    }
+
+    //GetEvent
+    public function event()
+    {
+        $events = Event::all();
+
+        $events->load('userevent.user');
+
+        $eventData = $events->map(function ($event) {
+            $userAvatars = $event->userevent->map(function ($userevent) {
+                return $userevent->user->avatar;
+            });
+    
+            return [
+                'id' => $event->id,
+                'image' => $event->image,
+                'url' => $event->url,
+                'title' => $event->title,
+                'description' => $event->description,
+                'date_start' => $event->date_start,
+                'date_end' => $event->date_end,
+                'deleted_at' => $event->deleted_at,
+                'created_at' => $event->created_at,
+                'updated_at' => $event->updated_at,
+                'userAvatars' => $userAvatars
+            ];
+        });
+    
+        return response()->json($eventData);
     }
 
   
