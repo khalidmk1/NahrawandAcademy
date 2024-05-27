@@ -404,8 +404,11 @@ class UsersServicesRepository  implements UsersRepositoryInterface
             $directory = 'avatars/';
             $fileNameImage = uniqid() . '_' . $file->getClientOriginalName();
             $file->storeAs($directory, $fileNameImage, 'public');
-    
-            $profile->avatar = $fileNameImage;
+
+            $profile->update([
+                'avatar' => $fileNameImage
+            ]);
+
         }
     
         if ($request->hasFile('profile_image')) {
