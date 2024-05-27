@@ -552,7 +552,7 @@ public function Cour_Conference(){
 
         $userSubcategory = SubCategoryUser::where('user_id', $user->id)->get();
 
-        $subCategoryIds = $userSubcategory->pluck('objetif_id');
+        $subCategoryIds = $userSubcategory->pluck('subcategory_id');
             
         $subCategoryCours = Cour::whereIn('subcategory_id', $subCategoryIds)
         ->where(['cours_type'=> 'podcast' , 'isComing' => 0])
