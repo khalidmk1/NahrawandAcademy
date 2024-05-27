@@ -1291,7 +1291,7 @@ public function index_cours()
 
         $category = Category::whereHas('souscategories.goals')->get();
 
-        $subCategory = SousCategory::all();
+        $subCategorys = SousCategory::all();
 
         $CoursGols = CoursGoals::where('cours_id' , $Cour->id)->get();
 
@@ -1310,7 +1310,7 @@ public function index_cours()
             
             return view('Cours.detail.conference')->with(['Cour' => $Cour , 
             'coursCoference' =>$coursCoference , 'ConfrenceGuest' => $ConfrenceGuest , 
-            'category' => $category , 'CoursGols' =>$CoursGols , 'subCategory' => $subCategory ,
+            'category' => $category , 'CoursGols' =>$CoursGols , 'subCategorys' => $subCategorys ,
             'HostConfrence' => $HostConfrence , 'GuestConfrence' => $GuestConfrence]);
 
         }elseif ($Cour->cours_type == 'podcast') {
@@ -1333,7 +1333,7 @@ public function index_cours()
 
             return view('Cours.detail.podcast')->with(['Cour' => $Cour , 
             'coursPodcast' =>$coursPodcast , 'PodcastGuest' => $PodcastGuest , 
-            'category' => $category , 'CoursGols' => $CoursGols , 'subCategory' => $subCategory ,
+            'category' => $category , 'CoursGols' => $CoursGols , 'subCategorys' => $subCategorys ,
             'HostPodcast' => $HostPodcast , 'GuestPodcastAll' => $GuestPodcastAll]);
         
         }elseif ($Cour->cours_type == 'formation') {
@@ -1352,7 +1352,7 @@ public function index_cours()
 
             return view('Cours.detail.formation')->with(['Cour' => $Cour , 
             'coursFormation' =>$coursFormation ,'Qsm' => $Qsm , 'programs' => $programs,
-            'category' => $category , 'CoursGols' => $CoursGols, 'subCategory' => $subCategory ,
+            'category' => $category , 'CoursGols' => $CoursGols, 'subCategorys' => $subCategorys ,
             'HostFromateur' => $HostFromateur , 'Questions' => $Questions
         ]);
 
@@ -2142,6 +2142,7 @@ public function getCoursVideo(String $id){
             'description' => ['required' , 'string' , 'max:300'],
             'tags' => ['required' , 'array'],
             'cotegoryId' => ['required' , 'string'],
+            'subcategoryId' => ['required'],
             'goal' => ['required' , 'array'],
             'coursDuration' => ['required'],
             'slugAcroche' => ['required' , 'string' , 'max:100'],
@@ -2214,6 +2215,7 @@ public function getCoursVideo(String $id){
 
         $Cour->tags = $tags;
         $Cour->category_id = $request->cotegoryId;
+        $Cour->subcategory_id = $request->subcategoryId;
 
        
         $goalCours->each->forceDelete();
@@ -2452,6 +2454,7 @@ public function getCoursVideo(String $id){
             'description' => ['required', 'string', 'max:300'],
             'tags' => ['required', 'array'],
             'cotegoryId' => ['required', 'string'],
+            'subcategoryId' => ['required'],
             'goal' => ['required', 'array'],
             'conditionformation' => ['sometimes', 'string', 'max:600'],
             'image' => ['file', 'mimes:jpeg,png,jpg,gif', 'max:2000'],
@@ -2498,11 +2501,13 @@ public function getCoursVideo(String $id){
         $Cour->isComing = $request->iscoming == 'on';
         $Cour->isActive = $request->isActive == 'on';
         $Cour->description = $request->description;
+        
 
         $StringTag = $request->tags[0];
         $tags = array_map('trim', explode(',', $StringTag));
         $Cour->tags = $tags;
         $Cour->category_id = $request->cotegoryId;
+        $Cour->subcategory_id = $request->subcategoryId;
 
         $goalCours->each->forceDelete();
         foreach ($request->goal as $goal) {

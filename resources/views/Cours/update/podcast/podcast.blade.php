@@ -2,6 +2,7 @@
   <div class="tab-pane" id="timeline">
 
 
+
       <!-- /.card-header -->
       <form action="{{ Route('dashboard.update.podcast', Crypt::encrypt($Cour->id)) }}" method="post"
           enctype="multipart/form-data">
@@ -32,8 +33,9 @@
                       <label for="boostrap-switch" class="mr-5">
                           Dispaly
                       </label>
-                      <input type="checkbox" name="isActive" id="boostrap-switch" {{$Cour->isActive == 1 ? 'checked' : '' }} data-value=""
-                          data-bootstrap-switch data-off-color="danger" data-on-color="success">
+                      <input type="checkbox" name="isActive" id="boostrap-switch"
+                          {{ $Cour->isActive == 1 ? 'checked' : '' }} data-value="" data-bootstrap-switch
+                          data-off-color="danger" data-on-color="success">
                   </div>
                   <!-- /.card -->
 
@@ -58,10 +60,10 @@
               <div class="row">
                   <div class="col-6">
                       <div class="form-group">
-                          <label>Category <span>({{$Cour->category->category_name}})</span></label>
+                          <label>Category <span>({{ $Cour->category->category_name }})</span></label>
                           <select class="form-control select2" id="souscategory_goals" name="cotegoryId"
                               style="width: 100%;">
-                              <option selected value="{{$Cour->category->id}}">Choose Category</option>
+                              <option selected value="{{ $Cour->category->id }}">Choose Category</option>
                               @foreach ($category as $category)
                                   <option value="{{ $category->id }}">
                                       {{ $category->category_name }}
@@ -80,20 +82,38 @@
                   </div>
                   <div class="col-6">
 
-                    <div class="form-group">
-                        <label for="goals_option">Objectives</label>
-                        <select class="select3" name="goal[]" multiple="multiple" id="goals_option" data-placeholder="Select a State" style="width: 100%;">
-                            @foreach ($CoursGols as $CoursGol)
-                                <option selected value="{{ $CoursGol->goalcours->id }}">{{ $CoursGol->goalcours->goals }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                      <div class="form-group">
+                          <label for="goals_option">Objectives</label>
+                          <select class="select3" name="goal[]" multiple="multiple" id="goals_option"
+                              data-placeholder="Select a State" style="width: 100%;">
+                              @foreach ($CoursGols as $CoursGol)
+                                  <option selected value="{{ $CoursGol->goalcours->id }}">
+                                      {{ $CoursGol->goalcours->goals }}</option>
+                              @endforeach
+                          </select>
+                      </div>
 
 
                   </div>
 
 
               </div>
+
+
+              <div class="form-group">
+                  <label>SubCategory</label>
+                  <select class="form-control select2" id="subCategory" name="subcategoryId" style="width: 100%;">
+                      <option value="">Choose SubCategory</option>
+                      @foreach ($subCategorys as $subCategory)
+                          <option value="{{ $subCategory->id }}"
+                              {{ $subCategory->id == $Cour->subcategory_id ? 'selected' : '' }}>
+                              {{ $subCategory->souscategory_name }}
+                          </option>
+                      @endforeach
+                  </select>
+
+              </div>
+              <!-- /.form-group -->
 
 
               <section id="podcast" class="p-3"
@@ -112,7 +132,8 @@
                       <select class="form-control select2" name="hostPodcast" style="width: 100%;">
                           @foreach ($HostPodcast as $Host)
                               @if (isset($coursPodcast->user->email) && $Host->user->email == $coursPodcast->user->email)
-                                  <option selected value="{{ $coursPodcast->user->id }}">{{ $coursPodcast->user->email }}
+                                  <option selected value="{{ $coursPodcast->user->id }}">
+                                      {{ $coursPodcast->user->email }}
                                   </option>
                               @else
                                   <option value="{{ $Host->user->id }}">{{ $Host->user->email }}</option>
@@ -190,7 +211,6 @@
               Contnu</button>
 
       </form>
-
 
   </div>
   <!-- /.tab-pane -->

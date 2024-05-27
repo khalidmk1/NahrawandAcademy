@@ -95,6 +95,24 @@
 
         </div>
 
+        <div class="col-12">
+            <div class="form-group">
+                <label>SubCategory</label>
+                <select class="form-control select2" id="subCategory" name="subcategoryId"
+                    style="width: 100%;">
+                    <option value="">Choose SubCategory</option>
+                    @foreach ($subCategorys as $subCategory)
+                        <option value="{{ $subCategory->id }}" 
+                            {{$subCategory->id == $Cour->subcategory_id ? 'selected' : ''}}>
+                            {{ $subCategory->souscategory_name }}
+                        </option>
+                    @endforeach
+                </select>
+
+            </div>
+            <!-- /.form-group -->
+        </div>
+
 
 
         <section id="formation" class="p-3" style="background-color: rgba(208, 144, 16, 0.35) ; border-radius:20px ">
