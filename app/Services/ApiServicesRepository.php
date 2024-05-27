@@ -543,7 +543,7 @@ public function Cour_Conference(){
             return $item->first();
         })->values(); */
     
-        $subCategoryCours->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
+        $subCategoryCours->load(['CoursFormation.user.userspeaker', 'category']);
     
         return response()->json($subCategoryCours);
     }
@@ -569,7 +569,7 @@ public function Cour_Conference(){
         })->values(); */
 
         // Load relationships for unique cours goals
-        $subCategoryCours->load(['cours.CoursPodcast.user.userspeaker']);
+        $subCategoryCours->load(['CoursPodcast.user.userspeaker']);
 
         return response()->json($subCategoryCours);
     }
