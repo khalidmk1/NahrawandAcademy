@@ -878,12 +878,30 @@ public function Cour_Conference(){
         $user = User::findOrFail($id);
         $subCategory = SousCategory::findOrFail($subCategory);
 
-        $subcategoryuser = SubCategoryUser::create([
-            'user_id' => $user->id,
-            'subcategory_id' => $subCategory->id,
-        ]);
+        $subcategoryuserExists = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->exists();
 
-        return response()->json($subcategoryuser);
+        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->get();
+
+        if(!$subcategoryuserExists)
+        {
+            $subcategoryuser = SubCategoryUser::create([
+                'user_id' => $user->id,
+                'subcategory_id' => $subCategory->id,
+            ]);
+            return response()->json($subcategoryuser);
+
+        }else{
+
+            foreach ($UserSubCategorys as $key => $UserSubCategory) {
+                $UserSubCategory->delete();
+            }
+           
+            return response()->json('its been delete');
+        }
+
+       
+
+        
 
     }
   

@@ -1291,6 +1291,8 @@ public function index_cours()
 
         $category = Category::whereHas('souscategories.goals')->get();
 
+        $subCategory = SousCategory::all();
+
         $CoursGols = CoursGoals::where('cours_id' , $Cour->id)->get();
 
 
@@ -1308,7 +1310,7 @@ public function index_cours()
             
             return view('Cours.detail.conference')->with(['Cour' => $Cour , 
             'coursCoference' =>$coursCoference , 'ConfrenceGuest' => $ConfrenceGuest , 
-            'category' => $category , 'CoursGols' =>$CoursGols , 
+            'category' => $category , 'CoursGols' =>$CoursGols , 'subCategory' => $subCategory ,
             'HostConfrence' => $HostConfrence , 'GuestConfrence' => $GuestConfrence]);
 
         }elseif ($Cour->cours_type == 'podcast') {
@@ -1331,7 +1333,7 @@ public function index_cours()
 
             return view('Cours.detail.podcast')->with(['Cour' => $Cour , 
             'coursPodcast' =>$coursPodcast , 'PodcastGuest' => $PodcastGuest , 
-            'category' => $category , 'CoursGols' => $CoursGols , 
+            'category' => $category , 'CoursGols' => $CoursGols , 'subCategory' => $subCategory ,
             'HostPodcast' => $HostPodcast , 'GuestPodcastAll' => $GuestPodcastAll]);
         
         }elseif ($Cour->cours_type == 'formation') {
@@ -1350,7 +1352,7 @@ public function index_cours()
 
             return view('Cours.detail.formation')->with(['Cour' => $Cour , 
             'coursFormation' =>$coursFormation ,'Qsm' => $Qsm , 'programs' => $programs,
-            'category' => $category , 'CoursGols' => $CoursGols,
+            'category' => $category , 'CoursGols' => $CoursGols, 'subCategory' => $subCategory ,
             'HostFromateur' => $HostFromateur , 'Questions' => $Questions
         ]);
 
