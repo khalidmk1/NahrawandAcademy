@@ -133,6 +133,11 @@ Route::prefix('mobile')->group(function () {
     Route::post('/register', [RegisteredUserController::class, 'store_api'])
     ->middleware('guest')
     ->name('register.api');
+
+    //store subcategory of user 
+
+    Route::post('subcategory/user/{id}/{subcategory}', [CoursController::class, 'store_subcategory_user'])->name('user.subcategory');
+
 });
 
 

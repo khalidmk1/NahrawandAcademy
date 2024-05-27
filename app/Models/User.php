@@ -270,4 +270,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserEvent::class, 'host_id');
     }
+
+    /**
+     * Get all of the subcategoryuser for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subcategoryuser(): HasMany
+    {
+        return $this->hasMany(SubCategoryUser::class, 'user_id');
+    }
 }

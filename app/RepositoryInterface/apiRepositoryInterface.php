@@ -107,5 +107,6 @@ interface apiRepositoryInterface {
 
     //GetEvent
     public function event();
+    public function store_cours_subcategory(String $user , String $subCategory);
 
 }

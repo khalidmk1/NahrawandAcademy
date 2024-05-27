@@ -135,4 +135,9 @@ class CoursController extends Controller
      {
         return $this->apiRepository->getComment($cours);
      }
+
+     public function store_subcategory_user(String $id , String $subCategory)
+     {
+        return $this->apiRepository->store_cours_subcategory($id , $subCategory);
+     }
 }

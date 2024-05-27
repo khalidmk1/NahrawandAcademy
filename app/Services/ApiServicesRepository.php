@@ -27,12 +27,14 @@ use App\Models\CoursComment;
 use App\Models\CoursFavoris;
 use App\Models\CoursPodcast;
 use App\Models\QuizQuestion;
+use App\Models\SousCategory;
 use App\Models\UserObjectif;
 use Illuminate\Http\Request;
 use App\Models\FineshedCours;
 use App\Models\CoursFormation;
 use App\Models\RolePermission;
 use App\Models\QuestionAnswers;
+use App\Models\SubCategoryUser;
 use App\Models\CoursPadcastVideo;
 use App\Models\CoursFormationVideo;
 use App\Models\VideoProgressPodcast;
@@ -868,8 +870,23 @@ public function Cour_Conference(){
         return response()->json($eventData);
     }
 
-  
+    // store cour by subcategory
 
+    public function store_cours_subcategory(String $id , String $subCategory)
+    {
+
+        $user = User::findOrFail($id);
+        $subCategory = SousCategory::findOrFail($subCategory);
+
+        $subcategoryuser = SubCategoryUser::create([
+            'user_id' => $user->id,
+            'subcategory_id' => $subCategory->id,
+        ]);
+
+        return response()->json($subcategoryuser);
+
+    }
+  
     
 
 

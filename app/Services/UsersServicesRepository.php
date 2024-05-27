@@ -1390,6 +1390,7 @@ public function index_cours()
     public function create_cours()
     {
         $category = Category::whereHas('souscategories.goals')->get();
+        $subCategory = SousCategory::all();
 
         $HostConfrence = UserSpeakers::where('type_speaker' , 'Modérateur')->get();
 
@@ -1401,7 +1402,7 @@ public function index_cours()
 
 
         return ['category' =>$category , 'HostConfrence' => $HostConfrence , 'HostPodcast' => $HostPodcast 
-        , 'HostFormateur' => $HostFormation , 'Programs' => $Programs] ;
+        , 'HostFormateur' => $HostFormation , 'Programs' => $Programs , 'subCategory' => $subCategory] ;
     }
 
     // create short
@@ -1529,6 +1530,7 @@ public function store_cours(Request $request)
         'tags' => ['required', 'array'],
         'gaols_id' => ['required', 'array'],
         'coursType' => ['required', 'string', 'max:255'],
+        'subcategoryId' => ['required'],
     ];
 
     $request->validate($commonRules);
@@ -1602,6 +1604,7 @@ public function store_cours(Request $request)
             'isActive' => $isActive,
             'description' => $request->description,
             'category_id' => $request->cotegoryId,
+            'subcategory_id' => $request->subcategoryId,
             'tags' => $tags,
             'cours_type' => $request->coursType,
         ]);

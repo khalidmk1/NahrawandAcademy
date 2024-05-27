@@ -37,6 +37,26 @@ class SousCategory extends Model
         return $this->hasMany(Goal::class, 'souscategory_id');
     }
 
+    /**
+     * Get all of the cours for the SousCategory
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cours(): HasMany
+    {
+        return $this->hasMany(Cour::class, 'subcategory_id');
+    }
+
+    /**
+     * Get all of the subcategoryuser for the SousCategory
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subcategoryuser(): HasMany
+    {
+        return $this->hasMany(SubCategoryUser::class, 'subcategory_id');
+    }
+
 
 
 }

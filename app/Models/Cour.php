@@ -19,6 +19,7 @@ class Cour extends Model
         'description',
         'tags',
         'category_id',
+        'subcategory_id',
         'cours_type',
         'isActive',
         'isComing',
@@ -43,6 +44,16 @@ class Cour extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class ,'category_id');
+    }
+
+    /**
+     * Get the subcategory that owns the Cour
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subcategory(): BelongsTo
+    {
+        return $this->belongsTo(SousCategory::class, 'subcategory_id');
     }
 
 

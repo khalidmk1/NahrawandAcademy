@@ -114,6 +114,23 @@
 
                             </div>
 
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>SubCategory</label>
+                                    <select class="form-control select2" id="subCategory" name="subcategoryId"
+                                        style="width: 100%;">
+                                        <option value="">Choose SubCategory</option>
+                                        @foreach ($CoursInfo['subCategory'] as $subCategory)
+                                            <option value="{{ $subCategory->id }}">
+                                                {{ $subCategory->souscategory_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+
                             <!-- select -->
                             <div class="form-group">
                                 <label>Type Content</label>
