@@ -527,23 +527,21 @@ public function Cour_Conference(){
     {
         $user =  User::findOrFail($user);
     
-        $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+        $userSubcategory = SubCategoryUser::where('user_id', $user->id)->get();
     
-        $goalIds = $userObjectif->pluck('objetif_id');
+        $subCategoryIds = $userSubcategory->pluck('subcategory_id');
             
-        $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
-            ->whereHas('cours', function ($query) {
-                $query->where(['cours_type'=> 'formation' , 'isComing' => 0]);
-            })
-            ->get();
+        $subCategoryCours = Cour::whereIn('subcategory_id', $subCategoryIds)
+        ->where(['cours_type'=> 'formation' , 'isComing' => 0])
+        ->get();
     
-        $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
+       /*  $uniqueCoursSubcategory = $subCategoryCours->groupBy('cours_id')->map(function ($item) {
             return $item->first();
-        })->values();
+        })->values(); */
     
-        $uniqueCoursGoals->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
+        $subCategoryCours->load(['cours.CoursFormation.user.userspeaker', 'cours.category']);
     
-        return response()->json($uniqueCoursGoals);
+        return response()->json($subCategoryCours);
     }
 
 
@@ -552,26 +550,24 @@ public function Cour_Conference(){
     {
         $user =  User::findOrFail($user);
 
-        $userObjectif = UserObjectif::where('user_id', $user->id)->get();
+        $userSubcategory = SubCategoryUser::where('user_id', $user->id)->get();
 
-        $goalIds = $userObjectif->pluck('objetif_id');
+        $subCategoryIds = $userSubcategory->pluck('objetif_id');
             
-        $goalsCours = CoursGoals::whereIn('goal_id', $goalIds)
-            ->whereHas('cours', function ($query) {
-                $query->where(['cours_type'=> 'podcast' , 'isComing' => 0]);
-            })
-            ->get();
+        $subCategoryCours = Cour::whereIn('subcategory_id', $subCategoryIds)
+        ->where(['cours_type'=> 'podcast' , 'isComing' => 0])
+        ->get();
 
         // Group the results by cours_id
-        $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
+       /*  $uniqueCoursGoals = $goalsCours->groupBy('cours_id')->map(function ($item) {
             // If there are multiple items for the same cours_id, return the first one
             return $item->first();
-        })->values();
+        })->values(); */
 
         // Load relationships for unique cours goals
-        $uniqueCoursGoals->load(['cours.CoursPodcast.user.userspeaker']);
+        $subCategoryCours->load(['cours.CoursPodcast.user.userspeaker']);
 
-        return response()->json($uniqueCoursGoals);
+        return response()->json($subCategoryCours);
     }
 
 
@@ -880,8 +876,8 @@ public function Cour_Conference(){
 
         $subcategoryuserExists = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->exists();
 
-        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->first();
-
+        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->get();
+    
         if(!$subcategoryuserExists)
         {
             $subcategoryuser = SubCategoryUser::create([
