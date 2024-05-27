@@ -880,7 +880,7 @@ public function Cour_Conference(){
 
         $subcategoryuserExists = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->exists();
 
-        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->get();
+        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->first();
 
         if(!$subcategoryuserExists)
         {
@@ -892,9 +892,7 @@ public function Cour_Conference(){
 
         }else{
 
-            foreach ($UserSubCategorys as $key => $UserSubCategory) {
-                $UserSubCategory->delete();
-            }
+            $UserSubCategorys->delete();
            
             return response()->json('its been delete');
         }
