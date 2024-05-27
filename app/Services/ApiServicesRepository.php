@@ -191,6 +191,10 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     }
 
+    /* public function coming_video(){
+
+    } */
+
 
     public function domain(){
         $domain = Domain::all();
@@ -876,7 +880,7 @@ public function Cour_Conference(){
 
         $subcategoryuserExists = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->exists();
 
-        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->get();
+        $UserSubCategorys = SubCategoryUser::where(['user_id' => $user->id , 'subcategory_id' => $subCategory->id])->first();
     
         if(!$subcategoryuserExists)
         {
