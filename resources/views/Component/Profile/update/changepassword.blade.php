@@ -14,8 +14,6 @@
                 @method('patch')
                 <div class="modal-body">
 
-
-
                     <div class="form-group">
                         <label for="exampleInputPassword1"> Current password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1"

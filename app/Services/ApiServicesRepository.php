@@ -229,7 +229,9 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         if($cour->cours_type == 'podcast'){
             $courPodcast = CoursPodcast::where('cours_id' , $cour->id)->get();
-            $videoPodcast = CoursPadcastVideo::whereIn('podacast_id' , $courPodcast->pluck('id'))->get();
+            $videoPodcast = CoursPadcastVideo::whereIn('podacast_id' , $courPodcast->pluck('id'))
+            ->where('iscoming' , 0)
+            ->get();
 
             $videoPodcast->load('guestvideo' , 'guestvideo.user' , 
             'guestvideo.user.userspeaker');
@@ -239,7 +241,9 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
         if ($cour->cours_type == 'formation') {
             $courFormation = CoursFormation::where('cours_id' , $cour->id)->get();
-            $videoFormation = CoursFormationVideo::whereIn('CourFormation_id' , $courFormation->pluck('id'))->get();
+            $videoFormation = CoursFormationVideo::whereIn('CourFormation_id' , $courFormation->pluck('id')) 
+            ->where('iscoming' , 0)
+            ->get();
 
            /*  $videoFormation->load('guestvideo' , 'guestvideo.user' , 
             'guestvideo.user.userspeaker'); */
