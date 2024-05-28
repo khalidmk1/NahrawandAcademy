@@ -193,8 +193,8 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     public function coming_video(){
        /*  $courConferenceVideo = CoursConferenceVideo:: */
-        $courPodcastVideo = CoursPadcastVideo::where('iscoming' , 1)->get();
-        $courFormationVideo =  CoursFormationVideo::where('iscoming' , 1)->get();
+        $courPodcastVideo = CoursPadcastVideo::where('iscoming' , 1)->get(['image']);
+        $courFormationVideo =  CoursFormationVideo::where('iscoming' , 1)->get(['image']);
 
         return response()->json(['videoPodcast' => $courPodcastVideo , 'videoFormation' => $courFormationVideo]);
     }
