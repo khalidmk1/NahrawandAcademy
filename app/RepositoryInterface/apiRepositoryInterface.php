@@ -25,6 +25,9 @@ interface apiRepositoryInterface {
     //coming soon cours
     public function coming_cours();
 
+    //coming soon video
+    public function coming_video();
+
     //domain
     public function domain();
 
@@ -94,6 +97,9 @@ interface apiRepositoryInterface {
 
     //get cours objectif
     public function UserGoal(String $id);
+
+    //get cours by subcategory
+    public function userSubcategory(Request $request);
 
     //get user manager
     public function getmanager();

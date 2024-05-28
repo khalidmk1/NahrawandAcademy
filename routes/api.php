@@ -40,7 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 
-
+Route::get('userId/subcategory', [CoursController::class, 'getuserBysubCategory'])->name('userId.subcategory');
 
 Route::prefix('mobile')->group(function () {
 
@@ -78,6 +78,7 @@ Route::prefix('mobile')->group(function () {
 
     //cours api
     Route::get('/cours/coming', [CoursController::class, 'coming_cours'])->name('cours.coming');
+    Route::get('video/coming', [CoursController::class, 'coming_video'])->name('video.coming');
     Route::get('/Cour/Conference', [CoursController::class, 'Cour_Conference'])->name('cours.conference');
     Route::get('/Cour/Podcast', [CoursController::class, 'Cour_Podcast'])->name('cours.podcast');
     Route::get('/Cour/Formation', [CoursController::class, 'Cour_Formation'])->name('cours.formation');
@@ -109,6 +110,8 @@ Route::prefix('mobile')->group(function () {
     Route::post('/user/goal/{id}/{goal}', [GoalController::class, 'UserObjectif'])->name('user.goal');
     //get user goals by ID
     Route::get('/userId/goals/{id}', [GoalController::class, 'UserGoal'])->name('userId.goals.ById');
+    //get user subcategory by ID
+   
 
    //cours goal
    Route::get('cours/goal/{id}', [GoalController::class, 'CoursGoal'])->name('cours.goal');

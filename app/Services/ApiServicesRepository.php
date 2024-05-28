@@ -191,9 +191,13 @@ class ApiServicesRepository  implements apiRepositoryInterface
 
     }
 
-    /* public function coming_video(){
+    public function coming_video(){
+       /*  $courConferenceVideo = CoursConferenceVideo:: */
+        $courPodcastVideo = CoursPadcastVideo::where('iscoming' , 1)->get();
+        $courFormationVideo =  CoursFormationVideo::where('iscoming' , 1)->get();
 
-    } */
+        return response()->json(['videoPodcast' => $courPodcastVideo , 'videoFormation' => $courFormationVideo]);
+    }
 
 
     public function domain(){
@@ -754,6 +758,13 @@ public function Cour_Conference(){
         $UserGoal = UserObjectif::where('user_id' , $user->id)->get();
 
         return response()->json($UserGoal);
+    }
+
+    public function userSubcategory(Request $request){
+
+        $UserSubCateogry =  SubCategoryUser::where('user_id' , $request->user)->get();
+
+        return response()->json($UserSubCateogry);
     }
 
     //get manager

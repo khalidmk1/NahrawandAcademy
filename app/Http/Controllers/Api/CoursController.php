@@ -69,6 +69,10 @@ class CoursController extends Controller
         return  $this->apiRepository->coming_cours();
     }
 
+    public function coming_video(){
+        return $this->apiRepository->coming_video();
+    }
+
     public function Cour_Conference()
     {
         return  $this->apiRepository->Cour_Conference();
@@ -139,5 +143,9 @@ class CoursController extends Controller
      public function store_subcategory_user(String $id , String $subCategory)
      {
         return $this->apiRepository->store_cours_subcategory($id , $subCategory);
+     }
+
+     public function getuserBysubCategory(Request $request){
+        return $this->apiRepository->userSubcategory($request);
      }
 }
