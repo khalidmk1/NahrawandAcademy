@@ -1752,7 +1752,7 @@ public function store_short(Request $request)
         $file->storeAs($directory, $fileNameImageflex, 'public'); 
     }
 
-    $url = $request->videocpodcast;
+    $url = $request->video;
     $queryString = parse_url($url, PHP_URL_QUERY);
     parse_str($queryString, $params);
     $videoId = isset($params['v']) ? $params['v'] : null;
