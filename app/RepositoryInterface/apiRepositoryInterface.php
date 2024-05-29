@@ -53,6 +53,9 @@ interface apiRepositoryInterface {
     
     //all short cours by goals
     public function CourShort(String $user);
+    //all shorts 
+    public function allCourShort();
+    
 
     //cours
     public function Cour_Conference();
@@ -99,7 +102,7 @@ interface apiRepositoryInterface {
     public function UserGoal(String $id);
 
     //get cours by subcategory
-    public function userSubcategory(Request $request);
+    public function userSubcategory();
 
     //get user manager
     public function getmanager();

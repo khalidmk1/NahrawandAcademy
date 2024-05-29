@@ -437,6 +437,14 @@ public function Cour_Conference(){
             
         return response()->json($goalsCours);
     }
+    //all shorts
+
+    public function allCourShort()
+    {
+        $shorts = ShortCours::all();
+            
+        return response()->json($shorts);
+    }
 
     public function Cour_Podcast(){
 
@@ -760,9 +768,9 @@ public function Cour_Conference(){
         return response()->json($UserGoal);
     }
 
-    public function userSubcategory(Request $request){
+    public function userSubcategory(){
 
-        $UserSubCateogry =  SubCategoryUser::where('user_id' , $request->user)->get();
+        $UserSubCateogry =  SubCategoryUser::where('user_id' , Auth::user()->id)->get();
 
         return response()->json($UserSubCateogry);
     }
@@ -907,6 +915,8 @@ public function Cour_Conference(){
            
             return response()->json('its been delete');
         }
+
+
 
        
 

@@ -35,6 +35,10 @@ class CoursController extends Controller
         return $this->apiRepository->CourShort($user);
     }
 
+    public function allShorts(){
+        return $this->apiRepository->allCourShort();
+    }
+
     //create personel cours
     public function personelCours(String $user , String $cour){
         return $this->apiRepository->personelCours($user , $cour);
@@ -145,7 +149,7 @@ class CoursController extends Controller
         return $this->apiRepository->store_cours_subcategory($id , $subCategory);
      }
 
-     public function getuserBysubCategory(Request $request){
-        return $this->apiRepository->userSubcategory($request);
+     public function getuserBysubCategory(){
+        return $this->apiRepository->userSubcategory();
      }
 }

@@ -35,6 +35,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/update/client/{id}', [ProfileClientController::class, 'update_client'])->name('update.client');
     Route::post('update/client/image/{id}', [ProfileClientController::class, 'update_image_client'])->name('update.client.image');
     Route::post('update/password', [ProfileClientController::class, 'password_update'])->name('update.password');
+    Route::get('users/subcategory', [CoursController::class, 'getuserBysubCategory'])->name('user.subcategory');
     
 });
 
@@ -74,6 +75,9 @@ Route::prefix('mobile')->group(function () {
 
 
     Route::get('/short/{user}', [CoursController::class, 'CourShort'])->name('cours.short');
+
+    //all shorts
+    Route::get('all/shorts', [CoursController::class, 'allShorts'])->name('all.shorts');
 
 
     //cours api
